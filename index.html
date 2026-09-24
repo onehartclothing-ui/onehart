@@ -132,7 +132,7 @@
 
         <div style="position:absolute;bottom:48px;left:32px;right:32px;padding-right:72px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:24px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.5);animation:nk-fade 900ms ease-out 2.9s both">
           <div style="display:flex;flex-wrap:wrap;gap:40px;font-size:11px;font-weight:600;color:rgba(245,245,240,0.55)">
-            <span style="color:#F5F5F0">10 pieces</span>
+            <span style="color:#F5F5F0">09 pieces</span>
             <span>Oversized tees</span>
             <span>Heavyweight cotton</span>
 
@@ -271,7 +271,7 @@
         </div>
         <div style="max-width:1500px;margin:0 auto;padding:22px clamp(24px,4vw,48px) 40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid rgba(202,167,167,0.18)">
           <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">© 2026 One Hart. All rights reserved.</span>
-          <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">Drop 001 / 10 pieces</span>
+          <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">Drop 001 / 09 pieces</span>
         </div>
       </footer>
 
@@ -403,7 +403,7 @@
       <div style="margin-top:44px;display:flex;flex-wrap:wrap;gap:34px;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,245,240,0.45)">
         <span>Est. 2026</span>
         <span>Made in India</span>
-        <span>10 pieces</span>
+        <span>09 pieces</span>
       </div>
     </div>
   </sc-if>
@@ -513,15 +513,15 @@ class Component extends DCLogic {
 
   catalog() {
     return [
-      ['Product 1', 799, this.asset('tee1', './tees/tee-1-front.png'), this.asset('tee1_b', './tees/tee-1-back.png')],
-      ['Product 2', 799, this.asset('tee2', './tees/tee-2-front.png'), this.asset('tee2_b', './tees/tee-2-back.png')],
-      ['Product 3', 799, this.asset('tee3', './tees/tee-3-front.png'), this.asset('tee3_b', './tees/tee-3-back.png')],
-      ['Product 4', 799, this.asset('tee4', './tees/tee-4-front.png'), this.asset('tee4_b', './tees/tee-4-back.png')],
-      ['Product 5', 799, this.asset('tee5', './tees/tee-5-front.png'), this.asset('tee5_b', './tees/tee-5-back.png')],
-      ['Product 6', 799, this.asset('tee6', './tees/tee-6-front.png'), this.asset('tee6_b', './tees/tee-6-back.png')],
-      ['Product 7', 799, this.asset('tee7', './tees/tee-7-front.png'), this.asset('tee7_b', './tees/tee-7-back.png')],
-      ['Product 8', 799, this.asset('tee8', './tees/tee-8-front.png'), this.asset('tee8_b', './tees/tee-8-back.png')],
-      ['Product 9', 799, this.asset('tee9', './tees/tee-9-front.png'), this.asset('tee9_b', './tees/tee-9-back.png')]
+      ['Red Riot', 899, this.asset('tee1', './tees/tee-1-front.png'), this.asset('tee1_b', './tees/tee-1-back.png')],
+      ['The Observer', 899, this.asset('tee2', './tees/tee-2-front.png'), this.asset('tee2_b', './tees/tee-2-back.png')],
+      ['Rawr', 899, this.asset('tee3', './tees/tee-3-front.png'), this.asset('tee3_b', './tees/tee-3-back.png')],
+      ['Lunatic', 899, this.asset('tee4', './tees/tee-4-front.png'), this.asset('tee4_b', './tees/tee-4-back.png')],
+      ['Money Talks', 899, this.asset('tee5', './tees/tee-5-front.png'), this.asset('tee5_b', './tees/tee-5-back.png')],
+      ['Iconic', 899, this.asset('tee6', './tees/tee-6-front.png'), this.asset('tee6_b', './tees/tee-6-back.png')],
+      ['Wild West', 799, this.asset('tee7', './tees/tee-7-front.png'), this.asset('tee7_b', './tees/tee-7-back.png')],
+      ['Freefall', 799, this.asset('tee8', './tees/tee-8-front.png'), this.asset('tee8_b', './tees/tee-8-back.png')],
+      ['Lost & Found', 799, this.asset('tee9', './tees/tee-9-front.png'), this.asset('tee9_b', './tees/tee-9-back.png')]
     ];
   }
 
@@ -913,8 +913,8 @@ class Component extends DCLogic {
       })),
       visible: cat.map((c, i) => ({
         img: c[2], name: c[0], price: this.rupees(c[1]),
-        tag: i % 2 ? 'Limited' : 'New drop',
-        num: String(i + 1).padStart(2, '0') + ' / 06',
+        tag: i < 6 ? 'Bestseller' : '',
+        num: String(i + 1).padStart(2, '0') + ' / 09',
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
           const on = this.state.cardSize[i] === label;
           return {
