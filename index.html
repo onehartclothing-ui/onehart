@@ -275,9 +275,7 @@
         </div>
       </footer>
 
-      <button aria-label="Chat" style="position:fixed;right:24px;bottom:24px;z-index:60;width:56px;height:56px;border-radius:50%;border:1px solid rgba(202,167,167,0.3);background:#141414;color:#F5F5F0;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:20px" style-hover="background:#1c1c1c">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F5F0" stroke-width="1.6"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3 1.2-4.2A8 8 0 1 1 21 12z"></path></svg>
-      </button>
+
 
     </div>
   </sc-if>
@@ -310,7 +308,7 @@
         <div data-pdp-col="" style="position:sticky;top:180px;display:flex;flex-direction:column;gap:24px">
           <span style="font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,245,240,0.65)">Oversized tees</span>
           <h1 style="margin:0;font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:38px;line-height:1.1">{{ pdpName }}</h1>
-          <p style="margin:0;max-width:420px;font-size:16px;line-height:1.6;color:rgba(245,245,240,0.65)">Drop-shoulder oversized cut in 240gsm combed cotton. Pre-shrunk, garment-dyed, with a ribbed collar that holds its shape.</p>
+          <p style="margin:0;max-width:420px;font-size:16px;line-height:1.6;color:rgba(245,245,240,0.65)">240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem. Model is 6'1" wearing L.</p>
 
           <div style="display:flex;flex-direction:column;gap:12px">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
@@ -790,7 +788,7 @@ class Component extends DCLogic {
 
     const accData = [
       ['Product information', '240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem. Model is 6\u20191\u201d wearing L. Machine wash cold, hang dry.'],
-      ['Shipping', 'Free standard shipping on orders over $120. Dispatched within 2 business days.']
+      ['Shipping', 'Orders are dispatched within 2 business days and delivered within 3–7 business days.']
     ];
     const accordions = accData.map(([title, body], i) => {
       const open = !!this.state.open[i];
@@ -851,7 +849,7 @@ class Component extends DCLogic {
     });
 
     return {
-      enterNight: () => scrollToSel('[data-statement]'),
+      enterNight: () => scrollToSel('[data-rack]'),
       goShop: (e) => { e.preventDefault(); this.setState({ menuOpen: false }); scrollToSel('#nk-drop'); },
       goDrop: (e) => { e.preventDefault(); this.setState({ menuOpen: false }); scrollToSel('#nk-drop'); },
       goAbout: (e) => { e.preventDefault(); this.setState({ aboutOpen: true, menuOpen: false }); },
