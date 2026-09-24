@@ -3,12 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="ext-resource-dependency" content="./tees/tee-1.png" data-resource-id="tee1" />
-<meta name="ext-resource-dependency" content="./tees/tee-2.png" data-resource-id="tee2" />
-<meta name="ext-resource-dependency" content="./tees/tee-3.png" data-resource-id="tee3" />
-<meta name="ext-resource-dependency" content="./tees/tee-4.png" data-resource-id="tee4" />
-<meta name="ext-resource-dependency" content="./tees/tee-5.png" data-resource-id="tee5" />
-<meta name="ext-resource-dependency" content="./tees/tee-6.png" data-resource-id="tee6" />
+<meta name="ext-resource-dependency" content="./tees/tee-1-front.png" data-resource-id="tee1" />
+<meta name="ext-resource-dependency" content="./tees/tee-1-back.png" data-resource-id="tee1_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-2-front.png" data-resource-id="tee2" />
+<meta name="ext-resource-dependency" content="./tees/tee-2-back.png" data-resource-id="tee2_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-3-front.png" data-resource-id="tee3" />
+<meta name="ext-resource-dependency" content="./tees/tee-3-back.png" data-resource-id="tee3_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-4-front.png" data-resource-id="tee4" />
+<meta name="ext-resource-dependency" content="./tees/tee-4-back.png" data-resource-id="tee4_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-5-front.png" data-resource-id="tee5" />
+<meta name="ext-resource-dependency" content="./tees/tee-5-back.png" data-resource-id="tee5_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-6-front.png" data-resource-id="tee6" />
+<meta name="ext-resource-dependency" content="./tees/tee-6-back.png" data-resource-id="tee6_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-7-front.png" data-resource-id="tee7" />
+<meta name="ext-resource-dependency" content="./tees/tee-7-back.png" data-resource-id="tee7_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-8-front.png" data-resource-id="tee8" />
+<meta name="ext-resource-dependency" content="./tees/tee-8-back.png" data-resource-id="tee8_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-9-front.png" data-resource-id="tee9" />
+<meta name="ext-resource-dependency" content="./tees/tee-9-back.png" data-resource-id="tee9_b" />
 <meta name="ext-resource-dependency" content="./uploads/cosmos_1116054149-2fe8251f.mp4" data-resource-id="herovideo" />
 <meta name="ext-resource-dependency" content="./brand/tile-bg.jpg" data-resource-id="tilebg" />
 <meta name="ext-resource-dependency" content="./brand/wordmark-v3.png" data-resource-id="wordmark" />
@@ -239,7 +251,6 @@
             <a href="#" onClick="{{ goAbout }}" style="font-size:14px;color:rgba(245,245,240,0.82);transition:color 180ms ease" style-hover="color:#CAA7A7">About</a>
             <a href="#" onClick="{{ openSizeChart }}" style="font-size:14px;color:rgba(245,245,240,0.82);transition:color 180ms ease" style-hover="color:#CAA7A7">Size guide</a>
             <a href="#" style="font-size:14px;color:rgba(245,245,240,0.82);transition:color 180ms ease" style-hover="color:#CAA7A7">Shipping &amp; delivery</a>
-            <a href="#" style="font-size:14px;color:rgba(245,245,240,0.82);transition:color 180ms ease" style-hover="color:#CAA7A7">Returns &amp; exchanges</a>
             <a href="#" style="font-size:14px;color:rgba(245,245,240,0.82);transition:color 180ms ease" style-hover="color:#CAA7A7">Privacy policy</a>
             <a href="#" style="font-size:14px;color:rgba(245,245,240,0.82);transition:color 180ms ease" style-hover="color:#CAA7A7">Terms &amp; conditions</a>
           </nav>
@@ -497,12 +508,15 @@ class Component extends DCLogic {
 
   catalog() {
     return [
-      ['Positive Poison', 999, this.asset('tee1', './tees/tee-1.png'), null],
-      ['Scream', 899, this.asset('tee2', './tees/tee-2.png'), null],
-      ['Cowboy', 949, this.asset('tee3', './tees/tee-3.png'), null],
-      ['Rawr', 899, this.asset('tee4', './tees/tee-4.png'), null],
-      ['Lunatic', 999, this.asset('tee5', './tees/tee-5.png'), null],
-      ['All We Need Is Money', 949, this.asset('tee6', './tees/tee-6.png'), null]
+      ['Product 1', 799, this.asset('tee1', './tees/tee-1-front.png'), this.asset('tee1_b', './tees/tee-1-back.png')],
+      ['Product 2', 799, this.asset('tee2', './tees/tee-2-front.png'), this.asset('tee2_b', './tees/tee-2-back.png')],
+      ['Product 3', 799, this.asset('tee3', './tees/tee-3-front.png'), this.asset('tee3_b', './tees/tee-3-back.png')],
+      ['Product 4', 799, this.asset('tee4', './tees/tee-4-front.png'), this.asset('tee4_b', './tees/tee-4-back.png')],
+      ['Product 5', 799, this.asset('tee5', './tees/tee-5-front.png'), this.asset('tee5_b', './tees/tee-5-back.png')],
+      ['Product 6', 799, this.asset('tee6', './tees/tee-6-front.png'), this.asset('tee6_b', './tees/tee-6-back.png')],
+      ['Product 7', 799, this.asset('tee7', './tees/tee-7-front.png'), this.asset('tee7_b', './tees/tee-7-back.png')],
+      ['Product 8', 799, this.asset('tee8', './tees/tee-8-front.png'), this.asset('tee8_b', './tees/tee-8-back.png')],
+      ['Product 9', 799, this.asset('tee9', './tees/tee-9-front.png'), this.asset('tee9_b', './tees/tee-9-back.png')]
     ];
   }
 
@@ -510,18 +524,21 @@ class Component extends DCLogic {
 
   // Shopify product handles, same order as catalog(). Must match the handles in Shopify admin.
   handles() {
-    return ['positive-poison', 'scream', 'cowboy', 'rawr', 'lunatic', 'all-we-need-is-money'];
+    return ['positive-poison', 'scream', 'cowboy', 'rawr', 'lunatic', 'all-we-need-is-money', 'product-7', 'product-8', 'product-9'];
   }
 
   // Shopify variant IDs, same order as catalog(). Sizes: S, M, L, XL.
   variants() {
     return [
-      { S: '47678425366684', M: '47678425399452', L: '47678425432220', XL: '47678425464988' }, // Positive Poison
-      { S: '47678425530524', M: '47678425563292', L: '47678425596060', XL: '47678425628828' }, // Scream
-      { S: '47678425661596', M: '47678425694364', L: '47678425727132', XL: '47678425759900' }, // Cowboy
-      { S: '47678425825436', M: '47678425858204', L: '47678425890972', XL: '47678425923740' }, // Rawr
-      { S: '47678426218652', M: '47678426251420', L: '47678426284188', XL: '47678426316956' }, // Lunatic
-      { S: '47678426382492', M: '47678426415260', L: '47678426448028', XL: '47678426480796' }  // All We Need Is Money
+      { S: '47678425366684', M: '47678425399452', L: '47678425432220', XL: '47678425464988' }, // Product 1
+      { S: '47678425530524', M: '47678425563292', L: '47678425596060', XL: '47678425628828' }, // Product 2
+      { S: '47678425661596', M: '47678425694364', L: '47678425727132', XL: '47678425759900' }, // Product 3
+      { S: '47678425825436', M: '47678425858204', L: '47678425890972', XL: '47678425923740' }, // Product 4
+      { S: '47678426218652', M: '47678426251420', L: '47678426284188', XL: '47678426316956' }, // Product 5
+      { S: '47678426382492', M: '47678426415260', L: '47678426448028', XL: '47678426480796' }, // Product 6
+      { S: '47678426382492', M: '47678426415260', L: '47678426448028', XL: '47678426480796' }, // Product 7 (Dummy - reused)
+      { S: '47678426382492', M: '47678426415260', L: '47678426448028', XL: '47678426480796' }, // Product 8 (Dummy - reused)
+      { S: '47678426382492', M: '47678426415260', L: '47678426448028', XL: '47678426480796' }  // Product 9 (Dummy - reused)
     ];
   }
 
@@ -768,7 +785,7 @@ class Component extends DCLogic {
 
     const accData = [
       ['Product information', '240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem. Model is 6\u20191\u201d wearing L. Machine wash cold, hang dry.'],
-      ['Shipping & returns', 'Free standard shipping on orders over $120. Dispatched within 2 business days. 30-day returns on unworn items with tags attached.']
+      ['Shipping', 'Free standard shipping on orders over $120. Dispatched within 2 business days.']
     ];
     const accordions = accData.map(([title, body], i) => {
       const open = !!this.state.open[i];
