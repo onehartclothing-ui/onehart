@@ -203,20 +203,20 @@
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:clamp(20px,2.4vw,36px);align-items:start">
             <sc-for list="{{ visible }}" as="w" hint-placeholder-count="6">
-              <div data-hitem="" data-reveal="" style="perspective:1400px">
-                <div data-tilt3d="" onClick="{{ w.open }}" style="position:relative;transform-style:preserve-3d;transition:transform 260ms cubic-bezier(.22,.7,.2,1);background:linear-gradient(160deg, rgba(24,24,27,0.94), rgba(8,8,10,0.94));border:1px solid rgba(202,167,167,0.22);clip-path:polygon(2% 0,100% 1%,99% 100%,0 99%);padding:20px 26px 18px 22px;cursor:pointer">
-                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;transform:translateZ(24px);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,245,240,0.55)">
+              <div data-hitem="" data-reveal="">
+                <div onClick="{{ w.open }}" style="position:relative;background:linear-gradient(160deg, rgba(24,24,27,0.94), rgba(8,8,10,0.94));border:1px solid rgba(202,167,167,0.22);clip-path:polygon(2% 0,100% 1%,99% 100%,0 99%);padding:20px 26px 18px 22px;cursor:pointer">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,245,240,0.55)">
                     <span>{{ w.num }}</span>
                     <span style="color:#CAA7A7">{{ w.tag }}</span>
                   </div>
-                  <div style="position:relative;margin:12px 0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;transform:translateZ(12px)">
-                    <img src="{{ w.img }}" alt="{{ w.name }}" loading="lazy" style="width:94%;height:94%;object-fit:contain;display:block;transform:translateZ(64px);filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
+                  <div style="position:relative;margin:12px 0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;">
+                    <img src="{{ w.img }}" alt="{{ w.name }}" loading="lazy" style="width:94%;height:94%;object-fit:contain;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
                   </div>
-                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;transform:translateZ(30px)">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;">
                     <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(15px,1.5vw,20px);line-height:1.15">{{ w.name }}</span>
                     <span style="font-size:18px;font-weight:700">{{ w.price }}</span>
                   </div>
-                  <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;transform:translateZ(30px)">
+                  <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;">
                     <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px">
                       <sc-for list="{{ w.sizes }}" as="z" hint-placeholder-count="4">
                         <button onClick="{{ z.pick }}" style="min-width:0;padding:8px 2px;border:1px solid {{ z.border }};background:{{ z.bg }};color:{{ z.color }};font-family:inherit;font-size:10px;font-weight:600;letter-spacing:0.04em;text-align:center;cursor:pointer;transition:all 180ms ease">{{ z.label }}</button>
@@ -604,11 +604,11 @@ class Component extends DCLogic {
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll, { passive: true });
     window.addEventListener('pageshow', () => { if (this.state.checkingOut) this.setState({ checkingOut: false }); });
-    setTimeout(() => { this.parallax(); this.bindTilt(); this.bindCursor(); }, 60);
+    setTimeout(() => { this.parallax(); this.bindCursor(); }, 60);
     this.playVideo();
     this.reveal();
   }
-  componentDidUpdate() { this.playVideo(); this.reveal(); this.bindStage(); this.bindTilt(); this.parallax(); }
+  componentDidUpdate() { this.playVideo(); this.reveal(); this.bindStage(); this.parallax(); }
 
   playVideo() {
     const v = document.getElementById('nk-hero-video');
@@ -650,29 +650,7 @@ class Component extends DCLogic {
     if (this._blobUrl) URL.revokeObjectURL(this._blobUrl);
   }
 
-  bindTilt() {
-    const cards = document.querySelectorAll('[data-tilt3d]:not([data-tilt-bound])');
-    if (!cards.length) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    cards.forEach((card) => {
-      card.setAttribute('data-tilt-bound', '');
-      if (reduce) return;
-      const set = (rx, ry, lift) => {
-        card.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateZ(' + lift + 'px)';
-      };
-      card.addEventListener('pointermove', (e) => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transition = 'transform 90ms linear';
-        set(-py * 16, px * 20, 22);
-      });
-      card.addEventListener('pointerleave', () => {
-        card.style.transition = 'transform 520ms cubic-bezier(.22,.7,.2,1)';
-        card.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(0px)';
-      });
-    });
-  }
+
 
   horizontal() {
     const num = document.querySelector('[data-dropnum]');
