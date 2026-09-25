@@ -103,8 +103,8 @@
       </a>
       <div style="flex:1"></div>
       <div data-desk-only="" style="display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(202,167,167,0.45);padding-bottom:4px">
-        <span aria-hidden="true" style="font-size:12px;color:rgba(245,245,240,0.6)">⌕</span>
-        <input type="search" value="{{ query }}" onChange="{{ onSearch }}" placeholder="SEARCH PIECES" aria-label="Search pieces" style="width:150px;background:transparent;border:0;outline:none;color:#F5F5F0;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase">
+        <button aria-label="Search" onClick="{{ submitSearch }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:14px;color:rgba(245,245,240,0.8);display:flex;align-items:center">⌕</button>
+        <input type="search" value="{{ query }}" onInput="{{ onSearch }}" onKeyDown="{{ submitSearch }}" placeholder="SEARCH PIECES" aria-label="Search pieces" style="width:150px;background:transparent;border:0;outline:none;color:#F5F5F0;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase">
       </div>
       <nav data-desk-only="" style="display:flex;align-items:center;gap:30px;font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase">
         <a href="#" onClick="{{ goShop }}" style="color:{{ navShop }}">Shop</a>
@@ -203,6 +203,12 @@
             <h2 style="margin:0;font-weight:700;font-size:clamp(30px,5vw,68px);line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase">Drop 001<br>After dark</h2>
             <span style="font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,245,240,0.55)">{{ visibleCount }} pieces</span>
           </div>
+          <sc-if value="{{ emptySearch }}" hint-placeholder-val="{{ false }}">
+             <div style="padding:60px 0;text-align:center">
+                <p style="font-size:24px;font-weight:600;margin-bottom:24px;font-family:'Bodoni Moda',Georgia,serif;font-style:italic">No products found</p>
+                <button onClick="{{ clearSearch }}" style="padding:14px 28px;background:#CAA7A7;color:#0A0A0A;border:none;border-radius:999px;cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-size:11px">Clear Search</button>
+             </div>
+          </sc-if>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:clamp(20px,2.4vw,36px);align-items:start">
             <sc-for list="{{ visible }}" as="w" hint-placeholder-count="6">
               <div data-hitem="" data-reveal="">
@@ -398,6 +404,10 @@
     <div onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:115;background:rgba(7,7,9,0.55);backdrop-filter:blur(18px) saturate(120%);-webkit-backdrop-filter:blur(18px) saturate(120%);display:flex;flex-direction:column;justify-content:center;padding:0 clamp(24px,8vw,120px);animation:nk-fade 320ms ease-out both">
       <button onClick="{{ closeMenu }}" aria-label="Close menu" style="position:absolute;top:40px;right:40px;background:none;border:0;padding:0;color:#F5F5F0;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer">Close ✕</button>
       <span style="font-size:11px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:rgba(245,245,240,0.5);margin-bottom:26px">Menu · Drop 001</span>
+      <div data-mob-only="" style="display:none;align-items:center;gap:12px;border-bottom:1px solid rgba(202,167,167,0.45);padding-bottom:8px;margin-bottom:32px">
+        <button aria-label="Search" onClick="{{ submitSearchMobile }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:18px;color:rgba(245,245,240,0.8);display:flex;align-items:center">⌕</button>
+        <input type="search" value="{{ query }}" onInput="{{ onSearchMobile }}" onKeyDown="{{ submitSearchMobile }}" placeholder="SEARCH PIECES" aria-label="Search pieces" style="width:100%;background:transparent;border:0;outline:none;color:#F5F5F0;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase">
+      </div>
       <nav style="display:flex;flex-direction:column;gap:2px">
         <sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="4">
           <a href="#" onClick="{{ m.go }}" style="font-weight:700;font-size:clamp(34px,7vw,86px);line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;color:#F5F5F0;transition:color 200ms ease,transform 260ms cubic-bezier(.22,.7,.2,1)" style-hover="color:#CAA7A7;transform:translateX(14px)">{{ m.label }}</a>
@@ -851,7 +861,51 @@ class Component extends DCLogic {
         { label: 'Bag', go: (e) => { e.preventDefault(); this.setState({ bagOpen: true, menuOpen: false }); } }
       ],
       query: this.state.query,
-      onSearch: (e) => this.setState({ query: e.target.value }),
+      onSearch: (e) => {
+        this.setState({ query: e.target.value });
+      },
+      submitSearch: (e) => {
+        if (e.type === 'keydown' && e.key !== 'Enter') return;
+        if (e.type === 'keydown') e.preventDefault();
+        if (this.state.page !== 'home') {
+          this.setState({ page: 'home', menuOpen: false });
+          setTimeout(() => {
+            const drop = document.getElementById('nk-drop');
+            if (drop) drop.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 60);
+        } else {
+          this.setState({ menuOpen: false });
+          const drop = document.getElementById('nk-drop');
+          if (drop) drop.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      },
+      onSearchMobile: (e) => {
+        this.setState({ query: e.target.value });
+      },
+      submitSearchMobile: (e) => {
+        if (e.type === 'keydown' && e.key !== 'Enter') return;
+        if (e.type === 'keydown') e.preventDefault();
+        this.setState({ menuOpen: false });
+        if (this.state.page !== 'home') {
+          this.setState({ page: 'home' });
+          setTimeout(() => {
+            const drop = document.getElementById('nk-drop');
+            if (drop) drop.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 60);
+        } else {
+          setTimeout(() => {
+            const drop = document.getElementById('nk-drop');
+            if (drop) drop.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 60);
+        }
+      },
+      clearSearch: (e) => { e.preventDefault(); this.setState({ query: '' }); },
+      emptySearch: !!(this.state.query.trim() && cat.filter((c, i) => {
+        const q = this.state.query.trim().toLowerCase();
+        const handles = this.handles();
+        const searchString = (c[0] + " " + (handles[i] || "") + " oversized tee t-shirt streetwear").toLowerCase();
+        return q.split(/\s+/).every((term) => searchString.includes(term));
+      }).length === 0),
       bagOpen: this.state.bagOpen,
       openBag: (e) => { e.preventDefault(); this.setState({ bagOpen: true }); },
       closeBag: () => this.setState({ bagOpen: false }),
@@ -874,7 +928,12 @@ class Component extends DCLogic {
       flipView,
       thumbs,
       chartRows,
-      visibleCount: String(cat.filter((c) => !q || c[0].toLowerCase().includes(q)).length).padStart(2, '0'),
+      visibleCount: String(cat.filter((c, i) => {
+        if (!q) return true;
+        const handles = this.handles();
+        const searchString = (c[0] + " " + (handles[i] || "") + " oversized tee t-shirt streetwear").toLowerCase();
+        return q.split(/\s+/).every((term) => searchString.includes(term));
+      }).length).padStart(2, '0'),
       rackRows: [0, 3].map((off) => ({
         items: cat.slice(off, off + 3).map((c, j) => {
           const i = off + j;
@@ -916,7 +975,12 @@ class Component extends DCLogic {
         },
         depth: [0.8, 0.3, 1.1, 0.45, 0.95, 0.6][i % 6],
         open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
-      })).filter((p) => !q || p.name.toLowerCase().includes(q)),
+      })).filter((p, mappedIdx) => {
+        if (!q) return true;
+        const handles = this.handles();
+        const searchString = (p.name + " " + (handles[mappedIdx] || "") + " oversized tee t-shirt streetwear").toLowerCase();
+        return q.split(/\s+/).every((term) => searchString.includes(term));
+      }),
       zoomOpen: this.state.zoomOpen,
       chartOpen: this.state.chartOpen,
       openZoom: () => this.setState({ zoomOpen: true }),
