@@ -377,7 +377,10 @@
         <button onClick="{{ closeZoom }}" aria-label="Close viewer" style="background:none;border:0;padding:0;color:#F5F5F0;font-family:inherit;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer">Close ✕</button>
       </div>
       <div id="nk-zoom-stage" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:grab;perspective:1400px;touch-action:none">
-        <image-slot id="pdp-zoom" shape="rect" fit="contain" src="{{ pdpImage }}" placeholder="Product image" style="width:82%;height:100%;display:block;user-select:none;transform:{{ zoomTransform }};transition:{{ zoomTransition }}"></image-slot>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4vw;width:100%;height:100%;transform:{{ zoomTransform }};transition:{{ zoomTransition }}">
+          <image-slot id="pdp-zoom-front" shape="rect" fit="contain" src="{{ pdpImage }}" placeholder="Front image" style="width:40%;height:85%;display:block;user-select:none"></image-slot>
+          <image-slot id="pdp-zoom-back" shape="rect" fit="contain" src="{{ pdpBack }}" placeholder="Back image" style="width:40%;height:85%;display:block;user-select:none"></image-slot>
+        </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:24px 32px">
         <button onClick="{{ zoomOut }}" aria-label="Zoom out" style="width:44px;height:44px;border-radius:999px;border:1px solid rgba(202,167,167,0.55);background:transparent;color:#F5F5F0;font-family:inherit;font-size:20px;cursor:pointer">−</button>
