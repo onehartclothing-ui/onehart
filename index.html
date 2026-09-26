@@ -520,11 +520,11 @@ class Component extends DCLogic {
       ['Lunatic', 899, this.asset('tee4', './tees/tee-4-front.png'), this.asset('tee4_b', './tees/tee-4-back.png')],
       ['Money Talks', 899, this.asset('tee5', './tees/tee-5-front.png'), this.asset('tee5_b', './tees/tee-5-back.png')],
       ['Iconic', 899, this.asset('tee6', './tees/tee-6-front.png'), this.asset('tee6_b', './tees/tee-6-back.png')],
+      ['Positive Poison', 899, this.asset('tee10', './tees/tee-10-front.png'), this.asset('tee10_b', './tees/tee-10-back.png')],
+      ['Superlame', 899, this.asset('tee11', './tees/tee-11-front.png'), this.asset('tee11_b', './tees/tee-11-back.png')],
       ['Wild West', 799, this.asset('tee7', './tees/tee-7-front.png'), this.asset('tee7_b', './tees/tee-7-back.png')],
       ['Freefall', 799, this.asset('tee8', './tees/tee-8-front.png'), this.asset('tee8_b', './tees/tee-8-back.png')],
-      ['Lost & Found', 799, this.asset('tee9', './tees/tee-9-front.png'), this.asset('tee9_b', './tees/tee-9-back.png')],
-      ['Positive Poison', 899, this.asset('tee10', './tees/tee-10-front.png'), this.asset('tee10_b', './tees/tee-10-back.png')],
-      ['Superlame', 899, this.asset('tee11', './tees/tee-11-front.png'), this.asset('tee11_b', './tees/tee-11-back.png')]
+      ['Lost & Found', 799, this.asset('tee9', './tees/tee-9-front.png'), this.asset('tee9_b', './tees/tee-9-back.png')]
     ];
   }
 
@@ -532,7 +532,7 @@ class Component extends DCLogic {
 
   // Shopify product handles, same order as catalog(). Must match the handles in Shopify admin.
   handles() {
-    return ['positive-poison', 'scream', 'cowboy', 'rawr', 'lunatic', 'all-we-need-is-money', 'product-7', 'product-8', 'product-9', 'new-product-10', 'new-product-11'];
+    return ['positive-poison', 'scream', 'cowboy', 'rawr', 'lunatic', 'all-we-need-is-money', 'new-product-10', 'new-product-11', 'product-7', 'product-8', 'product-9'];
   }
 
   // Shopify variant IDs, same order as catalog(). Sizes: S, M, L, XL.
@@ -544,11 +544,11 @@ class Component extends DCLogic {
       { S: '47687433420956', M: '47687433453724', L: '47687433486492', XL: '47687433519260' }, // 3: Lunatic
       { S: '47687427162268', M: '47687427195036', L: '47687427227804', XL: '47687427260572' }, // 4: Money Talks
       { S: '47687423295644', M: '47687423328412', L: '47687423361180', XL: '47687423393948' }, // 5: Iconic
-      { S: '47687422050460', M: '47687422083228', L: '47687422115996', XL: '47687422148764' }, // 6: Wild West
-      { S: '47687421591708', M: '47687421624476', L: '47687421657244', XL: '47687421690012' }, // 7: Freefall
-      { S: '47687421362332', M: '47687421395100', L: '47687421427868', XL: '47687421460636' }, // 8: Lost & Found
-      { S: '', M: '', L: '', XL: '' }, // 9: Positive Poison
-      { S: '', M: '', L: '', XL: '' }  // 10: Superlame
+      { S: '', M: '', L: '', XL: '' }, // 6: Positive Poison
+      { S: '', M: '', L: '', XL: '' }, // 7: Superlame
+      { S: '47687422050460', M: '47687422083228', L: '47687422115996', XL: '47687422148764' }, // 8: Wild West
+      { S: '47687421591708', M: '47687421624476', L: '47687421657244', XL: '47687421690012' }, // 9: Freefall
+      { S: '47687421362332', M: '47687421395100', L: '47687421427868', XL: '47687421460636' }  // 10: Lost & Found
     ];
   }
 
@@ -966,16 +966,12 @@ class Component extends DCLogic {
           this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true, notice: '' }));
         },
         depth: [0.8, 0.3, 1.1, 0.45, 0.95, 0.6][i % 6],
-        open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); },
-        origIdx: i
+        open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
       })).filter((p, mappedIdx) => {
         if (!q) return true;
         const handles = this.handles();
         const searchString = (p.name + " " + (handles[mappedIdx] || "") + " oversized tee t-shirt streetwear").toLowerCase();
         return q.split(/\s+/).every((term) => searchString.includes(term));
-      }).sort((a, b) => {
-        const order = [0, 1, 2, 3, 4, 5, 9, 10, 6, 7, 8];
-        return order.indexOf(a.origIdx) - order.indexOf(b.origIdx);
       }),
       zoomOpen: this.state.zoomOpen,
       chartOpen: this.state.chartOpen,
