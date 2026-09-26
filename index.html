@@ -129,7 +129,7 @@
             <img src="brand/wordmark-v3.png" alt="One Hart" style="width:min(62vw,720px);height:auto;display:block;background:none;border:0;animation:nk-mark 1500ms cubic-bezier(.16,.84,.24,1) 900ms both">
             <span style="font-size:12px;font-weight:500;letter-spacing:0.34em;text-transform:uppercase;color:rgba(245,245,240,0.62);animation:nk-fade 1000ms ease-out 2.3s both">After dark · Drop 001</span>
           </h1>
-          <button onClick="{{ enterNight }}" style="margin-top:30px;padding:18px 40px;border-radius:999px;border:1px solid rgba(233,221,197,0.55);background:rgba(10,10,10,0.35);backdrop-filter:blur(6px);color:#F5F5F0;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;animation:nk-fade 900ms ease-out 2.7s both;transition:box-shadow 260ms ease,transform 260ms cubic-bezier(.22,.7,.2,1),letter-spacing 260ms ease" style-hover="box-shadow:0 0 44px rgba(255,180,110,0.45), inset 0 0 22px rgba(255,180,110,0.18);transform:translateY(-2px) scale(1.03);letter-spacing:0.3em">Enter the night</button>
+          <button onClick="{{ enterNight }}" style="display:none;margin-top:30px;padding:18px 40px;border-radius:999px;border:1px solid rgba(233,221,197,0.55);background:rgba(10,10,10,0.35);backdrop-filter:blur(6px);color:#F5F5F0;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;animation:nk-fade 900ms ease-out 2.7s both;transition:box-shadow 260ms ease,transform 260ms cubic-bezier(.22,.7,.2,1),letter-spacing 260ms ease" style-hover="box-shadow:0 0 44px rgba(255,180,110,0.45), inset 0 0 22px rgba(255,180,110,0.18);transform:translateY(-2px) scale(1.03);letter-spacing:0.3em">Enter the night</button>
         </div>
 
         <div style="position:absolute;bottom:48px;left:32px;right:32px;padding-right:72px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:24px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.5);animation:nk-fade 900ms ease-out 2.9s both">
@@ -143,30 +143,9 @@
         </div>
       </section>
 
-      <section data-statement="" style="position:relative;height:220vh;background:linear-gradient(to bottom, rgba(5,5,6,0) 0%, #060607 22%, #070708 100%)">
-        <div style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;overflow:hidden;text-align:center;padding:0 24px">
-          <div aria-hidden="true" style="position:absolute;inset:-10%;background:radial-gradient(38% 30% at 18% 28%, rgba(255,150,70,0.20), transparent 64%),radial-gradient(34% 26% at 84% 76%, rgba(120,150,160,0.16), transparent 66%);filter:blur(50px);animation:nk-breathe 22s ease-in-out infinite"></div>
-          <div aria-hidden="true" style="position:absolute;left:0;right:0;top:22%;height:1px;background:linear-gradient(90deg, transparent, rgba(255,214,150,0.6), transparent);filter:blur(1.5px);animation:nk-streak 14s linear infinite"></div>
-          <p data-line="0" style="margin:0;font-weight:700;font-size:clamp(34px,7vw,96px);line-height:0.96;letter-spacing:-0.02em;text-transform:uppercase">The night doesn't stop.</p>
-          <p data-line="1" style="margin:0;font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(30px,6vw,84px);line-height:1;color:#CAA7A7">Neither do we.</p>
-        </div>
-      </section>
 
-      <div aria-hidden="true" style="overflow:hidden">
-      <div style="position:relative;overflow:hidden;background:#CAA7A7;color:#0A0A0A;padding:12px 0;transform:rotate(-1.1deg) scaleX(1.04)">
-        <div style="display:flex;gap:48px;white-space:nowrap;font-size:13px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;animation:nk-marquee 26s linear infinite;will-change:transform">
-          <span>One Hart — After dark — Drop 001 — Made in India — One Hart — After dark — Drop 001 — Made in India —</span>
-          <span>One Hart — After dark — Drop 001 — Made in India — One Hart — After dark — Drop 001 — Made in India —</span>
-        </div>
-      </div>
-      </div>
 
-      <section data-reveal="" style="background:rgba(8,8,8,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:120px 0;border-bottom:1px solid rgba(202,167,167,0.28)">
-        <div style="max-width:1100px;margin:0 auto;padding:0 32px;text-align:center">
-          <span style="font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.6)">Our story</span>
-          <p style="margin:24px 0 0;font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:34px;line-height:1.45;text-wrap:pretty">One Hart creates elevated streetwear with distinctive graphics, and premium quality, bringing something different to a space where everything can start to look the same.</p>
-        </div>
-      </section>
+
 
       <section style="position:relative;background:linear-gradient(180deg, #0A0A0B 0%, #14151A 34%, #1B1D23 62%, #0C0C0E 100%);padding:clamp(64px,8vw,112px) 0 clamp(72px,9vw,128px);overflow:hidden">
         <div aria-hidden="true" style="position:absolute;left:50%;top:0;transform:translateX(-50%);width:130%;height:70%;background:radial-gradient(60% 70% at 50% 18%, rgba(226,226,230,0.16), transparent 70%);pointer-events:none"></div>
@@ -182,8 +161,7 @@
               <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vw,28px);align-items:start;padding:0 calc(clamp(10px,1.6vw,28px) / 2)">
               <sc-for list="{{ row.items }}" as="r" hint-placeholder-count="3">
                 <button onClick="{{ r.open }}" data-hang="" aria-label="{{ r.name }}" style="position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;padding:0;border:0;background:none;cursor:pointer;transition:transform 420ms cubic-bezier(.22,.7,.2,1)" style-hover="transform:translateY(8px)">
-                  <span aria-hidden="true" style="width:2px;height:22px;background:linear-gradient(180deg, #C9CDD1, #7C8085);margin-top:-14px"></span>
-                  <span aria-hidden="true" style="width:clamp(54px,7vw,84px);height:clamp(22px,3vw,32px);border:2px solid #A9AEB3;border-top:0;border-radius:0 0 46% 46%;box-shadow:0 4px 10px rgba(0,0,0,0.5)"></span>
+                  <img src="brand/hanger.png" alt="Hanger" style="width:clamp(80px,12vw,140px);height:auto;margin-top:-20px;margin-bottom:-10px;z-index:1;position:relative;pointer-events:none;">
                   <img src="{{ r.img }}" alt="{{ r.name }}" loading="lazy" style="width:100%;margin-top:-10px;display:block;filter:drop-shadow(0 34px 40px rgba(0,0,0,0.6));animation:nk-sway 9s ease-in-out infinite;animation-delay:{{ r.sway }}">
                   <span style="margin-top:14px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,245,240,0.55)">{{ r.num }}</span>
                   <span style="margin-top:6px;font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(14px,1.4vw,18px);color:#F5F5F0;text-align:center">{{ r.name }}</span>
@@ -240,6 +218,13 @@
       </section>
 
 
+
+      <section data-reveal="" style="background:rgba(8,8,8,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:120px 0;border-top:1px solid rgba(202,167,167,0.28)">
+        <div style="max-width:1100px;margin:0 auto;padding:0 32px;text-align:center">
+          <span style="font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.6)">Our story</span>
+          <p style="margin:24px 0 0;font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:34px;line-height:1.45;text-wrap:pretty">One Hart creates elevated streetwear with distinctive graphics, and premium quality, bringing something different to a space where everything can start to look the same.</p>
+        </div>
+      </section>
 
       <footer style="position:relative;background:#08080A;border-top:1px solid rgba(202,167,167,0.28)">
         <div style="max-width:1500px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(24px,4vw,48px) 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(36px,5vw,72px)">
