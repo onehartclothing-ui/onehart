@@ -161,8 +161,10 @@
               <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vw,28px);align-items:start;padding:0 calc(clamp(10px,1.6vw,28px) / 2)">
               <sc-for list="{{ row.items }}" as="r" hint-placeholder-count="3">
                 <button onClick="{{ r.open }}" data-hang="" aria-label="{{ r.name }}" style="position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;padding:0;border:0;background:none;cursor:pointer;transition:transform 420ms cubic-bezier(.22,.7,.2,1)" style-hover="transform:translateY(8px)">
-                  <img src="brand/hanger.png" alt="Hanger" style="width:clamp(80px,12vw,140px);height:auto;margin-top:-20px;margin-bottom:-10px;z-index:1;position:relative;pointer-events:none;">
-                  <img src="{{ r.img }}" alt="{{ r.name }}" loading="lazy" style="width:100%;margin-top:-10px;display:block;filter:drop-shadow(0 34px 40px rgba(0,0,0,0.6));animation:nk-sway 9s ease-in-out infinite;animation-delay:{{ r.sway }}">
+                  <div style="position:relative;width:100%;margin-top:-10px;">
+                    <img src="brand/hanger_real.jpg" alt="" style="position:absolute;top:-8%;left:50%;transform:translateX(-50%);width:clamp(80px,12vw,130px);height:auto;z-index:1;mix-blend-mode:screen;pointer-events:none;animation:nk-sway 9s ease-in-out infinite;animation-delay:{{ r.sway }}">
+                    <img src="{{ r.img }}" alt="{{ r.name }}" loading="lazy" style="position:relative;z-index:2;width:100%;display:block;filter:drop-shadow(0 34px 40px rgba(0,0,0,0.6));animation:nk-sway 9s ease-in-out infinite;animation-delay:{{ r.sway }}">
+                  </div>
                   <span style="margin-top:14px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,245,240,0.55)">{{ r.num }}</span>
                   <span style="margin-top:6px;font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(14px,1.4vw,18px);color:#F5F5F0;text-align:center">{{ r.name }}</span>
                 </button>
@@ -196,7 +198,8 @@
                     <span style="color:#CAA7A7">{{ w.tag }}</span>
                   </div>
                   <div style="position:relative;margin:12px 0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;">
-                    <img src="{{ w.img }}" alt="{{ w.name }}" loading="lazy" style="width:94%;height:94%;object-fit:contain;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
+                    <img src="brand/hanger_real.jpg" alt="" style="position:absolute;top:2%;left:50%;transform:translateX(-50%);width:clamp(120px,45%,180px);height:auto;z-index:1;mix-blend-mode:screen;pointer-events:none;animation:nk-float 7s ease-in-out infinite">
+                    <img src="{{ w.img }}" alt="{{ w.name }}" loading="lazy" style="position:relative;z-index:2;width:94%;height:94%;object-fit:contain;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
                   </div>
                   <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;">
                     <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(15px,1.5vw,20px);line-height:1.15">{{ w.name }}</span>
