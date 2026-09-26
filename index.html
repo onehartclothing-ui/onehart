@@ -946,7 +946,7 @@ class Component extends DCLogic {
       visible: cat.map((c, i) => ({
         img: c[2], name: c[0], price: this.rupees(c[1]),
         tag: i < 6 ? 'Bestseller' : '',
-        num: String(i + 1).padStart(2, '0') + ' / 09',
+        num: String(i + 1).padStart(2, '0') + ' / 11',
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
           const on = this.state.cardSize[i] === label;
           return {
@@ -966,12 +966,16 @@ class Component extends DCLogic {
           this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true, notice: '' }));
         },
         depth: [0.8, 0.3, 1.1, 0.45, 0.95, 0.6][i % 6],
-        open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
+        open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); },
+        origIdx: i
       })).filter((p, mappedIdx) => {
         if (!q) return true;
         const handles = this.handles();
         const searchString = (p.name + " " + (handles[mappedIdx] || "") + " oversized tee t-shirt streetwear").toLowerCase();
         return q.split(/\s+/).every((term) => searchString.includes(term));
+      }).sort((a, b) => {
+        const order = [0, 1, 2, 3, 4, 5, 9, 10, 6, 7, 8];
+        return order.indexOf(a.origIdx) - order.indexOf(b.origIdx);
       }),
       zoomOpen: this.state.zoomOpen,
       chartOpen: this.state.chartOpen,
