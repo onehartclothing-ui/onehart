@@ -23,6 +23,10 @@
 <meta name="ext-resource-dependency" content="./tees/tee-8-back.png" data-resource-id="tee8_b" />
 <meta name="ext-resource-dependency" content="./tees/tee-9-front.png" data-resource-id="tee9" />
 <meta name="ext-resource-dependency" content="./tees/tee-9-back.png" data-resource-id="tee9_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-10-front.png" data-resource-id="tee10" />
+<meta name="ext-resource-dependency" content="./tees/tee-10-back.png" data-resource-id="tee10_b" />
+<meta name="ext-resource-dependency" content="./tees/tee-11-front.png" data-resource-id="tee11" />
+<meta name="ext-resource-dependency" content="./tees/tee-11-back.png" data-resource-id="tee11_b" />
 <meta name="ext-resource-dependency" content="./uploads/cosmos_1116054149-2fe8251f.mp4" data-resource-id="herovideo" />
 <meta name="ext-resource-dependency" content="./brand/tile-bg.jpg" data-resource-id="tilebg" />
 <meta name="ext-resource-dependency" content="./brand/wordmark-v3.png" data-resource-id="wordmark" />
@@ -132,7 +136,7 @@
 
         <div style="position:absolute;bottom:48px;left:32px;right:32px;padding-right:72px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:24px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.5);animation:nk-fade 900ms ease-out 2.9s both">
           <div style="display:flex;flex-wrap:wrap;gap:40px;font-size:11px;font-weight:600;color:rgba(245,245,240,0.55)">
-            <span style="color:#F5F5F0">09 pieces</span>
+            <span style="color:#F5F5F0">11 pieces</span>
             <span>Oversized tees</span>
             <span>Heavyweight cotton</span>
 
@@ -263,7 +267,7 @@
         </div>
         <div style="max-width:1500px;margin:0 auto;padding:22px clamp(24px,4vw,48px) 40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid rgba(202,167,167,0.18)">
           <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">© 2026 One Hart. All rights reserved.</span>
-          <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">Drop 001 / 09 pieces</span>
+          <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">Drop 001 / 11 pieces</span>
         </div>
       </footer>
 
@@ -400,7 +404,7 @@
       <div style="margin-top:44px;display:flex;flex-wrap:wrap;gap:34px;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,245,240,0.45)">
         <span>Est. 2026</span>
         <span>Made in India</span>
-        <span>09 pieces</span>
+        <span>11 pieces</span>
       </div>
     </div>
   </sc-if>
@@ -518,7 +522,9 @@ class Component extends DCLogic {
       ['Iconic', 899, this.asset('tee6', './tees/tee-6-front.png'), this.asset('tee6_b', './tees/tee-6-back.png')],
       ['Wild West', 799, this.asset('tee7', './tees/tee-7-front.png'), this.asset('tee7_b', './tees/tee-7-back.png')],
       ['Freefall', 799, this.asset('tee8', './tees/tee-8-front.png'), this.asset('tee8_b', './tees/tee-8-back.png')],
-      ['Lost & Found', 799, this.asset('tee9', './tees/tee-9-front.png'), this.asset('tee9_b', './tees/tee-9-back.png')]
+      ['Lost & Found', 799, this.asset('tee9', './tees/tee-9-front.png'), this.asset('tee9_b', './tees/tee-9-back.png')],
+      ['NEW PRODUCT 10', 899, this.asset('tee10', './tees/tee-10-front.png'), this.asset('tee10_b', './tees/tee-10-back.png')],
+      ['NEW PRODUCT 11', 899, this.asset('tee11', './tees/tee-11-front.png'), this.asset('tee11_b', './tees/tee-11-back.png')]
     ];
   }
 
@@ -526,7 +532,7 @@ class Component extends DCLogic {
 
   // Shopify product handles, same order as catalog(). Must match the handles in Shopify admin.
   handles() {
-    return ['positive-poison', 'scream', 'cowboy', 'rawr', 'lunatic', 'all-we-need-is-money', 'product-7', 'product-8', 'product-9'];
+    return ['positive-poison', 'scream', 'cowboy', 'rawr', 'lunatic', 'all-we-need-is-money', 'product-7', 'product-8', 'product-9', 'new-product-10', 'new-product-11'];
   }
 
   // Shopify variant IDs, same order as catalog(). Sizes: S, M, L, XL.
@@ -540,7 +546,9 @@ class Component extends DCLogic {
       { S: '47687423295644', M: '47687423328412', L: '47687423361180', XL: '47687423393948' }, // 5: Iconic
       { S: '47687422050460', M: '47687422083228', L: '47687422115996', XL: '47687422148764' }, // 6: Wild West
       { S: '47687421591708', M: '47687421624476', L: '47687421657244', XL: '47687421690012' }, // 7: Freefall
-      { S: '47687421362332', M: '47687421395100', L: '47687421427868', XL: '47687421460636' }  // 8: Lost & Found
+      { S: '47687421362332', M: '47687421395100', L: '47687421427868', XL: '47687421460636' }, // 8: Lost & Found
+      { S: '', M: '', L: '', XL: '' }, // 9: NEW PRODUCT 10
+      { S: '', M: '', L: '', XL: '' }  // 10: NEW PRODUCT 11
     ];
   }
 
@@ -918,7 +926,7 @@ class Component extends DCLogic {
         const searchString = (c[0] + " " + (handles[i] || "") + " oversized tee t-shirt streetwear").toLowerCase();
         return q.split(/\s+/).every((term) => searchString.includes(term));
       }).length).padStart(2, '0'),
-      rackRows: [0, 3].map((off) => ({
+      rackRows: [0, 3, 6, 9].map((off) => ({
         items: cat.slice(off, off + 3).map((c, j) => {
           const i = off + j;
           return {
