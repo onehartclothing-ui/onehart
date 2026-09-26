@@ -155,9 +155,9 @@
             <span style="font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:rgba(245,245,240,0.72)">Graphic // Retro // Oversized</span>
           </div>
           <div data-rack="" style="position:relative;display:flex;flex-wrap:wrap;column-gap:0;row-gap:clamp(40px,5vw,64px)">
+            <div aria-hidden="true" style="position:absolute;left:0;right:0;top:44px;height:9px;border-radius:5px;background:linear-gradient(180deg, #6E7378 0%, #D5D9DC 26%, #9BA0A5 52%, #4C5054 100%);box-shadow:0 10px 26px rgba(0,0,0,0.6)"></div>
             <sc-for list="{{ rackRows }}" as="row" hint-placeholder-count="2">
             <div data-rackrow="" style="position:relative;flex:1 1 300px;min-width:0;padding:56px 0 4px">
-              <div aria-hidden="true" style="position:absolute;left:0;right:0;top:44px;height:9px;border-radius:5px;background:linear-gradient(180deg, #6E7378 0%, #D5D9DC 26%, #9BA0A5 52%, #4C5054 100%);box-shadow:0 10px 26px rgba(0,0,0,0.6)"></div>
               <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vw,28px);align-items:start;padding:0 calc(clamp(10px,1.6vw,28px) / 2)">
               <sc-for list="{{ row.items }}" as="r" hint-placeholder-count="3">
                 <button onClick="{{ r.open }}" data-hang="" aria-label="{{ r.name }}" style="position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;padding:0;border:0;background:none;cursor:pointer;transition:transform 420ms cubic-bezier(.22,.7,.2,1)" style-hover="transform:translateY(8px)">
