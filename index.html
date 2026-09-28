@@ -71,6 +71,20 @@
     [data-desk-only] { display: none !important; }
     [data-pdp-grid] { grid-template-columns: minmax(0,1fr) !important; gap: 36px !important; }
     [data-pdp-col] { position: static !important; }
+    
+    [data-rack] { flex-direction: column !important; }
+    [data-rack] > div[aria-hidden="true"]:first-child { display: none !important; }
+    [data-rackrow]::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 44px;
+      height: 9px;
+      border-radius: 5px;
+      background: linear-gradient(180deg, #6E7378 0%, #D5D9DC 26%, #9BA0A5 52%, #4C5054 100%);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.6);
+    }
   }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
