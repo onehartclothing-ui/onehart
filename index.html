@@ -85,6 +85,32 @@
       background: linear-gradient(180deg, #6E7378 0%, #D5D9DC 26%, #9BA0A5 52%, #4C5054 100%);
       box-shadow: 0 10px 26px rgba(0,0,0,0.6);
     }
+    
+    [data-zoom-container] {
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      height: auto !important;
+      min-height: 100%;
+      padding: 60px 20px 60px !important;
+      gap: 32px !important;
+      box-sizing: border-box;
+    }
+    #pdp-zoom-front, #pdp-zoom-back {
+      width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 4/5;
+      background: #141414 !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      border-radius: 6px !important;
+      padding: 10% !important;
+      display: block !important;
+      box-sizing: border-box !important;
+    }
+    #nk-zoom-stage {
+      overflow-y: auto !important;
+      align-items: flex-start !important;
+      touch-action: pan-y !important;
+    }
   }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
@@ -528,17 +554,17 @@ class Component extends DCLogic {
 
   catalog() {
     return [
-      ['Red Riot', 899, this.asset('tee1', './tees/tee-1-front.png'), this.asset('tee1_b', './tees/tee-1-back.png')],
-      ['The Observer', 899, this.asset('tee2', './tees/tee-2-front.png'), this.asset('tee2_b', './tees/tee-2-back.png')],
-      ['Rawr', 899, this.asset('tee3', './tees/tee-3-front.png'), this.asset('tee3_b', './tees/tee-3-back.png')],
-      ['Lunatic', 899, this.asset('tee4', './tees/tee-4-front.png'), this.asset('tee4_b', './tees/tee-4-back.png')],
-      ['Money Talks', 899, this.asset('tee5', './tees/tee-5-front.png'), this.asset('tee5_b', './tees/tee-5-back.png')],
-      ['Iconic', 899, this.asset('tee6', './tees/tee-6-front.png'), this.asset('tee6_b', './tees/tee-6-back.png')],
-      ['Positive Poison', 899, this.asset('tee10', './tees/tee-10-front.png'), this.asset('tee10_b', './tees/tee-10-back.png')],
-      ['Superlame', 899, this.asset('tee11', './tees/tee-11-front.png'), this.asset('tee11_b', './tees/tee-11-back.png')],
-      ['Wild West', 799, this.asset('tee7', './tees/tee-7-front.png'), this.asset('tee7_b', './tees/tee-7-back.png')],
-      ['Freefall', 799, this.asset('tee8', './tees/tee-8-front.png'), this.asset('tee8_b', './tees/tee-8-back.png')],
-      ['Lost & Found', 799, this.asset('tee9', './tees/tee-9-front.png'), this.asset('tee9_b', './tees/tee-9-back.png')]
+      ['Red Riot', 899, this.asset('tee1', './design img/Red Riot Front.png'), this.asset('tee1_b', './design img/Red Riot Back.png')],
+      ['The Observer', 899, this.asset('tee2', './design img/The Observer Front.png'), this.asset('tee2_b', './design img/The Observer Back.png')],
+      ['Rawr', 899, this.asset('tee3', './design img/Rawr Front.png'), this.asset('tee3_b', './design img/Rawr Back.png')],
+      ['Lunatic', 899, this.asset('tee4', './design img/Lunatic Front.png'), this.asset('tee4_b', './design img/Lunatic Back.png')],
+      ['Money Talks', 899, this.asset('tee5', './design img/Money Talks Front.png'), this.asset('tee5_b', './design img/Money Talks Back.png')],
+      ['Iconic', 899, this.asset('tee6', './design img/Iconic Front.png'), this.asset('tee6_b', './design img/Iconic Back.png')],
+      ['Positive Poison', 899, this.asset('tee10', './design img/Positive Poison Front.png'), this.asset('tee10_b', './design img/Positive Poison Back.png')],
+      ['Superlame', 899, this.asset('tee11', './design img/Superlame Front.png'), this.asset('tee11_b', './design img/Superlame Back.png')],
+      ['Wild West', 799, this.asset('tee7', './design img/Wild West Front.png'), this.asset('tee7_b', './design img/Wild West Back.png')],
+      ['Freefall', 799, this.asset('tee8', './design img/Freefall Front.png'), this.asset('tee8_b', './design img/Freefall Back.png')],
+      ['Lost & Found', 799, this.asset('tee9', './design img/Lost & Found Front.png'), this.asset('tee9_b', './design img/Lost & Found Back.png')]
     ];
   }
 
@@ -595,11 +621,9 @@ class Component extends DCLogic {
     let swipeHandled = false;
     stage.addEventListener('pointerdown', (e) => {
       last = { x: e.clientX, y: e.clientY };
-      if (window.innerWidth <= 900) {
-        touchStartX = e.clientX;
-        touchStartY = e.clientY;
-        swipeHandled = false;
-      }
+      touchStartX = e.clientX;
+      touchStartY = e.clientY;
+      swipeHandled = false;
       stage.setPointerCapture(e.pointerId);
       stage.style.cursor = 'grabbing';
       this.setState({ dragging: true });
@@ -608,30 +632,23 @@ class Component extends DCLogic {
       if (!last) return;
       const dx = e.clientX - last.x, dy = e.clientY - last.y;
       
-      if (window.innerWidth <= 900) {
-        if (this.state.scale > 1) {
-          last = { x: e.clientX, y: e.clientY };
-          this.setState((s) => ({ tx: s.tx + dx, ty: s.ty + dy }));
-        } else {
-          if (!swipeHandled) {
-            const totalDx = e.clientX - touchStartX;
-            const totalDy = e.clientY - touchStartY;
-            if (Math.abs(totalDx) > 40 && Math.abs(totalDx) > Math.abs(totalDy)) {
-              swipeHandled = true;
-              const cat = this.catalog();
-              if (totalDx < 0) {
-                this.setState((s) => ({ pdp: (s.pdp + 1) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
-              } else {
-                this.setState((s) => ({ pdp: (s.pdp - 1 + cat.length) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
-              }
+      if (this.state.scale > 1) {
+        last = { x: e.clientX, y: e.clientY };
+        this.setState((s) => ({ tx: s.tx + dx, ty: s.ty + dy }));
+      } else {
+        if (!swipeHandled) {
+          const totalDx = e.clientX - touchStartX;
+          const totalDy = e.clientY - touchStartY;
+          if (Math.abs(totalDx) > 40 && Math.abs(totalDx) > Math.abs(totalDy)) {
+            swipeHandled = true;
+            const cat = this.catalog();
+            if (totalDx < 0) {
+              this.setState((s) => ({ pdp: (s.pdp + 1) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
+            } else {
+              this.setState((s) => ({ pdp: (s.pdp - 1 + cat.length) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
             }
           }
         }
-      } else {
-        last = { x: e.clientX, y: e.clientY };
-        this.setState((s) => (s.scale > 1
-          ? { tx: s.tx + dx, ty: s.ty + dy }
-          : { rotY: Math.max(-48, Math.min(48, s.rotY + dx * 0.35)) }));
       }
     });
     const end = () => { last = null; stage.style.cursor = 'grab'; this.setState({ dragging: false }); };
@@ -1027,7 +1044,7 @@ class Component extends DCLogic {
       zoomOut: () => this.setState((s) => ({ scale: Math.max(1, s.scale - 0.4) })),
       resetZoom: () => this.setState({ scale: 1, rotY: 0, tx: 0, ty: 0 }),
       zoomLabel: Math.round(this.state.scale * 100) + '%',
-      zoomTransform: 'translate(' + this.state.tx + 'px,' + this.state.ty + 'px) scale(' + this.state.scale + ') rotateY(' + this.state.rotY + 'deg)',
+      zoomTransform: 'translate(' + this.state.tx + 'px,' + this.state.ty + 'px) scale(' + this.state.scale + ')',
       zoomTransition: this.state.dragging ? 'none' : 'transform 200ms ease-out',
       isHome: this.state.page === 'home',
       isPdp: this.state.page === 'pdp',
