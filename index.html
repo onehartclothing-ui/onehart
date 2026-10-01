@@ -590,8 +590,16 @@ class Component extends DCLogic {
     if (!stage || stage.__nkBound) return;
     stage.__nkBound = true;
     let last = null;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let swipeHandled = false;
     stage.addEventListener('pointerdown', (e) => {
       last = { x: e.clientX, y: e.clientY };
+      if (window.innerWidth <= 900) {
+        touchStartX = e.clientX;
+        touchStartY = e.clientY;
+        swipeHandled = false;
+      }
       stage.setPointerCapture(e.pointerId);
       stage.style.cursor = 'grabbing';
       this.setState({ dragging: true });
@@ -599,10 +607,32 @@ class Component extends DCLogic {
     stage.addEventListener('pointermove', (e) => {
       if (!last) return;
       const dx = e.clientX - last.x, dy = e.clientY - last.y;
-      last = { x: e.clientX, y: e.clientY };
-      this.setState((s) => (s.scale > 1
-        ? { tx: s.tx + dx, ty: s.ty + dy }
-        : { rotY: Math.max(-48, Math.min(48, s.rotY + dx * 0.35)) }));
+      
+      if (window.innerWidth <= 900) {
+        if (this.state.scale > 1) {
+          last = { x: e.clientX, y: e.clientY };
+          this.setState((s) => ({ tx: s.tx + dx, ty: s.ty + dy }));
+        } else {
+          if (!swipeHandled) {
+            const totalDx = e.clientX - touchStartX;
+            const totalDy = e.clientY - touchStartY;
+            if (Math.abs(totalDx) > 40 && Math.abs(totalDx) > Math.abs(totalDy)) {
+              swipeHandled = true;
+              const cat = this.catalog();
+              if (totalDx < 0) {
+                this.setState((s) => ({ pdp: (s.pdp + 1) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
+              } else {
+                this.setState((s) => ({ pdp: (s.pdp - 1 + cat.length) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
+              }
+            }
+          }
+        }
+      } else {
+        last = { x: e.clientX, y: e.clientY };
+        this.setState((s) => (s.scale > 1
+          ? { tx: s.tx + dx, ty: s.ty + dy }
+          : { rotY: Math.max(-48, Math.min(48, s.rotY + dx * 0.35)) }));
+      }
     });
     const end = () => { last = null; stage.style.cursor = 'grab'; this.setState({ dragging: false }); };
     stage.addEventListener('pointerup', end);
