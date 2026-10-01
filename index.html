@@ -324,13 +324,17 @@
       <div style="max-width:1600px;margin:0 auto;padding:56px 32px 96px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:64px;align-items:start" data-pdp-grid="">
 
         <div style="display:flex;flex-direction:column;gap:16px">
-          <div style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding-bottom:16px;scrollbar-width:none;-ms-overflow-style:none">
+          <div style="display:flex;gap:12px;margin-bottom:12px">
+            <button onClick="{{ scrollToFront }}" style="flex:1;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#F5F5F0;border-radius:4px;cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">Front</button>
+            <button onClick="{{ scrollToBack }}" style="flex:1;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#F5F5F0;border-radius:4px;cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">Back</button>
+          </div>
+          <div id="pdp-slider" class="slider" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth;border-radius:6px;background:#141414;border:1px solid rgba(255,255,255,0.08)">
             <style>.slider::-webkit-scrollbar { display: none; }</style>
-            <button onClick="{{ openZoom }}" aria-label="Open front image viewer" style="flex:0 0 100%;scroll-snap-align:center;display:block;width:100%;padding:0;border:0;aspect-ratio:4/5;position:relative;cursor:zoom-in;overflow:hidden;padding:7%;box-sizing:border-box">
+            <button onClick="{{ openZoomFront }}" aria-label="Open front image viewer" style="flex:0 0 100%;scroll-snap-align:start;display:block;width:100%;padding:0;border:0;aspect-ratio:4/5;position:relative;cursor:zoom-in;overflow:hidden;padding:7%;box-sizing:border-box;background:transparent">
               <image-slot id="pdp-main" shape="rect" fit="contain" src="{{ pdpImage }}" style="width:100%;height:100%;display:block" placeholder="Product image"></image-slot>
               <span style="position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(10,10,10,0.72);border:1px solid rgba(255,255,255,0.18);font-family:inherit;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#F5F5F0">Front · Zoom</span>
             </button>
-            <button onClick="{{ openZoom }}" aria-label="Open back image viewer" style="flex:0 0 100%;scroll-snap-align:center;display:block;width:100%;padding:0;border:0;aspect-ratio:4/5;position:relative;cursor:zoom-in;overflow:hidden;padding:7%;box-sizing:border-box">
+            <button onClick="{{ openZoomBack }}" aria-label="Open back image viewer" style="flex:0 0 100%;scroll-snap-align:start;display:block;width:100%;padding:0;border:0;aspect-ratio:4/5;position:relative;cursor:zoom-in;overflow:hidden;padding:7%;box-sizing:border-box;background:transparent">
               <image-slot id="pdp-back" shape="rect" fit="contain" src="{{ pdpBack }}" style="width:100%;height:100%;display:block" placeholder="Product image back"></image-slot>
               <span style="position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(10,10,10,0.72);border:1px solid rgba(255,255,255,0.18);font-family:inherit;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#F5F5F0">Back · Zoom</span>
             </button>
@@ -417,9 +421,8 @@
         <button onClick="{{ closeZoom }}" aria-label="Close viewer" style="background:none;border:0;padding:0;color:#F5F5F0;font-family:inherit;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer">Close ✕</button>
       </div>
       <div id="nk-zoom-stage" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:grab;perspective:1400px;touch-action:none">
-        <div style="display:flex;align-items:center;justify-content:center;gap:4vw;width:100%;height:100%;transform:{{ zoomTransform }};transition:{{ zoomTransition }}">
-          <image-slot id="pdp-zoom-front" shape="rect" fit="contain" src="{{ pdpImage }}" placeholder="Front image" style="width:40%;height:85%;display:block;user-select:none"></image-slot>
-          <image-slot id="pdp-zoom-back" shape="rect" fit="contain" src="{{ pdpBack }}" placeholder="Back image" style="width:40%;height:85%;display:block;user-select:none"></image-slot>
+        <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;transform:{{ zoomTransform }};transition:{{ zoomTransition }}">
+          <image-slot id="pdp-zoom-active" shape="rect" fit="contain" src="{{ viewImg }}" placeholder="Product image" style="width:80%;height:85%;display:block;user-select:none"></image-slot>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:24px 32px">
@@ -558,19 +561,19 @@ class Component extends DCLogic {
 
   catalog() {
     return [
-      ['Blue Obsession', 899, this.asset('tee1', './Front/Blue Obsession.png'), this.asset('tee1_b', './back/Blue Obsession.png')],
+      ['Blue Obsession', 999, this.asset('tee1', './Front/Blue Obsession.png'), this.asset('tee1_b', './back/Blue Obsession.png')],
       ['Born Iconic', 899, this.asset('tee2', './Front/Born Iconic.png'), this.asset('tee2_b', './back/Born Iconic.png')],
       ['Diva Energy', 899, this.asset('tee3', './Front/Diva Energy.png'), this.asset('tee3_b', './back/Diva Energy.png')],
       ['Faith Unbroken', 899, this.asset('tee4', './Front/Faith Unbroken.png'), this.asset('tee4_b', './back/Faith Unbroken.png')],
-      ['Forever Yours', 899, this.asset('tee5', './Front/Forever Yours.png'), this.asset('tee5_b', './back/Forever Yours.png')],
+      ['Forever Yours', 999, this.asset('tee5', './Front/Forever Yours.png'), this.asset('tee5_b', './back/Forever Yours.png')],
       ['Heartbreaker', 899, this.asset('tee6', './Front/Heartbreaker.png'), this.asset('tee6_b', './back/Heartbreaker.png')],
       ['Kiss & Kill', 899, this.asset('tee7', './Front/Kiss & Kill.png'), this.asset('tee7_b', './back/Kiss & Kill.png')],
-      ['Lucky Theory', 899, this.asset('tee8', './Front/Lucky Theory.png'), this.asset('tee8_b', './back/Lucky Theory.png')],
-      ['Midnight Madness', 899, this.asset('tee9', './Front/Midnight Madness.png'), this.asset('tee9_b', './back/Midnight Madness.png')],
-      ['Money Talks', 999, this.asset('tee10', './Front/Money Talks.png'), this.asset('tee10_b', './back/Money Talks.png')],
-      ['No Pressure', 899, this.asset('tee11', './Front/No Pressure.png'), this.asset('tee11_b', './back/No Pressure.png')],
+      ['Lucky Theory', 999, this.asset('tee8', './Front/Lucky Theory.png'), this.asset('tee8_b', './back/Lucky Theory.png')],
+      ['Midnight Madness', 999, this.asset('tee9', './Front/Midnight Madness.png'), this.asset('tee9_b', './back/Midnight Madness.png')],
+      ['Money Talks', 899, this.asset('tee10', './Front/Money Talks.png'), this.asset('tee10_b', './back/Money Talks.png')],
+      ['No Pressure', 999, this.asset('tee11', './Front/No Pressure.png'), this.asset('tee11_b', './back/No Pressure.png')],
       ['Sugar Rush', 899, this.asset('tee12', './Front/Sugar Rush.png'), this.asset('tee12_b', './back/Sugar Rush.png')],
-      ['Wild West', 899, this.asset('tee13', './Front/Wild West.png'), this.asset('tee13_b', './back/Wild West.png')]
+      ['Wild West', 999, this.asset('tee13', './Front/Wild West.png'), this.asset('tee13_b', './back/Wild West.png')]
     ];
   }
 
@@ -856,7 +859,9 @@ class Component extends DCLogic {
 
     const cat = this.catalog();
     const cur = cat[this.state.pdp] || cat[0];
-    const views = [cur[2]];
+    const bestsellers = [8, 0, 4, 7, 10, 12];
+    const views = [cur[2], cur[3] || cur[2]];
+    const viewImg = views[this.state.view] || views[0];
     const thumbs = cat.map((c, i) => ({
       label: String(i + 1).padStart(2, '0'),
       slot: 'pdp-thumb-' + i,
@@ -865,7 +870,7 @@ class Component extends DCLogic {
       color: i === this.state.pdp ? '#F5F5F0' : 'rgba(245,245,240,0.6)',
       select: () => this.setState({ pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 })
     }));
-    const flipView = () => this.setState((s) => ({ pdp: (s.pdp + 1) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
+    const flipView = () => this.setState((s) => ({ view: s.view === 0 ? 1 : 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
 
     const chartRows = [
       ['S', '42"', '27"', '8.5"'],
@@ -984,8 +989,9 @@ class Component extends DCLogic {
       pdpPrice: this.rupees(cur[1]),
       pdpImage: cur[2],
       pdpBack: cur[3] || cur[2],
+      viewImg,
       viewLabel: 'Back print',
-      flipLabel: 'Next piece',
+      flipLabel: this.state.view === 0 ? 'Back print' : 'Front print',
       flipView,
       thumbs,
       chartRows,
@@ -995,27 +1001,30 @@ class Component extends DCLogic {
         const searchString = (c[0] + " " + (handles[i] || "") + " oversized tee t-shirt streetwear").toLowerCase();
         return q.split(/\s+/).every((term) => searchString.includes(term));
       }).length).padStart(2, '0'),
-      rackRows: [0, 3, 6, 9, 12].map((off) => ({
-        items: cat.slice(off, off + 3).map((c, j) => {
-          const i = off + j;
+      rackRows: [0, 3].map((off) => ({
+        items: bestsellers.slice(off, off + 3).map((ci, j) => {
+          const c = cat[ci];
           return {
             img: c[2], name: c[0],
-            isBestSeller: c[1] === 999,
-            num: String(i + 1).padStart(2, '0'),
-            sway: (i * 0.7).toFixed(1) + 's',
-            open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
+            isBestSeller: true,
+            num: String(ci + 1).padStart(2, '0'),
+            sway: (j * 0.7).toFixed(1) + 's',
+            open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
           };
         })
       })),
-      rack: cat.map((c, i) => ({
-        img: c[2], name: c[0],
-        num: String(i + 1).padStart(2, '0'),
-        sway: (i * 0.7).toFixed(1) + 's',
-        open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
-      })),
+      rack: bestsellers.map((ci, j) => {
+        const c = cat[ci];
+        return {
+          img: c[2], name: c[0],
+          num: String(ci + 1).padStart(2, '0'),
+          sway: (j * 0.7).toFixed(1) + 's',
+          open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
+        };
+      }),
       visible: cat.map((c, i) => ({
         img: c[2], name: c[0], price: this.rupees(c[1]),
-        tag: c[1] === 999 ? 'Bestseller' : '',
+        tag: bestsellers.includes(i) ? 'Bestseller' : '',
         num: String(i + 1).padStart(2, '0') + ' / 13',
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
           const on = this.state.cardSize[i] === label;
@@ -1045,7 +1054,11 @@ class Component extends DCLogic {
       }),
       zoomOpen: this.state.zoomOpen,
       chartOpen: this.state.chartOpen,
-      openZoom: () => this.setState({ zoomOpen: true }),
+      scrollToFront: (e) => { e.preventDefault(); const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'smooth'}); },
+      scrollToBack: (e) => { e.preventDefault(); const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: s.scrollWidth, behavior: 'smooth'}); },
+      openZoomFront: () => this.setState({ zoomOpen: true, view: 0 }),
+      openZoomBack: () => this.setState({ zoomOpen: true, view: 1 }),
+      openZoom: () => this.setState({ zoomOpen: true, view: 0 }),
       closeZoom: () => this.setState({ zoomOpen: false, scale: 1, rotY: 0, tx: 0, ty: 0 }),
       openSizeChart: () => this.setState({ chartOpen: true }),
       closeSizeChart: () => this.setState({ chartOpen: false }),
