@@ -208,6 +208,9 @@
                   <img src="{{ r.img }}" alt="{{ r.name }}" loading="lazy" style="width:100%;margin-top:-10px;display:block;filter:drop-shadow(0 34px 40px rgba(0,0,0,0.6));animation:nk-sway 9s ease-in-out infinite;animation-delay:{{ r.sway }}">
                   <span style="margin-top:14px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,245,240,0.55)">{{ r.num }}</span>
                   <span style="margin-top:6px;font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(14px,1.4vw,18px);color:#F5F5F0;text-align:center">{{ r.name }}</span>
+                  <sc-if value="{{ r.isBestSeller }}" hint-placeholder-val="{{ false }}">
+                    <span style="margin-top:8px;font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#0A0A0A;background:#CAA7A7;padding:4px 8px;border-radius:4px;">Bestseller</span>
+                  </sc-if>
                 </button>
               </sc-for>
               </div>
@@ -321,12 +324,13 @@
       <div style="max-width:1600px;margin:0 auto;padding:56px 32px 96px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:64px;align-items:start" data-pdp-grid="">
 
         <div style="display:flex;flex-direction:column;gap:16px">
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
-            <button onClick="{{ openZoom }}" aria-label="Open front image viewer" style="display:block;width:100%;padding:0;border:0;aspect-ratio:4/5;position:relative;cursor:zoom-in;overflow:hidden;padding:7%;box-sizing:border-box">
+          <div style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding-bottom:16px;scrollbar-width:none;-ms-overflow-style:none">
+            <style>.slider::-webkit-scrollbar { display: none; }</style>
+            <button onClick="{{ openZoom }}" aria-label="Open front image viewer" style="flex:0 0 100%;scroll-snap-align:center;display:block;width:100%;padding:0;border:0;aspect-ratio:4/5;position:relative;cursor:zoom-in;overflow:hidden;padding:7%;box-sizing:border-box">
               <image-slot id="pdp-main" shape="rect" fit="contain" src="{{ pdpImage }}" style="width:100%;height:100%;display:block" placeholder="Product image"></image-slot>
               <span style="position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(10,10,10,0.72);border:1px solid rgba(255,255,255,0.18);font-family:inherit;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#F5F5F0">Front · Zoom</span>
             </button>
-            <button onClick="{{ openZoom }}" aria-label="Open back image viewer" style="display:block;width:100%;padding:0;border:0;aspect-ratio:4/5;position:relative;cursor:zoom-in;overflow:hidden;padding:7%;box-sizing:border-box">
+            <button onClick="{{ openZoom }}" aria-label="Open back image viewer" style="flex:0 0 100%;scroll-snap-align:center;display:block;width:100%;padding:0;border:0;aspect-ratio:4/5;position:relative;cursor:zoom-in;overflow:hidden;padding:7%;box-sizing:border-box">
               <image-slot id="pdp-back" shape="rect" fit="contain" src="{{ pdpBack }}" style="width:100%;height:100%;display:block" placeholder="Product image back"></image-slot>
               <span style="position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(10,10,10,0.72);border:1px solid rgba(255,255,255,0.18);font-family:inherit;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#F5F5F0">Back · Zoom</span>
             </button>
@@ -554,16 +558,19 @@ class Component extends DCLogic {
 
   catalog() {
     return [
-      ['Red Riot', 899, this.asset('tee1', './design img/Red Riot Front.png'), this.asset('tee1_b', './design img/Red Riot Back.png')],
-      ['The Observer', 899, this.asset('tee2', './design img/The Observer Front.png'), this.asset('tee2_b', './design img/The Observer Back.png')],
-      ['Rawr', 899, this.asset('tee3', './design img/Rawr Front.png'), this.asset('tee3_b', './design img/Rawr Back.png')],
-      ['Lunatic', 899, this.asset('tee4', './design img/Lunatic Front.png'), this.asset('tee4_b', './design img/Lunatic Back.png')],
-      ['Money Talks', 899, this.asset('tee5', './design img/Money Talks Front.png'), this.asset('tee5_b', './design img/Money Talks Back.png')],
-      ['Iconic', 899, this.asset('tee6', './design img/Iconic Front.png'), this.asset('tee6_b', './design img/Iconic Back.png')],
-      ['Positive Poison', 899, this.asset('tee10', './design img/Positive Poison Front.png'), this.asset('tee10_b', './design img/Positive Poison Back.png')],
-      ['Wild West', 799, this.asset('tee7', './design img/Wild West Front.png'), this.asset('tee7_b', './design img/Wild West Back.png')],
-      ['Freefall', 799, this.asset('tee8', './design img/Freefall Front.png'), this.asset('tee8_b', './design img/Freefall Back.png')],
-      ['Lost & Found', 799, this.asset('tee9', './design img/Lost & Found Front.png'), this.asset('tee9_b', './design img/Lost & Found Back.png')]
+      ['Blue Obsession', 899, this.asset('tee1', './Front/Blue Obsession.png'), this.asset('tee1_b', './back/Blue Obsession.png')],
+      ['Born Iconic', 899, this.asset('tee2', './Front/Born Iconic.png'), this.asset('tee2_b', './back/Born Iconic.png')],
+      ['Diva Energy', 899, this.asset('tee3', './Front/Diva Energy.png'), this.asset('tee3_b', './back/Diva Energy.png')],
+      ['Faith Unbroken', 899, this.asset('tee4', './Front/Faith Unbroken.png'), this.asset('tee4_b', './back/Faith Unbroken.png')],
+      ['Forever Yours', 899, this.asset('tee5', './Front/Forever Yours.png'), this.asset('tee5_b', './back/Forever Yours.png')],
+      ['Heartbreaker', 899, this.asset('tee6', './Front/Heartbreaker.png'), this.asset('tee6_b', './back/Heartbreaker.png')],
+      ['Kiss & Kill', 899, this.asset('tee7', './Front/Kiss & Kill.png'), this.asset('tee7_b', './back/Kiss & Kill.png')],
+      ['Lucky Theory', 899, this.asset('tee8', './Front/Lucky Theory.png'), this.asset('tee8_b', './back/Lucky Theory.png')],
+      ['Midnight Madness', 899, this.asset('tee9', './Front/Midnight Madness.png'), this.asset('tee9_b', './back/Midnight Madness.png')],
+      ['Money Talks', 999, this.asset('tee10', './Front/Money Talks.png'), this.asset('tee10_b', './back/Money Talks.png')],
+      ['No Pressure', 899, this.asset('tee11', './Front/No Pressure.png'), this.asset('tee11_b', './back/No Pressure.png')],
+      ['Sugar Rush', 899, this.asset('tee12', './Front/Sugar Rush.png'), this.asset('tee12_b', './back/Sugar Rush.png')],
+      ['Wild West', 899, this.asset('tee13', './Front/Wild West.png'), this.asset('tee13_b', './back/Wild West.png')]
     ];
   }
 
@@ -571,22 +578,25 @@ class Component extends DCLogic {
 
   // Shopify product handles, same order as catalog(). Must match the handles in Shopify admin.
   handles() {
-    return ['positive-poison', 'scream', 'cowboy', 'rawr', 'lunatic', 'all-we-need-is-money', 'new-product-10', 'product-7', 'product-8', 'product-9'];
+    return ['blue-obsession', 'born-iconic', 'diva-energy', 'faith-unbroken', 'forever-yours', 'heartbreaker', 'kiss-kill', 'lucky-theory', 'midnight-madness', 'money-talks', 'no-pressure', 'sugar-rush', 'wild-west'];
   }
 
   // Shopify variant IDs, same order as catalog(). Sizes: S, M, L, XL.
   variants() {
     return [
-      { S: '47687420674204', M: '47687420706972', L: '47687420739740', XL: '47687420772508' }, // 0: Red Riot
-      { S: '47687419920540', M: '47687419953308', L: '47687419986076', XL: '47687420018844' }, // 1: The Observer
-      { S: '47687441744028', M: '47687441776796', L: '47687441809564', XL: '47687441842332' }, // 2: Rawr
-      { S: '47687433420956', M: '47687433453724', L: '47687433486492', XL: '47687433519260' }, // 3: Lunatic
-      { S: '47687427162268', M: '47687427195036', L: '47687427227804', XL: '47687427260572' }, // 4: Money Talks
-      { S: '47687423295644', M: '47687423328412', L: '47687423361180', XL: '47687423393948' }, // 5: Iconic
-      { S: '', M: '', L: '', XL: '' }, // 6: Positive Poison
-      { S: '47687422050460', M: '47687422083228', L: '47687422115996', XL: '47687422148764' }, // 7: Wild West
-      { S: '47687421591708', M: '47687421624476', L: '47687421657244', XL: '47687421690012' }, // 8: Freefall
-      { S: '47687421362332', M: '47687421395100', L: '47687421427868', XL: '47687421460636' }  // 9: Lost & Found
+      { S: '47687420674204', M: '47687420706972', L: '47687420739740', XL: '47687420772508' }, // 0: Blue Obsession
+      { S: '47687419920540', M: '47687419953308', L: '47687419986076', XL: '47687420018844' }, // 1: Born Iconic
+      { S: '47687441744028', M: '47687441776796', L: '47687441809564', XL: '47687441842332' }, // 2: Diva Energy
+      { S: '47687433420956', M: '47687433453724', L: '47687433486492', XL: '47687433519260' }, // 3: Faith Unbroken
+      { S: '47687427162268', M: '47687427195036', L: '47687427227804', XL: '47687427260572' }, // 4: Forever Yours
+      { S: '47687423295644', M: '47687423328412', L: '47687423361180', XL: '47687423393948' }, // 5: Heartbreaker
+      { S: '', M: '', L: '', XL: '' }, // 6: Kiss & Kill
+      { S: '47687422050460', M: '47687422083228', L: '47687422115996', XL: '47687422148764' }, // 7: Lucky Theory
+      { S: '47687421591708', M: '47687421624476', L: '47687421657244', XL: '47687421690012' }, // 8: Midnight Madness
+      { S: '47687421362332', M: '47687421395100', L: '47687421427868', XL: '47687421460636' }, // 9: Money Talks
+      { S: '', M: '', L: '', XL: '' }, // 10: No Pressure
+      { S: '', M: '', L: '', XL: '' }, // 11: Sugar Rush
+      { S: '', M: '', L: '', XL: '' }  // 12: Wild West
     ];
   }
 
@@ -985,11 +995,12 @@ class Component extends DCLogic {
         const searchString = (c[0] + " " + (handles[i] || "") + " oversized tee t-shirt streetwear").toLowerCase();
         return q.split(/\s+/).every((term) => searchString.includes(term));
       }).length).padStart(2, '0'),
-      rackRows: [0, 3].map((off) => ({
+      rackRows: [0, 3, 6, 9, 12].map((off) => ({
         items: cat.slice(off, off + 3).map((c, j) => {
           const i = off + j;
           return {
             img: c[2], name: c[0],
+            isBestSeller: c[1] === 999,
             num: String(i + 1).padStart(2, '0'),
             sway: (i * 0.7).toFixed(1) + 's',
             open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
@@ -1004,8 +1015,8 @@ class Component extends DCLogic {
       })),
       visible: cat.map((c, i) => ({
         img: c[2], name: c[0], price: this.rupees(c[1]),
-        tag: i < 6 ? 'Bestseller' : '',
-        num: String(i + 1).padStart(2, '0') + ' / 11',
+        tag: c[1] === 999 ? 'Bestseller' : '',
+        num: String(i + 1).padStart(2, '0') + ' / 13',
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
           const on = this.state.cardSize[i] === label;
           return {
