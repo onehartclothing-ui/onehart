@@ -556,6 +556,9 @@
           Phone: <a href="tel:+919994013477" style="color:#CAA7A7;text-decoration:underline">+91 99940 13477</a><br>
           Instagram: <a href="https://www.instagram.com/onehart.clothing" target="_blank" style="color:#CAA7A7;text-decoration:underline">https://www.instagram.com/onehart.clothing</a></p>
         </div>
+        <div style="margin-top:48px;display:flex">
+          <a href="/" onClick="{{ goHome }}" style="display:inline-flex;padding:14px 28px;background:#CAA7A7;color:#0A0A0A;border:none;border-radius:999px;cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-size:11px;text-decoration:none;align-items:center;justify-content:center;transition:background 200ms ease" style-hover="background:#F5F5F0">Back to Home</a>
+        </div>
       </div>
     </div>
   </sc-if>
@@ -614,6 +617,9 @@
           <p>For privacy questions or requests:<br>
           Email: <a href="mailto:onehart.clothing@gmail.com" style="color:#CAA7A7;text-decoration:underline">onehart.clothing@gmail.com</a><br>
           Phone: <a href="tel:+919994013477" style="color:#CAA7A7;text-decoration:underline">+91 99940 13477</a></p>
+        </div>
+        <div style="margin-top:48px;display:flex">
+          <a href="/" onClick="{{ goHome }}" style="display:inline-flex;padding:14px 28px;background:#CAA7A7;color:#0A0A0A;border:none;border-radius:999px;cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-size:11px;text-decoration:none;align-items:center;justify-content:center;transition:background 200ms ease" style-hover="background:#F5F5F0">Back to Home</a>
         </div>
       </div>
     </div>
@@ -676,6 +682,9 @@
           Phone: <a href="tel:+919994013477" style="color:#CAA7A7;text-decoration:underline">+91 99940 13477</a><br>
           Website: <a href="https://www.onehart.in" target="_blank" style="color:#CAA7A7;text-decoration:underline">https://www.onehart.in</a><br>
           Instagram: <a href="https://www.instagram.com/onehart.clothing" target="_blank" style="color:#CAA7A7;text-decoration:underline">https://www.instagram.com/onehart.clothing</a></p>
+        </div>
+        <div style="margin-top:48px;display:flex">
+          <a href="/" onClick="{{ goHome }}" style="display:inline-flex;padding:14px 28px;background:#CAA7A7;color:#0A0A0A;border:none;border-radius:999px;cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-size:11px;text-decoration:none;align-items:center;justify-content:center;transition:background 200ms ease" style-hover="background:#F5F5F0">Back to Home</a>
         </div>
       </div>
     </div>
@@ -1255,7 +1264,7 @@ class Component extends DCLogic {
       goTerms: (e) => { e?.preventDefault(); window.scrollTo(0, 0); if(typeof window !== 'undefined') window.history.pushState({}, '', '/terms-conditions'); this.setState({ page: 'terms', menuOpen: false }); },
       headerScrimOpacity: this.state.page === 'pdp' || this.state.scrolled ? 1 : 0,
       cartCount: this.state.cart,
-      goHome: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'home' }); },
+      goHome: (e) => { e.preventDefault(); window.scrollTo(0, 0); if(typeof window !== 'undefined' && window.location.pathname !== '/') window.history.pushState({}, '', '/'); this.setState({ page: 'home' }); },
       sizes,
       accordions,
       ctaLabel: this.state.size ? 'Add to cart' : 'Select size',
