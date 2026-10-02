@@ -151,9 +151,9 @@
         <img src="brand/wordmark-v3.png" alt="Onehart" style="height:44px;width:auto;display:block">
       </a>
       <div style="flex:1"></div>
-      <div data-desk-only="" style="display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(202,167,167,0.45);padding-bottom:4px">
+      <div style="display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(202,167,167,0.45);padding-bottom:4px">
         <button aria-label="Search" onClick="{{ submitSearch }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:14px;color:rgba(245,245,240,0.8);display:flex;align-items:center">⌕</button>
-        <input type="search" value="{{ query }}" onInput="{{ onSearch }}" onKeyDown="{{ submitSearch }}" placeholder="SEARCH PIECES" aria-label="Search pieces" style="width:150px;background:transparent;border:0;outline:none;color:#F5F5F0;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase">
+        <input type="search" value="{{ query }}" onInput="{{ onSearch }}" onKeyDown="{{ submitSearch }}" placeholder="SEARCH" aria-label="Search pieces" style="width:clamp(80px, 15vw, 150px);background:transparent;border:0;outline:none;color:#F5F5F0;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase">
       </div>
       <nav data-desk-only="" style="display:flex;align-items:center;gap:30px;font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase">
         <a href="#" onClick="{{ goShop }}" style="color:{{ navShop }}">Shop</a>
@@ -455,10 +455,7 @@
     <div onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:115;background:rgba(7,7,9,0.55);backdrop-filter:blur(18px) saturate(120%);-webkit-backdrop-filter:blur(18px) saturate(120%);display:flex;flex-direction:column;justify-content:center;padding:0 clamp(24px,8vw,120px);animation:nk-fade 320ms ease-out both">
       <button onClick="{{ closeMenu }}" aria-label="Close menu" style="position:absolute;top:40px;right:40px;background:none;border:0;padding:0;color:#F5F5F0;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer">Close ✕</button>
       <span style="font-size:11px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:rgba(245,245,240,0.5);margin-bottom:26px">Menu · Drop 001</span>
-      <div data-mob-only="" style="display:none;align-items:center;gap:12px;border-bottom:1px solid rgba(202,167,167,0.45);padding-bottom:8px;margin-bottom:32px">
-        <button aria-label="Search" onClick="{{ submitSearchMobile }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:18px;color:rgba(245,245,240,0.8);display:flex;align-items:center">⌕</button>
-        <input type="search" value="{{ query }}" onInput="{{ onSearchMobile }}" onKeyDown="{{ submitSearchMobile }}" placeholder="SEARCH PIECES" aria-label="Search pieces" style="width:100%;background:transparent;border:0;outline:none;color:#F5F5F0;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase">
-      </div>
+
       <nav style="display:flex;flex-direction:column;gap:2px">
         <sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="4">
           <a href="#" onClick="{{ m.go }}" style="font-weight:700;font-size:clamp(34px,7vw,86px);line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;color:#F5F5F0;transition:color 200ms ease,transform 260ms cubic-bezier(.22,.7,.2,1)" style-hover="color:#CAA7A7;transform:translateX(14px)">{{ m.label }}</a>
