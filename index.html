@@ -113,6 +113,13 @@
     }
   }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+  .nk-product-card .nk-product-back { opacity: 0; transition: opacity 250ms ease; }
+  .nk-product-card .nk-product-front { transition: opacity 250ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .nk-product-card:hover .nk-product-back { opacity: 1; }
+    .nk-product-card:hover .nk-product-front { opacity: 0; }
+  }
+  #pdp-slider image-slot { pointer-events: none; }
 </style>
 </helmet>
 
@@ -160,14 +167,6 @@
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div style="position:relative;z-index:1">
 
-      <style>
-      .nk-product-card .nk-product-back { opacity: 0; transition: opacity 250ms ease; }
-      .nk-product-card .nk-product-front { transition: opacity 250ms ease; }
-      @media (hover: hover) and (pointer: fine) {
-        .nk-product-card:hover .nk-product-back { opacity: 1; }
-        .nk-product-card:hover .nk-product-front { opacity: 0; }
-      }
-      </style>
       <section style="height:100vh;position:relative;overflow:hidden">
         <div aria-hidden="true" data-parallax="0.5" style="position:absolute;inset:-6%;background:radial-gradient(50% 38% at 22% 76%, rgba(255,166,64,0.30), transparent 62%),radial-gradient(42% 32% at 78% 62%, rgba(196,58,44,0.26), transparent 65%),radial-gradient(60% 45% at 50% 108%, rgba(120,160,150,0.20), transparent 70%);filter:blur(42px);animation:nk-breathe 18s ease-in-out infinite"></div>
         <div aria-hidden="true" style="position:absolute;left:0;right:0;top:34%;height:2px;background:linear-gradient(90deg, transparent, rgba(255,214,150,0.95), transparent);filter:blur(1.5px);animation:nk-streak 9s linear infinite"></div>
@@ -368,7 +367,7 @@
         <div data-pdp-col="" style="position:sticky;top:180px;display:flex;flex-direction:column;gap:24px">
           <span style="font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,245,240,0.65)">Oversized tees</span>
           <h1 style="margin:0;font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:38px;line-height:1.1">{{ pdpName }}</h1>
-          <p style="margin:0;max-width:420px;font-size:16px;line-height:1.6;color:rgba(245,245,240,0.65)">240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem. Model is 6'1" wearing L.</p>
+          <p style="margin:0;max-width:420px;font-size:16px;line-height:1.6;color:rgba(245,245,240,0.65)">240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem.</p>
 
           <div style="display:flex;flex-direction:column;gap:12px">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
@@ -862,7 +861,7 @@ class Component extends DCLogic {
     });
 
     const accData = [
-      ['Product information', '240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem. Model is 6\u20191\u201d wearing L. Machine wash cold, hang dry.'],
+      ['Product information', '240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem. Machine wash cold, hang dry.'],
       ['Shipping', 'Orders are dispatched within 2 business days and delivered within 3–7 business days.']
     ];
     const accordions = accData.map(([title, body], i) => {
