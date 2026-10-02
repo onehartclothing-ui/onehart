@@ -160,6 +160,17 @@
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div style="position:relative;z-index:1">
 
+      <style>
+      @media (hover: hover) and (pointer: fine) {
+        .nk-product-card .nk-product-back { opacity: 0; transition: opacity 250ms ease; }
+        .nk-product-card .nk-product-front { transition: opacity 250ms ease; }
+        .nk-product-card:hover .nk-product-back { opacity: 1; }
+        .nk-product-card:hover .nk-product-front { opacity: 0; }
+      }
+      @media (hover: none) {
+        .nk-product-card .nk-product-back { display: none; }
+      }
+      </style>
       <section style="height:100vh;position:relative;overflow:hidden">
         <div aria-hidden="true" data-parallax="0.5" style="position:absolute;inset:-6%;background:radial-gradient(50% 38% at 22% 76%, rgba(255,166,64,0.30), transparent 62%),radial-gradient(42% 32% at 78% 62%, rgba(196,58,44,0.26), transparent 65%),radial-gradient(60% 45% at 50% 108%, rgba(120,160,150,0.20), transparent 70%);filter:blur(42px);animation:nk-breathe 18s ease-in-out infinite"></div>
         <div aria-hidden="true" style="position:absolute;left:0;right:0;top:34%;height:2px;background:linear-gradient(90deg, transparent, rgba(255,214,150,0.95), transparent);filter:blur(1.5px);animation:nk-streak 9s linear infinite"></div>
@@ -202,10 +213,13 @@
             <div data-rackrow="" style="position:relative;flex:1 1 300px;min-width:0;padding:56px 0 4px">
               <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vw,28px);align-items:start;padding:0 calc(clamp(10px,1.6vw,28px) / 2)">
               <sc-for list="{{ row.items }}" as="r" hint-placeholder-count="3">
-                <button onClick="{{ r.open }}" data-hang="" aria-label="{{ r.name }}" style="position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;padding:0;border:0;background:none;cursor:pointer;transition:transform 420ms cubic-bezier(.22,.7,.2,1)" style-hover="transform:translateY(8px)">
+                <button onClick="{{ r.open }}" class="nk-product-card" data-hang="" aria-label="{{ r.name }}" style="position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;padding:0;border:0;background:none;cursor:pointer;transition:transform 420ms cubic-bezier(.22,.7,.2,1)" style-hover="transform:translateY(8px)">
                   <span aria-hidden="true" style="width:2px;height:22px;background:linear-gradient(180deg, #C9CDD1, #7C8085);margin-top:-14px"></span>
                   <span aria-hidden="true" style="width:clamp(54px,7vw,84px);height:clamp(22px,3vw,32px);border:2px solid #A9AEB3;border-top:0;border-radius:0 0 46% 46%;box-shadow:0 4px 10px rgba(0,0,0,0.5)"></span>
-                  <img src="{{ r.img }}" alt="{{ r.name }}" loading="lazy" style="width:100%;margin-top:-10px;display:block;filter:drop-shadow(0 34px 40px rgba(0,0,0,0.6));animation:nk-sway 9s ease-in-out infinite;animation-delay:{{ r.sway }}">
+                  <div style="position:relative;width:100%;margin-top:-10px;display:flex;justify-content:center;">
+                    <img class="nk-product-front" src="{{ r.img }}" alt="{{ r.name }}" loading="lazy" style="width:100%;display:block;filter:drop-shadow(0 34px 40px rgba(0,0,0,0.6));animation:nk-sway 9s ease-in-out infinite;animation-delay:{{ r.sway }}">
+                    <img class="nk-product-back" src="{{ r.imgBack }}" alt="{{ r.name }} back" loading="lazy" style="width:100%;position:absolute;inset:0;display:block;filter:drop-shadow(0 34px 40px rgba(0,0,0,0.6));animation:nk-sway 9s ease-in-out infinite;animation-delay:{{ r.sway }}">
+                  </div>
                   <span style="margin-top:14px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,245,240,0.55)">{{ r.num }}</span>
                   <span style="margin-top:6px;font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(14px,1.4vw,18px);color:#F5F5F0;text-align:center">{{ r.name }}</span>
                   <sc-if value="{{ r.isBestSeller }}" hint-placeholder-val="{{ false }}">
@@ -236,13 +250,14 @@
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:clamp(20px,2.4vw,36px);align-items:start">
             <sc-for list="{{ visible }}" as="w" hint-placeholder-count="6">
               <div data-hitem="" data-reveal="">
-                <div onClick="{{ w.open }}" style="position:relative;background:linear-gradient(160deg, rgba(24,24,27,0.94), rgba(8,8,10,0.94));border:1px solid rgba(202,167,167,0.22);clip-path:polygon(2% 0,100% 1%,99% 100%,0 99%);padding:20px 26px 18px 22px;cursor:pointer">
+                <div onClick="{{ w.open }}" class="nk-product-card" style="position:relative;background:linear-gradient(160deg, rgba(24,24,27,0.94), rgba(8,8,10,0.94));border:1px solid rgba(202,167,167,0.22);clip-path:polygon(2% 0,100% 1%,99% 100%,0 99%);padding:20px 26px 18px 22px;cursor:pointer">
                   <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,245,240,0.55)">
                     <span>{{ w.num }}</span>
                     <span style="color:#CAA7A7">{{ w.tag }}</span>
                   </div>
                   <div style="position:relative;margin:12px 0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;">
-                    <img src="{{ w.img }}" alt="{{ w.name }}" loading="lazy" style="width:94%;height:94%;object-fit:contain;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
+                    <img class="nk-product-front" src="{{ w.img }}" alt="{{ w.name }}" loading="lazy" style="width:94%;height:94%;object-fit:contain;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
+                    <img class="nk-product-back" src="{{ w.imgBack }}" alt="{{ w.name }} back" loading="lazy" style="width:94%;height:94%;object-fit:contain;position:absolute;inset:0;margin:auto;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
                   </div>
                   <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;">
                     <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(15px,1.5vw,20px);line-height:1.15">{{ w.name }}</span>
@@ -393,9 +408,10 @@
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
             <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
-              <a href="#" onClick="{{ p.open }}" data-reveal="" style="display:block;cursor:pointer">
+              <a href="#" onClick="{{ p.open }}" class="nk-product-card" data-reveal="" style="display:block;cursor:pointer">
                 <div style="aspect-ratio:4/5;position:relative;padding:8%;box-sizing:border-box">
-                  <image-slot id="{{ p.slot }}" shape="rect" fit="contain" src="{{ p.img }}" style="width:100%;height:100%" placeholder="{{ p.placeholder }}"></image-slot>
+                  <image-slot id="{{ p.slot }}" class="nk-product-front" shape="rect" fit="contain" src="{{ p.img }}" style="width:100%;height:100%;display:block;" placeholder="{{ p.placeholder }}"></image-slot>
+                  <img class="nk-product-back" src="{{ p.imgBack }}" loading="lazy" style="width:84%;height:84%;object-fit:contain;position:absolute;inset:8%;display:block;">
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#141414;padding:16px">
                   <span style="font-size:15px;font-weight:400">{{ p.name }}</span>
@@ -826,6 +842,7 @@ class Component extends DCLogic {
       name: cat[ci][0],
       price: this.rupees(cat[ci][1]),
       img: cat[ci][2],
+      imgBack: cat[ci][3] || cat[ci][2],
       open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
     }));
   }
@@ -1005,7 +1022,7 @@ class Component extends DCLogic {
         items: bestsellers.slice(off, off + 3).map((ci, j) => {
           const c = cat[ci];
           return {
-            img: c[2], name: c[0],
+            img: c[2], imgBack: c[3] || c[2], name: c[0],
             isBestSeller: true,
             num: String(ci + 1).padStart(2, '0'),
             sway: (j * 0.7).toFixed(1) + 's',
@@ -1016,14 +1033,14 @@ class Component extends DCLogic {
       rack: bestsellers.map((ci, j) => {
         const c = cat[ci];
         return {
-          img: c[2], name: c[0],
+          img: c[2], imgBack: c[3] || c[2], name: c[0],
           num: String(ci + 1).padStart(2, '0'),
           sway: (j * 0.7).toFixed(1) + 's',
           open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
         };
       }),
       visible: cat.map((c, i) => ({
-        img: c[2], name: c[0], price: this.rupees(c[1]),
+        img: c[2], imgBack: c[3] || c[2], name: c[0], price: this.rupees(c[1]),
         tag: bestsellers.includes(i) ? 'Bestseller' : '',
         num: String(i + 1).padStart(2, '0') + ' / 13',
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
