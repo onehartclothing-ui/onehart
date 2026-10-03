@@ -714,8 +714,8 @@
           <button onClick="{{ closeSizeChart }}" aria-label="Close size chart" style="background:none;border:0;padding:0;color:#F5F5F0;font-family:inherit;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer">Close ✕</button>
         </div>
         <div style="display:flex;gap:24px;margin-bottom:24px;border-bottom:1px solid rgba(202,167,167,0.28)">
-          <button onClick="{{ setChartTabMen }}" style="background:transparent;border:0;padding:8px 0;font-family:inherit;font-size:13px;font-weight:{{ chartTab === 'MEN' ? '700' : '400' }};letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:#FFFFFF;border-bottom:2px solid {{ chartTab === 'MEN' ? '#FFFFFF' : 'transparent' }}">MEN</button>
-          <button onClick="{{ setChartTabWomen }}" style="background:transparent;border:0;padding:8px 0;font-family:inherit;font-size:13px;font-weight:{{ chartTab === 'WOMEN' ? '700' : '400' }};letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:#FFFFFF;border-bottom:2px solid {{ chartTab === 'WOMEN' ? '#FFFFFF' : 'transparent' }}">WOMEN</button>
+          <button onClick="{{ setChartTabMen }}" aria-selected="{{ chartTabMenAria }}" style="background:transparent;border:0;padding:8px 0;font-family:inherit;font-size:13px;font-weight:{{ chartTabMenWeight }};letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:#FFFFFF;border-bottom:2px solid {{ chartTabMenBorder }}">MEN</button>
+          <button onClick="{{ setChartTabWomen }}" aria-selected="{{ chartTabWomenAria }}" style="background:transparent;border:0;padding:8px 0;font-family:inherit;font-size:13px;font-weight:{{ chartTabWomenWeight }};letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:#FFFFFF;border-bottom:2px solid {{ chartTabWomenBorder }}">WOMEN</button>
         </div>
         <div style="margin:0 0 28px;font-size:14px;line-height:1.6;color:rgba(245,245,240,0.65)">
           Measurements in CM, taken flat across the garment. Chest represents the 1/2 chest measurement.<br>
@@ -1200,6 +1200,12 @@ class Component extends DCLogic {
       thumbs,
       chartRows,
       chartTab: this.state.chartTab,
+      chartTabMenWeight: this.state.chartTab === 'MEN' ? '700' : '400',
+      chartTabWomenWeight: this.state.chartTab === 'WOMEN' ? '700' : '400',
+      chartTabMenBorder: this.state.chartTab === 'MEN' ? '#FFFFFF' : 'transparent',
+      chartTabWomenBorder: this.state.chartTab === 'WOMEN' ? '#FFFFFF' : 'transparent',
+      chartTabMenAria: this.state.chartTab === 'MEN' ? 'true' : 'false',
+      chartTabWomenAria: this.state.chartTab === 'WOMEN' ? 'true' : 'false',
       setChartTabMen: () => this.setState({ chartTab: 'MEN' }),
       setChartTabWomen: () => this.setState({ chartTab: 'WOMEN' }),
       visibleCount: String(cat.filter((c, i) => {
