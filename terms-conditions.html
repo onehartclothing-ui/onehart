@@ -713,10 +713,18 @@
           <h2 style="margin:0;font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:30px">Size chart</h2>
           <button onClick="{{ closeSizeChart }}" aria-label="Close size chart" style="background:none;border:0;padding:0;color:#F5F5F0;font-family:inherit;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer">Close ✕</button>
         </div>
-        <p style="margin:0 0 28px;font-size:14px;line-height:1.6;color:rgba(245,245,240,0.65)">Measurements in inches, taken flat across the garment. Oversized boxy fit — size down for a regular fit.</p>
+        <div style="display:flex;gap:24px;margin-bottom:24px;border-bottom:1px solid rgba(202,167,167,0.28)">
+          <button onClick="{{ setChartTabMen }}" style="background:none;border:0;padding:8px 0;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:{{ chartTab === 'MEN' ? '#F5F5F0' : 'rgba(245,245,240,0.5)' }};border-bottom:2px solid {{ chartTab === 'MEN' ? '#F5F5F0' : 'transparent' }}">MEN</button>
+          <button onClick="{{ setChartTabWomen }}" style="background:none;border:0;padding:8px 0;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:{{ chartTab === 'WOMEN' ? '#F5F5F0' : 'rgba(245,245,240,0.5)' }};border-bottom:2px solid {{ chartTab === 'WOMEN' ? '#F5F5F0' : 'transparent' }}">WOMEN</button>
+        </div>
+        <p style="margin:0 0 28px;font-size:14px;line-height:1.6;color:rgba(245,245,240,0.65)">
+          Measurements in CM, taken flat across the garment. Chest represents the 1/2 chest measurement.<br>
+          <span style="display:{{ chartTab === 'MEN' ? 'inline' : 'none' }};font-weight:600;color:rgba(245,245,240,0.85);margin-top:8px">Men's Relaxed Fit</span>
+          <span style="display:{{ chartTab === 'WOMEN' ? 'inline' : 'none' }};font-weight:600;color:rgba(245,245,240,0.85);margin-top:8px">Women's Oversized / Boxy Fit</span>
+        </p>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;font-size:14px">
           <div style="padding:12px 8px;border-bottom:1px solid rgba(202,167,167,0.55);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">Size</div>
-          <div style="padding:12px 8px;border-bottom:1px solid rgba(202,167,167,0.55);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">Chest</div>
+          <div style="padding:12px 8px;border-bottom:1px solid rgba(202,167,167,0.55);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">1/2 Chest</div>
           <div style="padding:12px 8px;border-bottom:1px solid rgba(202,167,167,0.55);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">Length</div>
           <div style="padding:12px 8px;border-bottom:1px solid rgba(202,167,167,0.55);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">Sleeve</div>
           <sc-for list="{{ chartRows }}" as="r" hint-placeholder-count="4">
@@ -737,7 +745,7 @@ class Component extends DCLogic {
   state = { page: (typeof window !== 'undefined' && window.location.pathname.includes('shipping')) ? 'shipping' : (typeof window !== 'undefined' && window.location.pathname.includes('privacy')) ? 'privacy' : (typeof window !== 'undefined' && window.location.pathname.includes('terms')) ? 'terms' : 'home', scrolled: false, size: null, cart: 0, open: {},
             menuOpen: false, bagOpen: false, aboutOpen: false, query: '', bag: {},
             cardSize: {}, notice: '', noticeFor: -1, checkingOut: false, checkoutError: '',
-            pdp: 0, view: 0, zoomOpen: false, chartOpen: false, scale: 1, rotY: 0, tx: 0, ty: 0, dragging: false };
+            pdp: 0, view: 0, zoomOpen: false, chartOpen: false, chartTab: 'MEN', scale: 1, rotY: 0, tx: 0, ty: 0, dragging: false };
 
   asset(id, fallback) {
     const r = (typeof window !== 'undefined' && window.__resources) || null;
@@ -1058,12 +1066,18 @@ class Component extends DCLogic {
     }));
     const flipView = () => this.setState((s) => ({ view: s.view === 0 ? 1 : 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
 
-    const chartRows = [
-      ['S', '42"', '27"', '8.5"'],
-      ['M', '44"', '28"', '9"'],
-      ['L', '46"', '29"', '9.5"'],
-      ['XL', '48"', '30"', '10"']
-    ].map(([size, chest, length, sleeve]) => ({ size, chest, length, sleeve }));
+    const chartData = this.state.chartTab === 'WOMEN' ? [
+      ['S', '48 CM', '60 CM', '20 CM'],
+      ['M', '50 CM', '62 CM', '21 CM'],
+      ['L', '52 CM', '64 CM', '22 CM'],
+      ['XL', '54 CM', '66 CM', '24 CM']
+    ] : [
+      ['S', '51 CM', '68 CM', '24 CM'],
+      ['M', '53 CM', '70 CM', '25 CM'],
+      ['L', '55 CM', '72 CM', '26 CM'],
+      ['XL', '57 CM', '74 CM', '27 CM']
+    ];
+    const chartRows = chartData.map(([size, chest, length, sleeve]) => ({ size, chest, length, sleeve }));
 
     const scrollToSel = (sel) => {
       const go = () => {
@@ -1181,6 +1195,9 @@ class Component extends DCLogic {
       flipView,
       thumbs,
       chartRows,
+      chartTab: this.state.chartTab,
+      setChartTabMen: () => this.setState({ chartTab: 'MEN' }),
+      setChartTabWomen: () => this.setState({ chartTab: 'WOMEN' }),
       visibleCount: String(cat.filter((c, i) => {
         if (!q) return true;
         const handles = this.handles();
