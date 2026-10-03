@@ -713,9 +713,9 @@
           <h2 style="margin:0;font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:30px">Size chart</h2>
           <button onClick="{{ closeSizeChart }}" aria-label="Close size chart" style="background:none;border:0;padding:0;color:#F5F5F0;font-family:inherit;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer">Close ✕</button>
         </div>
-        <div style="display:flex;gap:24px;margin-bottom:24px;border-bottom:1px solid rgba(202,167,167,0.28)">
-          <button onClick="{{ setChartTabMen }}" style="background:none;border:0;padding:8px 0;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:{{ chartTab === 'MEN' ? '#F5F5F0' : 'rgba(245,245,240,0.5)' }};border-bottom:2px solid {{ chartTab === 'MEN' ? '#F5F5F0' : 'transparent' }}">MEN</button>
-          <button onClick="{{ setChartTabWomen }}" style="background:none;border:0;padding:8px 0;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:{{ chartTab === 'WOMEN' ? '#F5F5F0' : 'rgba(245,245,240,0.5)' }};border-bottom:2px solid {{ chartTab === 'WOMEN' ? '#F5F5F0' : 'transparent' }}">WOMEN</button>
+        <div style="display:flex;width:100%;margin-bottom:24px;border-bottom:1px solid rgba(202,167,167,0.28)">
+          <button onClick="{{ setChartTabMen }}" style="flex:1;background:{{ chartTab === 'MEN' ? 'rgba(255,255,255,0.04)' : 'transparent' }};border:0;padding:16px 0;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:{{ chartTab === 'MEN' ? '#FFFFFF' : 'rgba(245,245,240,0.6)' }};border-bottom:2px solid {{ chartTab === 'MEN' ? '#FFFFFF' : 'transparent' }};transition:all 200ms ease">MEN</button>
+          <button onClick="{{ setChartTabWomen }}" style="flex:1;background:{{ chartTab === 'WOMEN' ? 'rgba(255,255,255,0.04)' : 'transparent' }};border:0;padding:16px 0;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:{{ chartTab === 'WOMEN' ? '#FFFFFF' : 'rgba(245,245,240,0.6)' }};border-bottom:2px solid {{ chartTab === 'WOMEN' ? '#FFFFFF' : 'transparent' }};transition:all 200ms ease">WOMEN</button>
         </div>
         <p style="margin:0 0 28px;font-size:14px;line-height:1.6;color:rgba(245,245,240,0.65)">
           Measurements in CM, taken flat across the garment. Chest represents the 1/2 chest measurement.<br>
