@@ -145,7 +145,7 @@
   <div style="position:fixed;top:0;left:0;right:0;height:36px;background:#141414;color:#F5F5F0;z-index:51;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;animation:nk-header-in 400ms ease both;border-bottom:1px solid rgba(255,255,255,0.05)">
     <span data-desk-only="">YOUR FIRST ORDER, 10% OFF. USE CODE&nbsp;</span>
     <span data-mob-only="" style="display:none">FIRST ORDER? 10% OFF &middot;&nbsp;</span>
-    <button onClick="{{ copyCode }}" style="background:transparent;border:1px solid rgba(245,245,240,0.3);color:#F5F5F0;padding:4px 8px;border-radius:4px;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:0.15em;cursor:pointer;margin-left:4px;transition:all 200ms ease" style-hover="background:rgba(245,245,240,0.1)">{{ copied ? 'COPIED' : 'ONEHART10' }}</button>
+    <button onClick="{{ copyCode }}" style="background:transparent;border:1px solid rgba(245,245,240,0.4);color:#FFFFFF;padding:6px 12px;border-radius:4px;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;margin-left:8px;transition:all 200ms ease;white-space:nowrap;width:auto;" style-hover="background:rgba(255,255,255,0.1)">{{ couponLabel }}</button>
   </div>
   <header style="position:fixed;top:36px;left:0;right:0;z-index:50;height:96px;animation:nk-header-in 400ms ease both">
     <div style="position:absolute;inset:0;background:rgba(10,10,10,0.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:opacity 200ms ease;pointer-events:none;opacity:{{ headerScrimOpacity }}"></div>
@@ -1305,6 +1305,7 @@ class Component extends DCLogic {
         this.setState({ copied: true });
         setTimeout(() => this.setState({ copied: false }), 2000);
       },
+      couponLabel: this.state.copied ? 'COPIED!' : 'ONEHART10',
       copied: this.state.copied,
       goHome: (e) => { e.preventDefault(); window.scrollTo(0, 0); if(typeof window !== 'undefined' && window.location.pathname !== '/') window.history.pushState({}, '', '/'); this.setState({ page: 'home' }); },
       sizes,
