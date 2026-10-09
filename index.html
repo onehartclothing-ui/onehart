@@ -261,7 +261,7 @@
                   </div>
                   <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;">
                     <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(15px,1.5vw,20px);line-height:1.15">{{ w.name }}</span>
-                    <span style="font-size:18px;font-weight:700">{{ w.price }}</span>
+                    <span style="font-size:18px;font-weight:700"><del style="color:rgba(245,245,240,0.65);font-size:0.75em;margin-right:8px">{{ w.originalPrice }}</del>{{ w.price }}</span>
                   </div>
                   <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;">
                     <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px">
@@ -385,7 +385,7 @@
             </div>
           </div>
 
-          <div style="font-size:24px;font-weight:700">{{ pdpPrice }}</div>
+          <div style="font-size:24px;font-weight:700"><del style="color:rgba(245,245,240,0.65);font-size:0.7em;font-weight:500;margin-right:12px">{{ pdpOriginalPrice }}</del>{{ pdpPrice }}</div>
 
           <button onClick="{{ addToCart }}" style="width:100%;padding:18px 24px;border-radius:999px;border:0;background:#F5F5F0;color:#0A0A0A;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#FFFFFF">{{ ctaLabel }}</button>
 
@@ -419,7 +419,7 @@
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#141414;padding:16px">
                   <span style="font-size:15px;font-weight:400">{{ p.name }}</span>
-                  <span style="font-size:15px;font-weight:500">{{ p.price }}</span>
+                  <span style="font-size:15px;font-weight:500"><del style="color:rgba(245,245,240,0.65);font-size:0.85em;margin-right:8px">{{ p.originalPrice }}</del>{{ p.price }}</span>
                 </div>
               </a>
             </sc-for>
@@ -758,19 +758,19 @@ class Component extends DCLogic {
 
   catalog() {
     return [
-      ['Blue Obsession', 999, this.asset('tee1', './Front/Blue Obsession.png'), this.asset('tee1_b', './back/Blue Obsession.png')],
-      ['Born Iconic', 899, this.asset('tee2', './Front/Born Iconic.png'), this.asset('tee2_b', './back/Born Iconic.png')],
-      ['Diva Energy', 899, this.asset('tee3', './Front/Diva Energy.png'), this.asset('tee3_b', './back/Diva Energy.png')],
-      ['Faith Unbroken', 899, this.asset('tee4', './Front/Faith Unbroken.png'), this.asset('tee4_b', './back/Faith Unbroken.png')],
-      ['Forever Yours', 999, this.asset('tee5', './Front/Forever Yours.png'), this.asset('tee5_b', './back/Forever Yours.png')],
-      ['Heartbreaker', 899, this.asset('tee6', './Front/Heartbreaker.png'), this.asset('tee6_b', './back/Heartbreaker.png')],
-      ['Kiss & Kill', 899, this.asset('tee7', './Front/Kiss & Kill.png'), this.asset('tee7_b', './back/Kiss & Kill.png')],
-      ['Lucky Theory', 999, this.asset('tee8', './Front/Lucky Theory.png'), this.asset('tee8_b', './back/Lucky Theory.png')],
-      ['Midnight Madness', 999, this.asset('tee9', './Front/Midnight Madness.png'), this.asset('tee9_b', './back/Midnight Madness.png')],
-      ['Money Talks', 899, this.asset('tee10', './Front/Money Talks.png'), this.asset('tee10_b', './back/Money Talks.png')],
-      ['No Pressure', 999, this.asset('tee11', './Front/No Pressure.png'), this.asset('tee11_b', './back/No Pressure.png')],
-      ['Sugar Rush', 899, this.asset('tee12', './Front/Sugar Rush.png'), this.asset('tee12_b', './back/Sugar Rush.png')],
-      ['Wild West', 999, this.asset('tee13', './Front/Wild West.png'), this.asset('tee13_b', './back/Wild West.png')]
+      ['Blue Obsession', 899, 999, this.asset('tee1', './Front/Blue Obsession.png'), this.asset('tee1_b', './back/Blue Obsession.png')],
+      ['Born Iconic', 799, 899, this.asset('tee2', './Front/Born Iconic.png'), this.asset('tee2_b', './back/Born Iconic.png')],
+      ['Diva Energy', 799, 899, this.asset('tee3', './Front/Diva Energy.png'), this.asset('tee3_b', './back/Diva Energy.png')],
+      ['Faith Unbroken', 799, 899, this.asset('tee4', './Front/Faith Unbroken.png'), this.asset('tee4_b', './back/Faith Unbroken.png')],
+      ['Forever Yours', 899, 999, this.asset('tee5', './Front/Forever Yours.png'), this.asset('tee5_b', './back/Forever Yours.png')],
+      ['Heartbreaker', 799, 899, this.asset('tee6', './Front/Heartbreaker.png'), this.asset('tee6_b', './back/Heartbreaker.png')],
+      ['Kiss & Kill', 799, 899, this.asset('tee7', './Front/Kiss & Kill.png'), this.asset('tee7_b', './back/Kiss & Kill.png')],
+      ['Lucky Theory', 899, 999, this.asset('tee8', './Front/Lucky Theory.png'), this.asset('tee8_b', './back/Lucky Theory.png')],
+      ['Midnight Madness', 899, 999, this.asset('tee9', './Front/Midnight Madness.png'), this.asset('tee9_b', './back/Midnight Madness.png')],
+      ['Money Talks', 799, 899, this.asset('tee10', './Front/Money Talks.png'), this.asset('tee10_b', './back/Money Talks.png')],
+      ['No Pressure', 899, 999, this.asset('tee11', './Front/No Pressure.png'), this.asset('tee11_b', './back/No Pressure.png')],
+      ['Sugar Rush', 799, 899, this.asset('tee12', './Front/Sugar Rush.png'), this.asset('tee12_b', './back/Sugar Rush.png')],
+      ['Wild West', 899, 999, this.asset('tee13', './Front/Wild West.png'), this.asset('tee13_b', './back/Wild West.png')]
     ];
   }
 
@@ -1022,8 +1022,9 @@ class Component extends DCLogic {
       placeholder: 'Drop product photo',
       name: cat[ci][0],
       price: this.rupees(cat[ci][1]),
-      img: cat[ci][2],
-      imgBack: cat[ci][3] || cat[ci][2],
+      originalPrice: this.rupees(cat[ci][2]),
+      img: cat[ci][3],
+      imgBack: cat[ci][4] || cat[ci][3],
       open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
     }));
   }
@@ -1058,12 +1059,12 @@ class Component extends DCLogic {
     const cat = this.catalog();
     const cur = cat[this.state.pdp] || cat[0];
     const bestsellers = [8, 0, 4, 7, 10, 12];
-    const views = [cur[2], cur[3] || cur[2]];
+    const views = [cur[3], cur[4] || cur[3]];
     const viewImg = views[this.state.view] || views[0];
     const thumbs = cat.map((c, i) => ({
       label: String(i + 1).padStart(2, '0'),
       slot: 'pdp-thumb-' + i,
-      img: c[2],
+      img: c[3],
       opacity: i === this.state.pdp ? 1 : 0.42,
       color: i === this.state.pdp ? '#F5F5F0' : 'rgba(245,245,240,0.6)',
       select: () => this.setState({ pdp: i, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 })
@@ -1103,7 +1104,7 @@ class Component extends DCLogic {
       const [idx, size] = key.split('|');
       const i = Number(idx);
       return {
-        name: cat[i][0], img: cat[i][2], qty, size,
+        name: cat[i][0], img: cat[i][3], qty, size,
         line: this.rupees(cat[i][1] * qty),
         inc: () => bump(key, 1),
         dec: () => bump(key, -1),
@@ -1191,8 +1192,9 @@ class Component extends DCLogic {
       stop: (e) => e.stopPropagation(),
       pdpName: cur[0],
       pdpPrice: this.rupees(cur[1]),
-      pdpImage: cur[2],
-      pdpBack: cur[3] || cur[2],
+      pdpOriginalPrice: this.rupees(cur[2]),
+      pdpImage: cur[3],
+      pdpBack: cur[4] || cur[3],
       viewImg,
       viewLabel: 'Back print',
       flipLabel: this.state.view === 0 ? 'Back print' : 'Front print',
@@ -1218,7 +1220,7 @@ class Component extends DCLogic {
         items: bestsellers.slice(off, off + 3).map((ci, j) => {
           const c = cat[ci];
           return {
-            img: c[2], imgBack: c[3] || c[2], name: c[0],
+            img: c[3], imgBack: c[4] || c[3], name: c[0],
             isBestSeller: true,
             num: String(ci + 1).padStart(2, '0'),
             sway: (j * 0.7).toFixed(1) + 's',
@@ -1229,14 +1231,14 @@ class Component extends DCLogic {
       rack: bestsellers.map((ci, j) => {
         const c = cat[ci];
         return {
-          img: c[2], imgBack: c[3] || c[2], name: c[0],
+          img: c[3], imgBack: c[4] || c[3], name: c[0],
           num: String(ci + 1).padStart(2, '0'),
           sway: (j * 0.7).toFixed(1) + 's',
           open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
         };
       }),
       visible: cat.map((c, i) => ({
-        img: c[2], imgBack: c[3] || c[2], name: c[0], price: this.rupees(c[1]),
+        img: c[3], imgBack: c[4] || c[3], name: c[0], price: this.rupees(c[1]), originalPrice: this.rupees(c[2]),
         tag: bestsellers.includes(i) ? 'Bestseller' : '',
         num: String(i + 1).padStart(2, '0') + ' / 13',
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
