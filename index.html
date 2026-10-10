@@ -192,7 +192,7 @@
 
         <div style="position:absolute;bottom:48px;left:32px;right:32px;padding-right:72px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:24px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.5);animation:nk-fade 900ms ease-out 2.9s both">
           <div style="display:flex;flex-wrap:wrap;gap:40px;font-size:11px;font-weight:600;color:rgba(245,245,240,0.55)">
-            <span style="color:#F5F5F0">13 designs</span>
+            <span style="color:#F5F5F0">12 designs</span>
             <span>Oversized tees</span>
             <span>Heavyweight cotton</span>
 
@@ -330,7 +330,7 @@
         </div>
         <div style="max-width:1500px;margin:0 auto;padding:22px clamp(24px,4vw,48px) 40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid rgba(202,167,167,0.18)">
           <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">© 2026 One Hart. All rights reserved.</span>
-          <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">Drop 001 / 13 designs</span>
+          <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">Drop 001 / 12 designs</span>
         </div>
       </footer>
 
@@ -487,7 +487,7 @@
       <div style="margin-top:44px;display:flex;flex-wrap:wrap;gap:34px;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,245,240,0.45)">
         <span>Est. 2026</span>
         <span>Made in India</span>
-        <span>13 designs</span>
+        <span>12 designs</span>
       </div>
     </div>
   </sc-if>
@@ -782,7 +782,6 @@ class Component extends DCLogic {
       ['Diva Energy', 799, 899, this.asset('tee3', './Front/Diva Energy.png'), this.asset('tee3_b', './back/Diva Energy.png'), [{name:'Black',hex:'#111111',front:this.asset('tee3', './Front/Diva Energy.png'),back:this.asset('tee3_b', './back/Diva Energy.png')}]],
       ['Faith Unbroken', 799, 899, this.asset('tee4', './Front/Faith Unbroken.png'), this.asset('tee4_b', './back/Faith Unbroken.png'), [{name:'Black',hex:'#111111',front:this.asset('tee4', './Front/Faith Unbroken.png'),back:this.asset('tee4_b', './back/Faith Unbroken.png')},{name:'Navy',hex:'#141E30',front:'./Front/Faith Unbroken Navy.png',back:'./back/Faith Unbroken Navy.png'}]],
       ['Forever Yours', 899, 999, this.asset('tee5', './Front/Forever Yours.png'), this.asset('tee5_b', './back/Forever Yours.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee5', './Front/Forever Yours.png'),back:this.asset('tee5_b', './back/Forever Yours.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Forever Yours Beige.png',back:'./back/Forever Yours Beige.png'}]],
-      ['Heartbreaker', 799, 899, this.asset('tee6', './Front/Heartbreaker.png'), this.asset('tee6_b', './back/Heartbreaker.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee6', './Front/Heartbreaker.png'),back:this.asset('tee6_b', './back/Heartbreaker.png')}]],
       ['Kiss & Kill', 799, 899, this.asset('tee7', './Front/Kiss & Kill.png'), this.asset('tee7_b', './back/Kiss & Kill.png'), [{name:'Black',hex:'#111111',front:this.asset('tee7', './Front/Kiss & Kill.png'),back:this.asset('tee7_b', './back/Kiss & Kill.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Kiss & Kill Beige.png',back:'./back/Kiss & Kill Beige.png'},{name:'Navy',hex:'#141E30',front:'./Front/Kiss & Kill Navy.png',back:'./back/Kiss & Kill Navy.png'}]],
       ['Lucky Theory', 899, 999, this.asset('tee8', './Front/Lucky Theory.png'), this.asset('tee8_b', './back/Lucky Theory.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee8', './Front/Lucky Theory.png'),back:this.asset('tee8_b', './back/Lucky Theory.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Lucky Theory Beige.png',back:'./back/Lucky Theory Beige.png'}]],
       ['Midnight Madness', 899, 999, this.asset('tee9', './Front/Midnight Madness.png'), this.asset('tee9_b', './back/Midnight Madness.png'), [{name:'Black',hex:'#111111',front:this.asset('tee9', './Front/Midnight Madness.png'),back:this.asset('tee9_b', './back/Midnight Madness.png')},{name:'Navy',hex:'#141E30',front:'./Front/Midnight Madness Navy.png',back:'./back/Midnight Madness Navy.png'}]],
@@ -795,9 +794,8 @@ class Component extends DCLogic {
 
   rupees(n) { return '\u20B9' + n.toLocaleString('en-IN'); }
 
-  // Shopify product handles, same order as catalog(). Must match the handles in Shopify admin.
   handles() {
-    return ['blue-obsession', 'born-iconic', 'diva-energy', 'faith-unbroken', 'forever-yours', 'heartbreaker', 'kiss-kill', 'lucky-theory', 'midnight-madness', 'money-talks', 'no-pressure', 'sugar-rush', 'wild-west'];
+    return ['blue-obsession', 'born-iconic', 'diva-energy', 'faith-unbroken', 'forever-yours', 'kiss-kill', 'lucky-theory', 'midnight-madness', 'money-talks', 'no-pressure', 'sugar-rush', 'wild-west'];
   }
 
   // Shopify variant IDs, same order as catalog(). Sizes: S, M, L, XL.
@@ -808,14 +806,13 @@ class Component extends DCLogic {
       [ { S: '47796289175708', M: '47796289208476', L: '47796289241244', XL: '47796289274012' } ], // 2: Diva Energy
       [ { S: '47796297367708', M: '47796297400476', L: '47796297433244', XL: '47796297466012' }, null ], // 3: Faith Unbroken
       [ { S: '47796305887388', M: '47796305920156', L: '47796305952924', XL: '47796305985692' }, null ], // 4: Forever Yours
-      [ { S: '47796314964124', M: '47796314996892', L: '47796315029660', XL: '47796315062428' } ], // 5: Heartbreaker
-      [ { S: '47796322304156', M: '47796322336924', L: '47796322369692', XL: '47796322402460' }, null, null ], // 6: Kiss & Kill
-      [ { S: '47796349960348', M: '47796349993116', L: '47796350025884', XL: '47796350058652' }, null ], // 7: Lucky Theory
-      [ { S: '47796333314204', M: '47796333346972', L: '47796333379740', XL: '47796333412508' }, null ], // 8: Midnight Madness
-      [ { S: '47796357103772', M: '47796357136540', L: '47796357169308', XL: '47796357202076' } ], // 9: Money Talks
-      [ { S: '47796342620316', M: '47796342653084', L: '47796342685852', XL: '47796342718620' }, null ], // 10: No Pressure
-      [ { S: '47796363919516', M: '47796363952284', L: '47796363985052', XL: '47796364017820' }, null ], // 11: Sugar Rush
-      [ { S: '47796365164700', M: '47796365197468', L: '47796365230236', XL: '47796365263004' }, null, null ]  // 12: Wild West
+      [ { S: '47796322304156', M: '47796322336924', L: '47796322369692', XL: '47796322402460' }, null, null ], // 5: Kiss & Kill
+      [ { S: '47796349960348', M: '47796349993116', L: '47796350025884', XL: '47796350058652' }, null ], // 6: Lucky Theory
+      [ { S: '47796333314204', M: '47796333346972', L: '47796333379740', XL: '47796333412508' }, null ], // 7: Midnight Madness
+      [ { S: '47796357103772', M: '47796357136540', L: '47796357169308', XL: '47796357202076' } ], // 8: Money Talks
+      [ { S: '47796342620316', M: '47796342653084', L: '47796342685852', XL: '47796342718620' }, null ], // 9: No Pressure
+      [ { S: '47796363919516', M: '47796363952284', L: '47796363985052', XL: '47796364017820' }, null ], // 10: Sugar Rush
+      [ { S: '47796365164700', M: '47796365197468', L: '47796365230236', XL: '47796365263004' }, null, null ]  // 11: Wild West
     ];
   }
 
@@ -873,9 +870,11 @@ class Component extends DCLogic {
             swipeHandled = true;
             const cat = this.catalog();
             if (totalDx < 0) {
-              this.setState((s) => ({ pdp: (s.pdp + 1) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
+              this.setState((s) => ({ pdp: (s.pdp + 1) % cat.length, pdpColor: 0, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
+              setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
             } else {
-              this.setState((s) => ({ pdp: (s.pdp - 1 + cat.length) % cat.length, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
+              this.setState((s) => ({ pdp: (s.pdp - 1 + cat.length) % cat.length, pdpColor: 0, view: 0, scale: 1, rotY: 0, tx: 0, ty: 0 }));
+              setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
             }
           }
         }
@@ -1047,7 +1046,12 @@ class Component extends DCLogic {
       originalPrice: this.rupees(cat[ci][2]),
       img: cat[ci][3],
       imgBack: cat[ci][4] || cat[ci][3],
-      open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
+      open: (e) => { 
+        e.preventDefault(); 
+        window.scrollTo(0, 0); 
+        this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); 
+        setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
+      }
     }));
   }
 
@@ -1080,7 +1084,7 @@ class Component extends DCLogic {
 
     const cat = this.catalog();
     const cur = cat[this.state.pdp] || cat[0];
-    const bestsellers = [8, 0, 4, 7, 10, 12];
+    const bestsellers = [7, 0, 4, 6, 9, 11];
     const safeColorIdx = (cur[5] && cur[5][this.state.pdpColor]) ? this.state.pdpColor : 0;
     const views = [
       (cur[5] && cur[5][safeColorIdx] && cur[5][safeColorIdx].front) ? cur[5][safeColorIdx].front : cur[3],
@@ -1235,6 +1239,7 @@ class Component extends DCLogic {
         select: (e) => {
           e.preventDefault();
           this.setState({ pdpColor: i });
+          setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
           if (typeof window !== 'undefined' && c.front) {
             new Image().src = c.front;
             if (c.back) new Image().src = c.back;
@@ -1270,7 +1275,11 @@ class Component extends DCLogic {
             isBestSeller: true,
             num: String(ci + 1).padStart(2, '0'),
             sway: (j * 0.7).toFixed(1) + 's',
-            open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
+            open: (e) => { 
+              e.preventDefault(); window.scrollTo(0, 0); 
+              this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); 
+              setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
+            }
           };
         })
       })),
@@ -1280,13 +1289,17 @@ class Component extends DCLogic {
           img: c[3], imgBack: c[4] || c[3], name: c[0],
           num: String(ci + 1).padStart(2, '0'),
           sway: (j * 0.7).toFixed(1) + 's',
-          open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
+          open: (e) => { 
+            e.preventDefault(); window.scrollTo(0, 0); 
+            this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); 
+            setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
+          }
         };
       }),
       visible: cat.map((c, i) => ({
         img: c[3], imgBack: c[4] || c[3], name: c[0], price: this.rupees(c[1]), originalPrice: this.rupees(c[2]),
         tag: bestsellers.includes(i) ? 'Bestseller' : '',
-        num: String(i + 1).padStart(2, '0') + ' / 13',
+        num: String(i + 1).padStart(2, '0') + ' / 12',
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
           const on = this.state.cardSize[i] === label;
           return {
@@ -1306,7 +1319,11 @@ class Component extends DCLogic {
           this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true, notice: '' }));
         },
         depth: [0.8, 0.3, 1.1, 0.45, 0.95, 0.6][i % 6],
-        open: (e) => { e.preventDefault(); window.scrollTo(0, 0); this.setState({ page: 'pdp', pdp: i, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); }
+        open: (e) => { 
+          e.preventDefault(); window.scrollTo(0, 0); 
+          this.setState({ page: 'pdp', pdp: i, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); 
+          setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
+        }
       })).filter((p, mappedIdx) => {
         if (!q) return true;
         const handles = this.handles();
