@@ -807,14 +807,20 @@ class Component extends DCLogic {
       ['Money Talks', 799, 899, this.asset('tee10', './Front/Money Talks.png'), this.asset('tee10_b', './back/Money Talks.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee10', './Front/Money Talks.png'),back:this.asset('tee10_b', './back/Money Talks.png')}]],
       ['No Pressure', 899, 999, this.asset('tee11', './Front/No Pressure.png'), this.asset('tee11_b', './back/No Pressure.png'), [{name:'Black',hex:'#111111',front:this.asset('tee11', './Front/No Pressure.png'),back:this.asset('tee11_b', './back/No Pressure.png')},{name:'Navy',hex:'#141E30',front:'./Front/No Pressure Navy.png',back:'./back/No Pressure Navy.png'}]],
       ['Sugar Rush', 799, 899, this.asset('tee12', './Front/Sugar Rush.png'), this.asset('tee12_b', './back/Sugar Rush.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee12', './Front/Sugar Rush.png'),back:this.asset('tee12_b', './back/Sugar Rush.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Sugar Rush Beige.png',back:'./back/Sugar Rush Beige.png'}]],
-      ['Wild West', 899, 999, this.asset('tee13', './Front/Wild West.png'), this.asset('tee13_b', './back/Wild West.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee13', './Front/Wild West.png'),back:this.asset('tee13_b', './back/Wild West.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Wild West Beige.png',back:'./back/Wild West Beige.png'},{name:'Navy',hex:'#141E30',front:'./Front/Wild West Navy.png',back:'./back/Wild West Navy.png'}]]
+      ['Wild West', 899, 999, this.asset('tee13', './Front/Wild West.png'), this.asset('tee13_b', './back/Wild West.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee13', './Front/Wild West.png'),back:this.asset('tee13_b', './back/Wild West.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Wild West Beige.png',back:'./back/Wild West Beige.png'},{name:'Navy',hex:'#141E30',front:'./Front/Wild West Navy.png',back:'./back/Wild West Navy.png'}]],
+      ['Absolutely Sober', 799, 899, './Front/Absolute Black.png', './back/Absolute Black.png', [
+        {name:'Black',hex:'#111111',front:'./Front/Absolute Black.png',back:'./back/Absolute Black.png'},
+        {name:'White',hex:'#F5F5F0',front:'./Front/Absolute White.png',back:'./back/Absolute White.png'},
+        {name:'Beige',hex:'#E6DCC8',front:'./Front/Absolute Beige.png',back:'./back/Absolute Beige.png'},
+        {name:'Navy',hex:'#141E30',front:'./Front/Absolute Navy.png',back:'./back/Absolute Navy.png'}
+      ]]
     ];
   }
 
   rupees(n) { return '\u20B9' + n.toLocaleString('en-IN'); }
 
   handles() {
-    return ['blue-obsession', 'born-iconic', 'diva-energy', 'faith-unbroken', 'forever-yours', 'kiss-kill', 'lucky-theory', 'midnight-madness', 'money-talks', 'no-pressure', 'sugar-rush', 'wild-west'];
+    return ['blue-obsession', 'born-iconic', 'diva-energy', 'faith-unbroken', 'forever-yours', 'kiss-kill', 'lucky-theory', 'midnight-madness', 'money-talks', 'no-pressure', 'sugar-rush', 'wild-west', 'absolutely-sober'];
   }
 
   // Shopify variant IDs, same order as catalog(). Sizes: S, M, L, XL.
@@ -831,7 +837,13 @@ class Component extends DCLogic {
       [ { S: '47796357103772', M: '47796357136540', L: '47796357169308', XL: '47796357202076' } ], // 8: Money Talks
       [ { S: '47796342620316', M: '47796342653084', L: '47796342685852', XL: '47796342718620' }, { S: '47858982289564', M: '47858982322332', L: '47858982355100', XL: '47858982387868' } ], // 9: No Pressure
       [ { S: '47796363919516', M: '47796363952284', L: '47796363985052', XL: '47796364017820' }, { S: '47858978390172', M: '47858978422940', L: '47858978455708', XL: '47858978488476' } ], // 10: Sugar Rush
-      [ { S: '47796365164700', M: '47796365197468', L: '47796365230236', XL: '47796365263004' }, { S: '47858970427548', M: '47858970493084', L: '47858970558620', XL: '47858970624156' }, { S: '47858970394780', M: '47858970460316', L: '47858970525852', XL: '47858970591388' } ]  // 11: Wild West
+      [ { S: '47796365164700', M: '47796365197468', L: '47796365230236', XL: '47796365263004' }, { S: '47858970427548', M: '47858970493084', L: '47858970558620', XL: '47858970624156' }, { S: '47858970394780', M: '47858970460316', L: '47858970525852', XL: '47858970591388' } ], // 11: Wild West
+      [
+        { S: '47883263344796', M: '47883263377564', L: '47883263410332', XL: '47883263443100' }, // 12: Absolutely Sober (Black)
+        { S: '47883221041308', M: '47883221139612', L: '47883221237916', XL: '47883221336220' }, // 12: Absolutely Sober (White)
+        { S: '47883221106844', M: '47883221205148', L: '47883221303452', XL: '47883221401756' }, // 12: Absolutely Sober (Beige)
+        { S: '47883221074076', M: '47883221172380', L: '47883221270684', XL: '47883221368988' }  // 12: Absolutely Sober (Navy)
+      ]
     ];
   }
 
@@ -1262,7 +1274,7 @@ class Component extends DCLogic {
         ring: this.state.pdpColor === i ? '#FFFFFF' : 'transparent',
         select: (e) => {
           e.preventDefault();
-          this.setState({ pdpColor: i });
+          this.setState({ pdpColor: i, view: 0 });
           setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
           if (typeof window !== 'undefined' && c.front) {
             new Image().src = c.front;
@@ -1323,7 +1335,7 @@ class Component extends DCLogic {
       visible: cat.map((c, i) => ({
         img: c[3], imgBack: c[4] || c[3], name: c[0], price: this.rupees(c[1]), originalPrice: this.rupees(c[2]),
         tag: bestsellers.includes(i) ? 'Bestseller' : '',
-        num: String(i + 1).padStart(2, '0') + ' / 12',
+        num: String(i + 1).padStart(2, '0') + (i < 12 ? ' / 12' : ' / 13'),
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
           const on = this.state.cardSize[i] === label;
           return {
