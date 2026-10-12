@@ -200,7 +200,7 @@
 
         <div style="position:absolute;bottom:48px;left:32px;right:32px;padding-right:72px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:24px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.5);animation:nk-fade 900ms ease-out 2.9s both">
           <div style="display:flex;flex-wrap:wrap;gap:40px;font-size:11px;font-weight:600;color:rgba(245,245,240,0.55)">
-            <span style="color:#F5F5F0">12 designs</span>
+            <span style="color:#F5F5F0">13 designs</span>
             <span>Oversized tees</span>
             <span>Heavyweight cotton</span>
 
@@ -344,7 +344,7 @@
         </div>
         <div style="max-width:1500px;margin:0 auto;padding:22px clamp(24px,4vw,48px) 40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid rgba(202,167,167,0.18)">
           <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">© 2026 One Hart. All rights reserved.</span>
-          <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">Drop 001 / 12 designs</span>
+          <span style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.42)">Drop 001 / 13 designs</span>
         </div>
       </footer>
 
@@ -506,7 +506,7 @@
       <div style="margin-top:44px;display:flex;flex-wrap:wrap;gap:34px;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,245,240,0.45)">
         <span>Est. 2026</span>
         <span>Made in India</span>
-        <span>12 designs</span>
+        <span>13 designs</span>
       </div>
     </div>
   </sc-if>
@@ -1494,7 +1494,7 @@ class Component extends DCLogic {
       visible: cat.map((c, i) => ({
         img: c[3], imgBack: c[4] || c[3], name: c[0], price: this.rupees(c[1]), originalPrice: this.rupees(c[2]),
         tag: bestsellers.includes(i) ? 'Bestseller' : '',
-        num: String(i + 1).padStart(2, '0') + (i < 12 ? ' / 12' : ' / 13'),
+        num: String(i + 1).padStart(2, '0') + ' / 13',
         sizes: ['S', 'M', 'L', 'XL'].map((label) => {
           const on = this.state.cardSize[i] === label;
           return {
