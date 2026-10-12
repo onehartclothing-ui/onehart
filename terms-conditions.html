@@ -142,10 +142,18 @@
     </div>
   </sc-if>
 
-  <div style="position:fixed;top:0;left:0;right:0;height:36px;background:#141414;color:#F5F5F0;z-index:51;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;animation:nk-header-in 400ms ease both;border-bottom:1px solid rgba(255,255,255,0.05)">
-    <span data-desk-only="">YOUR FIRST ORDER, 10% OFF. USE CODE&nbsp;</span>
-    <span data-mob-only="" style="display:none">FIRST ORDER? 10% OFF &middot;&nbsp;</span>
-    <button onClick="{{ copyCode }}" style="background:transparent;border:1px solid rgba(245,245,240,0.4);color:#FFFFFF;padding:6px 12px;border-radius:4px;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;margin-left:8px;transition:all 200ms ease;white-space:nowrap;width:auto;" style-hover="background:rgba(255,255,255,0.1)">{{ couponLabel }}</button>
+  <div onMouseEnter="{{ pauseAnnounce }}" onMouseLeave="{{ resumeAnnounce }}" style="position:fixed;top:0;left:0;right:0;height:36px;background:#141414;color:#F5F5F0;z-index:51;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;animation:nk-header-in 400ms ease both;border-bottom:1px solid rgba(255,255,255,0.05);overflow:hidden">
+    <div style="position:relative;width:100%;max-width:1400px;height:100%;display:flex;align-items:center;justify-content:center">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 16px;white-space:nowrap;transition:opacity 400ms ease,transform 400ms cubic-bezier(.22,.7,.2,1);opacity:{{ ann0Opacity }};transform:{{ ann0Transform }};pointer-events:{{ ann0Events }}">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity:0.85;flex-shrink:0"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.24-4.05A1 1 0 0 0 17.76 8H14v10"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+        <span>COMPLIMENTARY SHIPPING ON ALL ORDERS</span>
+      </div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 16px;white-space:nowrap;transition:opacity 400ms ease,transform 400ms cubic-bezier(.22,.7,.2,1);opacity:{{ ann1Opacity }};transform:{{ ann1Transform }};pointer-events:{{ ann1Events }}">
+        <span data-desk-only="">YOUR FIRST ORDER, 10% OFF. USE CODE&nbsp;</span>
+        <span data-mob-only="" style="display:none">FIRST ORDER? 10% OFF &middot;&nbsp;</span>
+        <button onClick="{{ copyCode }}" style="background:transparent;border:1px solid rgba(245,245,240,0.4);color:#FFFFFF;padding:6px 12px;border-radius:4px;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;margin-left:8px;transition:all 200ms ease;white-space:nowrap;width:auto;" style-hover="background:rgba(255,255,255,0.1)">{{ couponLabel }}</button>
+      </div>
+    </div>
   </div>
   <header style="position:fixed;top:36px;left:0;right:0;z-index:50;height:96px;animation:nk-header-in 400ms ease both">
     <div style="position:absolute;inset:0;background:rgba(10,10,10,0.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:opacity 200ms ease;pointer-events:none;opacity:{{ headerScrimOpacity }}"></div>
@@ -264,9 +272,15 @@
                     <img class="nk-product-front" src="{{ w.img }}" alt="{{ w.name }}" loading="lazy" style="width:94%;height:94%;object-fit:contain;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
                     <img class="nk-product-back" src="{{ w.imgBack }}" alt="{{ w.name }} back" loading="lazy" style="width:94%;height:94%;object-fit:contain;position:absolute;inset:0;margin:auto;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
                   </div>
-                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
                     <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(15px,1.5vw,20px);line-height:1.15">{{ w.name }}</span>
-                    <span style="font-size:18px;font-weight:700"><del style="color:rgba(245,245,240,0.65);font-size:0.75em;margin-right:8px">{{ w.originalPrice }}</del>{{ w.price }}</span>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">
+                      <span style="font-size:18px;font-weight:700;line-height:1.15;white-space:nowrap"><del style="color:rgba(245,245,240,0.65);font-size:0.75em;margin-right:8px">{{ w.originalPrice }}</del>{{ w.price }}</span>
+                      <span style="font-size:9.5px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:rgba(245,245,240,0.7);display:inline-flex;align-items:center;gap:4px;white-space:nowrap">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity:0.8;display:inline-block"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.24-4.05A1 1 0 0 0 17.76 8H14v10"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+                        FREE SHIPPING
+                      </span>
+                    </div>
                   </div>
                   <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;">
                     <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px">
@@ -405,6 +419,11 @@
           </div>
 
           <div style="font-size:24px;font-weight:700"><del style="color:rgba(245,245,240,0.65);font-size:0.7em;font-weight:500;margin-right:12px">{{ pdpOriginalPrice }}</del>{{ pdpPrice }}</div>
+
+          <div style="display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.72);margin-top:-4px;margin-bottom:2px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity:0.85;display:inline-block"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.24-4.05A1 1 0 0 0 17.76 8H14v10"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+            <span>FREE SHIPPING ON ALL ORDERS</span>
+          </div>
 
           <button onClick="{{ addToCart }}" style="width:100%;padding:18px 24px;border-radius:999px;border:0;background:#F5F5F0;color:#0A0A0A;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#FFFFFF">{{ ctaLabel }}</button>
 
@@ -765,7 +784,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { copied: false, page: (typeof window !== 'undefined' && window.location.pathname.includes('shipping')) ? 'shipping' : (typeof window !== 'undefined' && window.location.pathname.includes('privacy')) ? 'privacy' : (typeof window !== 'undefined' && window.location.pathname.includes('terms')) ? 'terms' : 'home', scrolled: false, size: null, cart: 0, open: {},
+  state = { announcementIndex: 0, copied: false, page: (typeof window !== 'undefined' && window.location.pathname.includes('shipping')) ? 'shipping' : (typeof window !== 'undefined' && window.location.pathname.includes('privacy')) ? 'privacy' : (typeof window !== 'undefined' && window.location.pathname.includes('terms')) ? 'terms' : 'home', scrolled: false, size: null, cart: 0, open: {},
             menuOpen: false, bagOpen: false, aboutOpen: false, query: '', bag: {},
             cardSize: {}, notice: '', noticeFor: -1, checkingOut: false, checkoutError: '',
             pdp: 0, pdpColor: 0, view: 0, zoomOpen: false, chartOpen: false, chartTab: 'MEN', scale: 1, rotY: 0, tx: 0, ty: 0, dragging: false };
@@ -898,6 +917,10 @@ class Component extends DCLogic {
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll, { passive: true });
     window.addEventListener('pageshow', () => { if (this.state.checkingOut) this.setState({ checkingOut: false }); });
+    this._announcementTimer = setInterval(() => {
+      if (this.state.copied || this._announcementPaused) return;
+      this.setState((s) => ({ announcementIndex: (s.announcementIndex + 1) % 2 }));
+    }, 4500);
     setTimeout(() => { this.parallax(); this.bindCursor(); }, 60);
     this.playVideo();
     this.reveal();
@@ -941,6 +964,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll);
+    if (this._announcementTimer) clearInterval(this._announcementTimer);
     if (this._blobUrl) URL.revokeObjectURL(this._blobUrl);
   }
 
@@ -1360,11 +1384,19 @@ class Component extends DCLogic {
         if (typeof navigator !== 'undefined' && navigator.clipboard) {
           navigator.clipboard.writeText('ONEHART10').catch(()=>{});
         }
-        this.setState({ copied: true });
+        this.setState({ copied: true, announcementIndex: 1 });
         setTimeout(() => this.setState({ copied: false }), 2000);
       },
       couponLabel: this.state.copied ? 'COPIED!' : 'ONEHART10',
       copied: this.state.copied,
+      ann0Opacity: (this.state.announcementIndex || 0) === 0 ? 1 : 0,
+      ann0Transform: (this.state.announcementIndex || 0) === 0 ? 'translateY(0)' : ((typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'translateY(0)' : 'translateY(-6px)'),
+      ann0Events: (this.state.announcementIndex || 0) === 0 ? 'auto' : 'none',
+      ann1Opacity: (this.state.announcementIndex || 0) === 1 ? 1 : 0,
+      ann1Transform: (this.state.announcementIndex || 0) === 1 ? 'translateY(0)' : ((typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'translateY(0)' : 'translateY(6px)'),
+      ann1Events: (this.state.announcementIndex || 0) === 1 ? 'auto' : 'none',
+      pauseAnnounce: () => { this._announcementPaused = true; },
+      resumeAnnounce: () => { this._announcementPaused = false; },
       goHome: (e) => { e.preventDefault(); window.scrollTo(0, 0); if(typeof window !== 'undefined' && window.location.pathname !== '/') window.history.pushState({}, '', '/'); this.setState({ page: 'home' }); },
       sizes,
       accordions,
