@@ -38,6 +38,7 @@ function validate(body) {
   for (const l of lines) {
     if (!l || typeof l.handle !== 'string' || !HANDLE_RE.test(l.handle)) return null;
     if (!SIZES.includes(l.size)) return null;
+    if (l.color && typeof l.color !== 'string') return null;
     if (!Number.isInteger(l.quantity) || l.quantity < 1 || l.quantity > 20) return null;
   }
   return lines;
@@ -103,10 +104,13 @@ export default async function handler(req, res) {
     for (const l of lines) {
       const product = products[l.handle];
       if (!product) return res.status(409).json({ error: `A piece in your bag is no longer available (${l.handle}).` });
-      const variant = product.variants.nodes.find((v) =>
-        v.selectedOptions.some((o) => /size/i.test(o.name) && o.value.trim().toUpperCase() === l.size));
-      if (!variant) return res.status(409).json({ error: `Size ${l.size} isn't available for ${l.handle}.` });
-      if (!variant.availableForSale) return res.status(409).json({ error: `Size ${l.size} of ${l.handle} is sold out.` });
+      const variant = product.variants.nodes.find((v) => {
+        const hasSize = v.selectedOptions.some((o) => /size/i.test(o.name) && o.value.trim().toUpperCase() === l.size);
+        const hasColor = !l.color || v.selectedOptions.some((o) => /color/i.test(o.name) && o.value.trim().toLowerCase() === l.color.trim().toLowerCase());
+        return hasSize && hasColor;
+      });
+      if (!variant) return res.status(409).json({ error: `Selected option (${l.color ? l.color + ' / ' : ''}${l.size}) isn't available for ${l.handle}.` });
+      if (!variant.availableForSale) return res.status(409).json({ error: `Selected option (${l.color ? l.color + ' / ' : ''}${l.size}) of ${l.handle} is sold out.` });
       merged.set(variant.id, (merged.get(variant.id) || 0) + l.quantity);
     }
 

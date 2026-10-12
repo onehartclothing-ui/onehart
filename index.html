@@ -783,6 +783,147 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+const SHOPIFY_VARIANTS = {
+  "Absolutely Sober": {
+    "S / White": "gid://shopify/ProductVariant/47883221041308",
+    "S / Navy": "gid://shopify/ProductVariant/47883221074076",
+    "S / Beige": "gid://shopify/ProductVariant/47883221106844",
+    "S / Black": "gid://shopify/ProductVariant/47883263344796",
+    "M / White": "gid://shopify/ProductVariant/47883221139612",
+    "M / Navy": "gid://shopify/ProductVariant/47883221172380",
+    "M / Beige": "gid://shopify/ProductVariant/47883221205148",
+    "M / Black": "gid://shopify/ProductVariant/47883263377564",
+    "L / White": "gid://shopify/ProductVariant/47883221237916",
+    "L / Navy": "gid://shopify/ProductVariant/47883221270684",
+    "L / Beige": "gid://shopify/ProductVariant/47883221303452",
+    "L / Black": "gid://shopify/ProductVariant/47883263410332",
+    "XL / White": "gid://shopify/ProductVariant/47883221336220",
+    "XL / Navy": "gid://shopify/ProductVariant/47883221368988",
+    "XL / Beige": "gid://shopify/ProductVariant/47883221401756",
+    "XL / Black": "gid://shopify/ProductVariant/47883263443100"
+  },
+  "Blue Obsession": {
+    "S / White": "gid://shopify/ProductVariant/47796266205340",
+    "S / Beige": "gid://shopify/ProductVariant/47858996314268",
+    "M / White": "gid://shopify/ProductVariant/47796266238108",
+    "M / Beige": "gid://shopify/ProductVariant/47858996347036",
+    "L / White": "gid://shopify/ProductVariant/47796266270876",
+    "L / Beige": "gid://shopify/ProductVariant/47858996379804",
+    "XL / White": "gid://shopify/ProductVariant/47796266303644",
+    "XL / Beige": "gid://shopify/ProductVariant/47858996412572"
+  },
+  "Born Iconic": {
+    "S / Navy": "gid://shopify/ProductVariant/47796274036892",
+    "S / Black": "gid://shopify/ProductVariant/47858995527836",
+    "M / Navy": "gid://shopify/ProductVariant/47796274069660",
+    "M / Black": "gid://shopify/ProductVariant/47858995560604",
+    "L / Navy": "gid://shopify/ProductVariant/47796274102428",
+    "L / Black": "gid://shopify/ProductVariant/47858995593372",
+    "XL / Navy": "gid://shopify/ProductVariant/47796274135196",
+    "XL / Black": "gid://shopify/ProductVariant/47858995626140"
+  },
+  "Diva Energy": {
+    "S": "gid://shopify/ProductVariant/47796289175708",
+    "M": "gid://shopify/ProductVariant/47796289208476",
+    "L": "gid://shopify/ProductVariant/47796289241244",
+    "XL": "gid://shopify/ProductVariant/47796289274012"
+  },
+  "Faith Unbroken": {
+    "S / Black": "gid://shopify/ProductVariant/47796297367708",
+    "S / Navy": "gid://shopify/ProductVariant/47858992021660",
+    "M / Black": "gid://shopify/ProductVariant/47796297400476",
+    "M / Navy": "gid://shopify/ProductVariant/47858992054428",
+    "L / Black": "gid://shopify/ProductVariant/47796297433244",
+    "L / Navy": "gid://shopify/ProductVariant/47858992087196",
+    "XL / Black": "gid://shopify/ProductVariant/47796297466012",
+    "XL / Navy": "gid://shopify/ProductVariant/47858992119964"
+  },
+  "Forever Yours": {
+    "S / White": "gid://shopify/ProductVariant/47796305887388",
+    "S / Beige": "gid://shopify/ProductVariant/47858989170844",
+    "M / White": "gid://shopify/ProductVariant/47796305920156",
+    "M / Beige": "gid://shopify/ProductVariant/47858989203612",
+    "L / White": "gid://shopify/ProductVariant/47796305952924",
+    "L / Beige": "gid://shopify/ProductVariant/47858989236380",
+    "XL / White": "gid://shopify/ProductVariant/47796305985692",
+    "XL / Beige": "gid://shopify/ProductVariant/47858989269148"
+  },
+  "Kiss & Kill": {
+    "S / Black": "gid://shopify/ProductVariant/47796322304156",
+    "S / Navy": "gid://shopify/ProductVariant/47858986025116",
+    "S / Beige": "gid://shopify/ProductVariant/47858986057884",
+    "M / Black": "gid://shopify/ProductVariant/47796322336924",
+    "M / Navy": "gid://shopify/ProductVariant/47858986090652",
+    "M / Beige": "gid://shopify/ProductVariant/47858986123420",
+    "L / Black": "gid://shopify/ProductVariant/47796322369692",
+    "L / Navy": "gid://shopify/ProductVariant/47858986156188",
+    "L / Beige": "gid://shopify/ProductVariant/47858986188956",
+    "XL / Black": "gid://shopify/ProductVariant/47796322402460",
+    "XL / Navy": "gid://shopify/ProductVariant/47858986221724",
+    "XL / Beige": "gid://shopify/ProductVariant/47858986254492"
+  },
+  "Lucky Theory": {
+    "S / White": "gid://shopify/ProductVariant/47796349960348",
+    "S / Beige": "gid://shopify/ProductVariant/47858980651164",
+    "M / White": "gid://shopify/ProductVariant/47796349993116",
+    "M / Beige": "gid://shopify/ProductVariant/47858980683932",
+    "L / White": "gid://shopify/ProductVariant/47796350025884",
+    "L / Beige": "gid://shopify/ProductVariant/47858980716700",
+    "XL / White": "gid://shopify/ProductVariant/47796350058652",
+    "XL / Beige": "gid://shopify/ProductVariant/47858980749468"
+  },
+  "Midnight Madness": {
+    "S / Black": "gid://shopify/ProductVariant/47796333314204",
+    "S / Navy": "gid://shopify/ProductVariant/47858984026268",
+    "M / Black": "gid://shopify/ProductVariant/47796333346972",
+    "M / Navy": "gid://shopify/ProductVariant/47858984059036",
+    "L / Black": "gid://shopify/ProductVariant/47796333379740",
+    "L / Navy": "gid://shopify/ProductVariant/47858984091804",
+    "XL / Black": "gid://shopify/ProductVariant/47796333412508",
+    "XL / Navy": "gid://shopify/ProductVariant/47858984124572"
+  },
+  "Money Talks": {
+    "S": "gid://shopify/ProductVariant/47796357103772",
+    "M": "gid://shopify/ProductVariant/47796357136540",
+    "L": "gid://shopify/ProductVariant/47796357169308",
+    "XL": "gid://shopify/ProductVariant/47796357202076"
+  },
+  "No Pressure": {
+    "S / Black": "gid://shopify/ProductVariant/47796342620316",
+    "S / Navy": "gid://shopify/ProductVariant/47858982289564",
+    "M / Black": "gid://shopify/ProductVariant/47796342653084",
+    "M / Navy": "gid://shopify/ProductVariant/47858982322332",
+    "L / Black": "gid://shopify/ProductVariant/47796342685852",
+    "L / Navy": "gid://shopify/ProductVariant/47858982355100",
+    "XL / Black": "gid://shopify/ProductVariant/47796342718620",
+    "XL / Navy": "gid://shopify/ProductVariant/47858982387868"
+  },
+  "Sugar Rush": {
+    "S / White": "gid://shopify/ProductVariant/47796363919516",
+    "S / Beige": "gid://shopify/ProductVariant/47858978390172",
+    "M / White": "gid://shopify/ProductVariant/47796363952284",
+    "M / Beige": "gid://shopify/ProductVariant/47858978422940",
+    "L / White": "gid://shopify/ProductVariant/47796363985052",
+    "L / Beige": "gid://shopify/ProductVariant/47858978455708",
+    "XL / White": "gid://shopify/ProductVariant/47796364017820",
+    "XL / Beige": "gid://shopify/ProductVariant/47858978488476"
+  },
+  "Wild West": {
+    "S / White": "gid://shopify/ProductVariant/47796365164700",
+    "S / Navy": "gid://shopify/ProductVariant/47858970394780",
+    "S / Beige": "gid://shopify/ProductVariant/47858970427548",
+    "M / White": "gid://shopify/ProductVariant/47796365197468",
+    "M / Navy": "gid://shopify/ProductVariant/47858970460316",
+    "M / Beige": "gid://shopify/ProductVariant/47858970493084",
+    "L / White": "gid://shopify/ProductVariant/47796365230236",
+    "L / Navy": "gid://shopify/ProductVariant/47858970525852",
+    "L / Beige": "gid://shopify/ProductVariant/47858970558620",
+    "XL / White": "gid://shopify/ProductVariant/47796365263004",
+    "XL / Navy": "gid://shopify/ProductVariant/47858970591388",
+    "XL / Beige": "gid://shopify/ProductVariant/47858970624156"
+  }
+};
+
 class Component extends DCLogic {
   state = { announcementIndex: 0, copied: false, page: (typeof window !== 'undefined' && window.location.pathname.includes('shipping')) ? 'shipping' : (typeof window !== 'undefined' && window.location.pathname.includes('privacy')) ? 'privacy' : (typeof window !== 'undefined' && window.location.pathname.includes('terms')) ? 'terms' : 'home', scrolled: false, size: null, cart: 0, open: {},
             menuOpen: false, bagOpen: false, aboutOpen: false, query: '', bag: {},
@@ -823,43 +964,61 @@ class Component extends DCLogic {
     return ['blue-obsession', 'born-iconic', 'diva-energy', 'faith-unbroken', 'forever-yours', 'kiss-kill', 'lucky-theory', 'midnight-madness', 'money-talks', 'no-pressure', 'sugar-rush', 'wild-west', 'absolutely-sober'];
   }
 
-  // Shopify variant IDs, same order as catalog(). Sizes: S, M, L, XL.
+  // Lookup Shopify variant GID or numeric ID for a product + color + size.
+  lookupVariant(productName, colorName, size, asGid = false) {
+    if (!SHOPIFY_VARIANTS || !productName || !size) return null;
+    const pMap = SHOPIFY_VARIANTS[productName];
+    if (!pMap) return null;
+    // 1. Check exact "SIZE / COLOR"
+    let gid = colorName ? pMap[size + ' / ' + colorName] : null;
+    // 2. Check size-only "SIZE" (for Diva Energy, Money Talks)
+    if (!gid) gid = pMap[size];
+    if (!gid) return null;
+    if (asGid) return gid;
+    const m = String(gid).match(/(\d+)$/);
+    return m ? m[1] : null;
+  }
+
+  // Shopify variant IDs, generated from SHOPIFY_VARIANTS mapping for backwards compatibility.
   variants() {
-    return [
-      [ { S: '47796266205340', M: '47796266238108', L: '47796266270876', XL: '47796266303644' }, { S: '47858996314268', M: '47858996347036', L: '47858996379804', XL: '47858996412572' } ], // 0: Blue Obsession
-      [ { S: '47858995527836', M: '47858995560604', L: '47858995593372', XL: '47858995626140' }, { S: '47796274036892', M: '47796274069660', L: '47796274102428', XL: '47796274135196' } ], // 1: Born Iconic
-      [ { S: '47796289175708', M: '47796289208476', L: '47796289241244', XL: '47796289274012' } ], // 2: Diva Energy
-      [ { S: '47796297367708', M: '47796297400476', L: '47796297433244', XL: '47796297466012' }, { S: '47858992021660', M: '47858992054428', L: '47858992087196', XL: '47858992119964' } ], // 3: Faith Unbroken
-      [ { S: '47796305887388', M: '47796305920156', L: '47796305952924', XL: '47796305985692' }, { S: '47858989170844', M: '47858989203612', L: '47858989236380', XL: '47858989269148' } ], // 4: Forever Yours
-      [ { S: '47796322304156', M: '47796322336924', L: '47796322369692', XL: '47796322402460' }, { S: '47858986057884', M: '47858986123420', L: '47858986188956', XL: '47858986254492' }, { S: '47858986025116', M: '47858986090652', L: '47858986156188', XL: '47858986221724' } ], // 5: Kiss & Kill
-      [ { S: '47796349960348', M: '47796349993116', L: '47796350025884', XL: '47796350058652' }, { S: '47858980651164', M: '47858980683932', L: '47858980716700', XL: '47858980749468' } ], // 6: Lucky Theory
-      [ { S: '47796333314204', M: '47796333346972', L: '47796333379740', XL: '47796333412508' }, { S: '47858984026268', M: '47858984059036', L: '47858984091804', XL: '47858984124572' } ], // 7: Midnight Madness
-      [ { S: '47796357103772', M: '47796357136540', L: '47796357169308', XL: '47796357202076' } ], // 8: Money Talks
-      [ { S: '47796342620316', M: '47796342653084', L: '47796342685852', XL: '47796342718620' }, { S: '47858982289564', M: '47858982322332', L: '47858982355100', XL: '47858982387868' } ], // 9: No Pressure
-      [ { S: '47796363919516', M: '47796363952284', L: '47796363985052', XL: '47796364017820' }, { S: '47858978390172', M: '47858978422940', L: '47858978455708', XL: '47858978488476' } ], // 10: Sugar Rush
-      [ { S: '47796365164700', M: '47796365197468', L: '47796365230236', XL: '47796365263004' }, { S: '47858970427548', M: '47858970493084', L: '47858970558620', XL: '47858970624156' }, { S: '47858970394780', M: '47858970460316', L: '47858970525852', XL: '47858970591388' } ], // 11: Wild West
-      [
-        { S: '47883263344796', M: '47883263377564', L: '47883263410332', XL: '47883263443100' }, // 12: Absolutely Sober (Black)
-        { S: '47883221041308', M: '47883221139612', L: '47883221237916', XL: '47883221336220' }, // 12: Absolutely Sober (White)
-        { S: '47883221106844', M: '47883221205148', L: '47883221303452', XL: '47883221401756' }, // 12: Absolutely Sober (Beige)
-        { S: '47883221074076', M: '47883221172380', L: '47883221270684', XL: '47883221368988' }  // 12: Absolutely Sober (Navy)
-      ]
-    ];
+    const cat = this.catalog();
+    return cat.map((item) => {
+      const pName = item[0];
+      const colors = item[5] || [{ name: '' }];
+      return colors.map((col) => {
+        const cName = col.name;
+        const res = {};
+        for (const s of ['S', 'M', 'L', 'XL']) {
+          res[s] = this.lookupVariant(pName, cName, s);
+        }
+        return res;
+      });
+    });
   }
 
   // Redirects to Shopify's hosted checkout via a cart permalink. No API token needed.
   checkout() {
     if (this.state.checkingOut) return;
-    const variants = this.variants();
+    const cat = this.catalog();
     const qty = {};
     for (const [key, n] of Object.entries(this.state.bag)) {
       if (!(n > 0)) continue;
       const parts = key.split('|');
-      const idx = parts[0];
+      const idx = Number(parts[0]);
       const size = parts[parts.length - 1];
-      const colorIdx = parts.length === 3 ? parts[1] : 0;
-      const id = variants[Number(idx)] && variants[Number(idx)][colorIdx] && variants[Number(idx)][colorIdx][size];
-      if (!id) { this.setState({ checkoutError: 'A piece in your bag is unavailable or missing a variant in Shopify. Please remove it and try again.' }); return; }
+      const colorIdx = parts.length === 3 ? Number(parts[1]) : 0;
+      const product = cat[idx];
+      if (!product) {
+        this.setState({ checkoutError: 'A piece in your bag is no longer available. Please remove it and try again.' });
+        return;
+      }
+      const pName = product[0];
+      const colorName = (product[5] && product[5][colorIdx]) ? product[5][colorIdx].name : '';
+      const id = this.lookupVariant(pName, colorName, size);
+      if (!id) {
+        this.setState({ checkoutError: 'A piece in your bag is unavailable or missing a variant in Shopify. Please remove it and try again.' });
+        return;
+      }
       qty[id] = (qty[id] || 0) + n;
     }
     const items = Object.entries(qty).map(([id, n]) => id + ':' + n);
