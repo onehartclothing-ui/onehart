@@ -399,8 +399,13 @@
               </div>
               <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;">
                 <sc-for list="{{ pdpColorOptions }}" as="col" hint-placeholder-count="3">
-                  <button onClick="{{ col.select }}" aria-label="{{ col.name }}" style="width:28px;height:28px;border-radius:50%;background:{{ col.hex }};border:1px solid rgba(255,255,255,0.15);cursor:pointer;outline:none;padding:0;transition:all 200ms ease;position:relative;box-shadow:0 2px 5px rgba(0,0,0,0.5)">
-                    <span style="position:absolute;inset:-4px;border-radius:50%;border:1px solid {{ col.ring }};transition:border-color 200ms ease"></span>
+                  <button onClick="{{ col.select }}" aria-label="{{ col.ariaLabel }}" title="{{ col.title }}" style="width:28px;height:28px;border-radius:50%;background:{{ col.hex }};border:1px solid rgba(255,255,255,0.15);cursor:pointer;outline:none;padding:0;transition:all 200ms ease;position:relative;box-shadow:0 2px 5px rgba(0,0,0,0.5)">
+                    <sc-if value="{{ col.isOOS }}" hint-placeholder-val="{{ false }}">
+                      <svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:2">
+                        <line x1="4" y1="24" x2="24" y2="4" stroke="#111111" stroke-width="1.8" stroke-linecap="round" />
+                      </svg>
+                    </sc-if>
+                    <span style="position:absolute;inset:-4px;border-radius:50%;border:1px solid {{ col.ring }};transition:border-color 200ms ease;pointer-events:none"></span>
                   </button>
                 </sc-for>
               </div>
@@ -425,7 +430,7 @@
             <span>FREE SHIPPING ON ALL ORDERS</span>
           </div>
 
-          <button onClick="{{ addToCart }}" style="width:100%;padding:18px 24px;border-radius:999px;border:0;background:#F5F5F0;color:#0A0A0A;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#FFFFFF">{{ ctaLabel }}</button>
+          <button onClick="{{ addToCart }}" disabled="{{ ctaDisabled }}" aria-disabled="{{ ctaAriaDisabled }}" style="width:100%;padding:18px 24px;border-radius:999px;border:0;background:{{ ctaBg }};color:{{ ctaColor }};cursor:{{ ctaCursor }};opacity:{{ ctaOpacity }};font-family:inherit;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all 200ms ease" style-hover="{{ ctaHover }}">{{ ctaLabel }}</button>
 
           <div style="display:flex;flex-direction:column;margin-top:8px">
             <sc-for list="{{ accordions }}" as="a" hint-placeholder-count="2">
@@ -783,6 +788,17 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+// Centralized inventory & fabric availability configuration.
+// Set any color to false to mark it temporarily out of stock across all products.
+// When fabric is restocked in the future, changing 'Beige: true' automatically
+// removes the diagonal slash from Beige swatches and re-enables customer checkout.
+const COLOR_AVAILABILITY = {
+  Beige: false, // Temporarily OUT OF STOCK (fabric unavailable)
+  Black: true,
+  White: true,
+  Navy: true
+};
+
 const SHOPIFY_VARIANTS = {
   "Absolutely Sober": {
     "S / White": "gid://shopify/ProductVariant/47883221041308",
@@ -930,6 +946,12 @@ class Component extends DCLogic {
             cardSize: {}, notice: '', noticeFor: -1, checkingOut: false, checkoutError: '',
             pdp: 0, pdpColor: 0, view: 0, zoomOpen: false, chartOpen: false, chartTab: 'MEN', scale: 1, rotY: 0, tx: 0, ty: 0, dragging: false };
 
+  isColorAvailable(colorName) {
+    if (!colorName) return true;
+    if (COLOR_AVAILABILITY[colorName] === false) return false;
+    return true;
+  }
+
   asset(id, fallback) {
     const r = (typeof window !== 'undefined' && window.__resources) || null;
     return (r && r[id]) || fallback;
@@ -937,23 +959,59 @@ class Component extends DCLogic {
 
   catalog() {
     return [
-      ['Blue Obsession', 899, 999, this.asset('tee1', './Front/Blue Obsession.png'), this.asset('tee1_b', './back/Blue Obsession.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee1', './Front/Blue Obsession.png'),back:this.asset('tee1_b', './back/Blue Obsession.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Blue Obsession Beige.png',back:'./back/Blue Obsession Beige.png'}]],
-      ['Born Iconic', 799, 899, this.asset('tee2', './Front/Born Iconic.png'), this.asset('tee2_b', './back/Born Iconic.png'), [{name:'Black',hex:'#111111',front:this.asset('tee2', './Front/Born Iconic.png'),back:this.asset('tee2_b', './back/Born Iconic.png')},{name:'Navy',hex:'#141E30',front:'./Front/Born Iconic Navy.png',back:'./back/Born Iconic Navy.png'}]],
-      ['Diva Energy', 799, 899, this.asset('tee3', './Front/Diva Energy.png'), this.asset('tee3_b', './back/Diva Energy.png'), [{name:'Black',hex:'#111111',front:this.asset('tee3', './Front/Diva Energy.png'),back:this.asset('tee3_b', './back/Diva Energy.png')}]],
-      ['Faith Unbroken', 799, 899, this.asset('tee4', './Front/Faith Unbroken.png'), this.asset('tee4_b', './back/Faith Unbroken.png'), [{name:'Black',hex:'#111111',front:this.asset('tee4', './Front/Faith Unbroken.png'),back:this.asset('tee4_b', './back/Faith Unbroken.png')},{name:'Navy',hex:'#141E30',front:'./Front/Faith Unbroken Navy.png',back:'./back/Faith Unbroken Navy.png'}]],
-      ['Forever Yours', 899, 999, this.asset('tee5', './Front/Forever Yours.png'), this.asset('tee5_b', './back/Forever Yours.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee5', './Front/Forever Yours.png'),back:this.asset('tee5_b', './back/Forever Yours.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Forever Yours Beige.png',back:'./back/Forever Yours Beige.png'}]],
-      ['Kiss & Kill', 799, 899, this.asset('tee7', './Front/Kiss & Kill.png'), this.asset('tee7_b', './back/Kiss & Kill.png'), [{name:'Black',hex:'#111111',front:this.asset('tee7', './Front/Kiss & Kill.png'),back:this.asset('tee7_b', './back/Kiss & Kill.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Kiss & Kill Beige.png',back:'./back/Kiss & Kill Beige.png'},{name:'Navy',hex:'#141E30',front:'./Front/Kiss & Kill Navy.png',back:'./back/Kiss & Kill Navy.png'}]],
-      ['Lucky Theory', 899, 999, this.asset('tee8', './Front/Lucky Theory.png'), this.asset('tee8_b', './back/Lucky Theory.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee8', './Front/Lucky Theory.png'),back:this.asset('tee8_b', './back/Lucky Theory.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Lucky Theory Beige.png',back:'./back/Lucky Theory Beige.png'}]],
-      ['Midnight Madness', 899, 999, this.asset('tee9', './Front/Midnight Madness.png'), this.asset('tee9_b', './back/Midnight Madness.png'), [{name:'Black',hex:'#111111',front:this.asset('tee9', './Front/Midnight Madness.png'),back:this.asset('tee9_b', './back/Midnight Madness.png')},{name:'Navy',hex:'#141E30',front:'./Front/Midnight Madness Navy.png',back:'./back/Midnight Madness Navy.png'}]],
-      ['Money Talks', 799, 899, this.asset('tee10', './Front/Money Talks.png'), this.asset('tee10_b', './back/Money Talks.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee10', './Front/Money Talks.png'),back:this.asset('tee10_b', './back/Money Talks.png')}]],
-      ['No Pressure', 899, 999, this.asset('tee11', './Front/No Pressure.png'), this.asset('tee11_b', './back/No Pressure.png'), [{name:'Black',hex:'#111111',front:this.asset('tee11', './Front/No Pressure.png'),back:this.asset('tee11_b', './back/No Pressure.png')},{name:'Navy',hex:'#141E30',front:'./Front/No Pressure Navy.png',back:'./back/No Pressure Navy.png'}]],
-      ['Sugar Rush', 799, 899, this.asset('tee12', './Front/Sugar Rush.png'), this.asset('tee12_b', './back/Sugar Rush.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee12', './Front/Sugar Rush.png'),back:this.asset('tee12_b', './back/Sugar Rush.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Sugar Rush Beige.png',back:'./back/Sugar Rush Beige.png'}]],
-      ['Wild West', 899, 999, this.asset('tee13', './Front/Wild West.png'), this.asset('tee13_b', './back/Wild West.png'), [{name:'White',hex:'#F5F5F0',front:this.asset('tee13', './Front/Wild West.png'),back:this.asset('tee13_b', './back/Wild West.png')},{name:'Beige',hex:'#E6DCC8',front:'./Front/Wild West Beige.png',back:'./back/Wild West Beige.png'},{name:'Navy',hex:'#141E30',front:'./Front/Wild West Navy.png',back:'./back/Wild West Navy.png'}]],
+      ['Blue Obsession', 899, 999, this.asset('tee1', './Front/Blue Obsession.png'), this.asset('tee1_b', './back/Blue Obsession.png'), [
+        {name:'White',hex:'#F5F5F0',front:this.asset('tee1', './Front/Blue Obsession.png'),back:this.asset('tee1_b', './back/Blue Obsession.png')},
+        {name:'Beige',hex:'#E6DCC8',front:'./Front/Blue Obsession Beige.png',back:'./back/Blue Obsession Beige.png'}
+      ]],
+      ['Born Iconic', 799, 899, './Front/Born Iconic Navy.png', './back/Born Iconic Navy.png', [
+        {name:'Navy',hex:'#141E30',front:'./Front/Born Iconic Navy.png',back:'./back/Born Iconic Navy.png'},
+        {name:'Black',hex:'#111111',front:this.asset('tee2', './Front/Born Iconic.png'),back:this.asset('tee2_b', './back/Born Iconic.png')}
+      ]],
+      ['Diva Energy', 799, 899, this.asset('tee3', './Front/Diva Energy.png'), this.asset('tee3_b', './back/Diva Energy.png'), [
+        {name:'Black',hex:'#111111',front:this.asset('tee3', './Front/Diva Energy.png'),back:this.asset('tee3_b', './back/Diva Energy.png')}
+      ]],
+      ['Faith Unbroken', 799, 899, './Front/Faith Unbroken Navy.png', './back/Faith Unbroken Navy.png', [
+        {name:'Navy',hex:'#141E30',front:'./Front/Faith Unbroken Navy.png',back:'./back/Faith Unbroken Navy.png'},
+        {name:'Black',hex:'#111111',front:this.asset('tee4', './Front/Faith Unbroken.png'),back:this.asset('tee4_b', './back/Faith Unbroken.png')}
+      ]],
+      ['Forever Yours', 899, 999, this.asset('tee5', './Front/Forever Yours.png'), this.asset('tee5_b', './back/Forever Yours.png'), [
+        {name:'White',hex:'#F5F5F0',front:this.asset('tee5', './Front/Forever Yours.png'),back:this.asset('tee5_b', './back/Forever Yours.png')},
+        {name:'Beige',hex:'#E6DCC8',front:'./Front/Forever Yours Beige.png',back:'./back/Forever Yours Beige.png'}
+      ]],
+      ['Kiss & Kill', 799, 899, this.asset('tee7', './Front/Kiss & Kill.png'), this.asset('tee7_b', './back/Kiss & Kill.png'), [
+        {name:'Black',hex:'#111111',front:this.asset('tee7', './Front/Kiss & Kill.png'),back:this.asset('tee7_b', './back/Kiss & Kill.png')},
+        {name:'Navy',hex:'#141E30',front:'./Front/Kiss & Kill Navy.png',back:'./back/Kiss & Kill Navy.png'},
+        {name:'Beige',hex:'#E6DCC8',front:'./Front/Kiss & Kill Beige.png',back:'./back/Kiss & Kill Beige.png'}
+      ]],
+      ['Lucky Theory', 899, 999, this.asset('tee8', './Front/Lucky Theory.png'), this.asset('tee8_b', './back/Lucky Theory.png'), [
+        {name:'White',hex:'#F5F5F0',front:this.asset('tee8', './Front/Lucky Theory.png'),back:this.asset('tee8_b', './back/Lucky Theory.png')},
+        {name:'Beige',hex:'#E6DCC8',front:'./Front/Lucky Theory Beige.png',back:'./back/Lucky Theory Beige.png'}
+      ]],
+      ['Midnight Madness', 899, 999, './Front/Midnight Madness Navy.png', './back/Midnight Madness Navy.png', [
+        {name:'Navy',hex:'#141E30',front:'./Front/Midnight Madness Navy.png',back:'./back/Midnight Madness Navy.png'},
+        {name:'Black',hex:'#111111',front:this.asset('tee9', './Front/Midnight Madness.png'),back:this.asset('tee9_b', './back/Midnight Madness.png')}
+      ]],
+      ['Money Talks', 799, 899, this.asset('tee10', './Front/Money Talks.png'), this.asset('tee10_b', './back/Money Talks.png'), [
+        {name:'White',hex:'#F5F5F0',front:this.asset('tee10', './Front/Money Talks.png'),back:this.asset('tee10_b', './back/Money Talks.png')}
+      ]],
+      ['No Pressure', 899, 999, this.asset('tee11', './Front/No Pressure.png'), this.asset('tee11_b', './back/No Pressure.png'), [
+        {name:'Black',hex:'#111111',front:this.asset('tee11', './Front/No Pressure.png'),back:this.asset('tee11_b', './back/No Pressure.png')},
+        {name:'Navy',hex:'#141E30',front:'./Front/No Pressure Navy.png',back:'./back/No Pressure Navy.png'}
+      ]],
+      ['Sugar Rush', 799, 899, this.asset('tee12', './Front/Sugar Rush.png'), this.asset('tee12_b', './back/Sugar Rush.png'), [
+        {name:'White',hex:'#F5F5F0',front:this.asset('tee12', './Front/Sugar Rush.png'),back:this.asset('tee12_b', './back/Sugar Rush.png')},
+        {name:'Beige',hex:'#E6DCC8',front:'./Front/Sugar Rush Beige.png',back:'./back/Sugar Rush Beige.png'}
+      ]],
+      ['Wild West', 899, 999, './Front/Wild West Navy.png', './back/Wild West Navy.png', [
+        {name:'Navy',hex:'#141E30',front:'./Front/Wild West Navy.png',back:'./back/Wild West Navy.png'},
+        {name:'White',hex:'#F5F5F0',front:this.asset('tee13', './Front/Wild West.png'),back:this.asset('tee13_b', './back/Wild West.png')},
+        {name:'Beige',hex:'#E6DCC8',front:'./Front/Wild West Beige.png',back:'./back/Wild West Beige.png'}
+      ]],
       ['Absolutely Sober', 799, 899, './Front/Absolute Black.png', './back/Absolute Black.png', [
         {name:'Black',hex:'#111111',front:'./Front/Absolute Black.png',back:'./back/Absolute Black.png'},
         {name:'White',hex:'#F5F5F0',front:'./Front/Absolute White.png',back:'./back/Absolute White.png'},
-        {name:'Beige',hex:'#E6DCC8',front:'./Front/Absolute Beige.png',back:'./back/Absolute Beige.png'},
-        {name:'Navy',hex:'#141E30',front:'./Front/Absolute Navy.png',back:'./back/Absolute Navy.png'}
+        {name:'Navy',hex:'#141E30',front:'./Front/Absolute Navy.png',back:'./back/Absolute Navy.png'},
+        {name:'Beige',hex:'#E6DCC8',front:'./Front/Absolute Beige.png',back:'./back/Absolute Beige.png'}
       ]]
     ];
   }
@@ -1014,6 +1072,10 @@ class Component extends DCLogic {
       }
       const pName = product[0];
       const colorName = (product[5] && product[5][colorIdx]) ? product[5][colorIdx].name : '';
+      if (!this.isColorAvailable(colorName)) {
+        this.setState({ checkoutError: `${colorName || 'This piece'} is temporarily out of stock. Please remove it from your bag to continue.` });
+        return;
+      }
       const id = this.lookupVariant(pName, colorName, size);
       if (!id) {
         this.setState({ checkoutError: 'A piece in your bag is unavailable or missing a variant in Shopify. Please remove it and try again.' });
@@ -1095,6 +1157,35 @@ class Component extends DCLogic {
     setTimeout(() => { this.parallax(); this.bindCursor(); }, 60);
     this.playVideo();
     this.reveal();
+
+    if (typeof window !== 'undefined' && window.location.search) {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const pParam = params.get('pdp') || params.get('product');
+        const cParam = params.get('color');
+        const cat = this.catalog();
+        let targetPdp = -1;
+        if (pParam !== null) {
+          if (/^\d+$/.test(pParam)) {
+            const num = parseInt(pParam, 10);
+            if (num >= 0 && num < cat.length) targetPdp = num;
+          } else {
+            const handles = this.handles();
+            const hIdx = handles.indexOf(pParam.toLowerCase().trim());
+            if (hIdx !== -1) targetPdp = hIdx;
+          }
+        }
+        if (targetPdp !== -1) {
+          let targetColor = 0;
+          if (cParam) {
+            const colors = cat[targetPdp][5] || [];
+            const cIdx = colors.findIndex((col) => col.name.toLowerCase() === cParam.toLowerCase().trim());
+            if (cIdx !== -1) targetColor = cIdx;
+          }
+          this.setState({ page: 'pdp', pdp: targetPdp, pdpColor: targetColor, view: 0 });
+        }
+      } catch (err) {}
+    }
   }
   componentDidUpdate() { this.playVideo(); this.reveal(); this.bindStage(); this.parallax(); }
 
@@ -1281,6 +1372,8 @@ class Component extends DCLogic {
     const cur = cat[this.state.pdp] || cat[0];
     const bestsellers = [7, 0, 4, 6, 9, 11];
     const safeColorIdx = (cur[5] && cur[5][this.state.pdpColor]) ? this.state.pdpColor : 0;
+    const curColorObj = (cur[5] && cur[5][safeColorIdx]) ? cur[5][safeColorIdx] : null;
+    const isCurColorOOS = curColorObj ? !this.isColorAvailable(curColorObj.name, cur[0]) : false;
     const views = [
       (cur[5] && cur[5][safeColorIdx] && cur[5][safeColorIdx].front) ? cur[5][safeColorIdx].front : cur[3],
       (cur[5] && cur[5][safeColorIdx] && cur[5][safeColorIdx].back) ? cur[5][safeColorIdx].back : (cur[4] || cur[3])
@@ -1333,12 +1426,17 @@ class Component extends DCLogic {
       const c = cat[idx];
       const colorName = (c[5] && c[5][colorIdx]) ? c[5][colorIdx].name : '';
       const imgFront = (c[5] && c[5][colorIdx] && c[5][colorIdx].front) ? c[5][colorIdx].front : c[3];
+      const isOOS = !this.isColorAvailable(colorName, c[0]);
+      const sizeDisplay = colorName
+        ? (colorName + ' / ' + size + (isOOS ? ' (Out of stock)' : ''))
+        : (size + (isOOS ? ' (Out of stock)' : ''));
       return {
-        name: c[0], img: imgFront, qty, size: colorName ? (colorName + ' / ' + size) : size,
+        name: c[0], img: imgFront, qty, size: sizeDisplay,
+        isOOS,
         line: this.rupees(c[1] * qty),
-        inc: () => bump(key, 1),
+        inc: () => isOOS ? null : bump(key, 1),
         dec: () => bump(key, -1),
-        remove: () => this.setState((s) => { const b = { ...s.bag }; delete b[key]; return { bag: b, cart: Math.max(0, s.cart - qty) }; })
+        remove: () => this.setState((s) => { const b = { ...s.bag }; delete b[key]; return { bag: b, cart: Math.max(0, s.cart - qty), checkoutError: '' }; })
       };
     });
 
@@ -1426,21 +1524,27 @@ class Component extends DCLogic {
       pdpImage: (cur[5] && cur[5][safeColorIdx] && cur[5][safeColorIdx].front) ? cur[5][safeColorIdx].front : cur[3],
       pdpBack: (cur[5] && cur[5][safeColorIdx] && cur[5][safeColorIdx].back) ? cur[5][safeColorIdx].back : (cur[4] || cur[3]),
       hasColors: cur[5] && cur[5].length > 1,
-      pdpColorName: cur[5] ? (cur[5][safeColorIdx] ? cur[5][safeColorIdx].name : '') : '',
-      pdpColorOptions: (cur[5] || []).map((c, i) => ({
-        name: c.name,
-        hex: c.hex,
-        ring: this.state.pdpColor === i ? '#FFFFFF' : 'transparent',
-        select: (e) => {
-          e.preventDefault();
-          this.setState({ pdpColor: i, view: 0 });
-          setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
-          if (typeof window !== 'undefined' && c.front) {
-            new Image().src = c.front;
-            if (c.back) new Image().src = c.back;
+      pdpColorName: curColorObj ? (isCurColorOOS ? curColorObj.name + ' — Out of stock' : curColorObj.name) : '',
+      pdpColorOptions: (cur[5] || []).map((c, i) => {
+        const isOOS = !this.isColorAvailable(c.name, cur[0]);
+        return {
+          name: c.name,
+          hex: c.hex,
+          isOOS,
+          title: isOOS ? (c.name + ' — Out of Stock') : c.name,
+          ariaLabel: isOOS ? (c.name + ' — Out of stock') : c.name,
+          ring: this.state.pdpColor === i ? '#FFFFFF' : 'transparent',
+          select: (e) => {
+            e.preventDefault();
+            this.setState({ pdpColor: i, view: 0 });
+            setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
+            if (typeof window !== 'undefined' && c.front) {
+              new Image().src = c.front;
+              if (c.back) new Image().src = c.back;
+            }
           }
-        }
-      })),
+        };
+      }),
       viewImg,
       viewLabel: 'Back print',
       flipLabel: this.state.view === 0 ? 'Back print' : 'Front print',
@@ -1510,6 +1614,9 @@ class Component extends DCLogic {
           e.stopPropagation(); e.preventDefault();
           const size = this.state.cardSize[i];
           if (!size) { this.setState({ notice: 'size', noticeFor: i }); return; }
+          const curItem = cat[i];
+          const colName = (curItem[5] && curItem[5][0]) ? curItem[5][0].name : '';
+          if (!this.isColorAvailable(colName, curItem[0])) return;
           const key = i + '|0|' + size; // Default color is 0 when adding from card
           this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true, notice: '' }));
         },
@@ -1571,10 +1678,18 @@ class Component extends DCLogic {
       goHome: (e) => { e.preventDefault(); window.scrollTo(0, 0); if(typeof window !== 'undefined' && window.location.pathname !== '/') window.history.pushState({}, '', '/'); this.setState({ page: 'home' }); },
       sizes,
       accordions,
-      ctaLabel: this.state.size ? 'Add to cart' : 'Select size',
+      ctaLabel: isCurColorOOS ? 'Out of stock' : (this.state.size ? 'Add to cart' : 'Select size'),
+      ctaDisabled: isCurColorOOS,
+      ctaAriaDisabled: isCurColorOOS ? 'true' : 'false',
+      ctaBg: isCurColorOOS ? '#222224' : '#F5F5F0',
+      ctaColor: isCurColorOOS ? 'rgba(245,245,240,0.45)' : '#0A0A0A',
+      ctaCursor: isCurColorOOS ? 'not-allowed' : 'pointer',
+      ctaOpacity: isCurColorOOS ? 0.6 : 1,
+      ctaHover: isCurColorOOS ? '' : 'background:#FFFFFF',
       addToCart: () => {
+        if (isCurColorOOS) return;
         if (!this.state.size) return;
-        const key = this.state.pdp + '|' + this.state.pdpColor + '|' + this.state.size;
+        const key = this.state.pdp + '|' + safeColorIdx + '|' + this.state.size;
         this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true }));
       },
       newDrops: this.products('drop', [0, 1, 2]),

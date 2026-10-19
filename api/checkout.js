@@ -102,6 +102,9 @@ export default async function handler(req, res) {
 
     const merged = new Map();
     for (const l of lines) {
+      if (l.color && l.color.trim().toLowerCase() === 'beige') {
+        return res.status(409).json({ error: 'Beige fabric is temporarily out of stock. Please select another color.' });
+      }
       const product = products[l.handle];
       if (!product) return res.status(409).json({ error: `A piece in your bag is no longer available (${l.handle}).` });
       const variant = product.variants.nodes.find((v) => {
