@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -114,11 +114,26 @@
     }
   }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
-  .nk-product-card .nk-product-back { opacity: 0; transition: opacity 250ms ease; }
-  .nk-product-card .nk-product-front { transition: opacity 250ms ease; }
+  .nk-product-card .nk-product-back { opacity: 0; transition: opacity 280ms ease; }
+  .nk-product-card .nk-product-front { transition: opacity 280ms ease; }
+  .nk-card-dots { pointer-events: none; }
+  .nk-dot-front, .nk-dot-back { transition: background 220ms ease, opacity 220ms ease; }
+
+  .nk-product-card.show-back .nk-product-back { opacity: 1 !important; }
+  .nk-product-card.show-back .nk-product-front { opacity: 0 !important; }
+  .nk-product-card.show-back .nk-dot-front { background: rgba(255,255,255,0.3) !important; }
+  .nk-product-card.show-back .nk-dot-back { background: #FFFFFF !important; }
+
+  .nk-product-card.show-front .nk-product-back { opacity: 0 !important; }
+  .nk-product-card.show-front .nk-product-front { opacity: 1 !important; }
+  .nk-product-card.show-front .nk-dot-front { background: #FFFFFF !important; }
+  .nk-product-card.show-front .nk-dot-back { background: rgba(255,255,255,0.3) !important; }
+
   @media (hover: hover) and (pointer: fine) {
-    .nk-product-card:hover .nk-product-back { opacity: 1; }
-    .nk-product-card:hover .nk-product-front { opacity: 0; }
+    .nk-product-card:hover .nk-product-back { opacity: 1 !important; }
+    .nk-product-card:hover .nk-product-front { opacity: 0 !important; }
+    .nk-product-card:hover .nk-dot-front { background: rgba(255,255,255,0.3) !important; }
+    .nk-product-card:hover .nk-dot-back { background: #FFFFFF !important; }
   }
   #pdp-slider image-slot { pointer-events: none; }
   .header-container { padding: 0 32px; gap: 24px; }
@@ -329,9 +344,13 @@
                       <span>{{ hw.num }}</span>
                       <span style="color:#CAA7A7;border:1px solid rgba(202,167,167,0.3);padding:2px 8px;border-radius:2px">HALLOWEEN EDITION</span>
                     </div>
-                    <div style="position:relative;margin:14px 0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;">
+                    <div class="nk-card-image-box" style="position:relative;margin:14px 0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;touch-action:pan-y;">
                       <img class="nk-product-front" src="{{ hw.img }}" alt="{{ hw.name }}" loading="lazy" style="width:94%;height:94%;object-fit:contain;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
                       <img class="nk-product-back" src="{{ hw.imgBack }}" alt="{{ hw.name }} back" loading="lazy" style="width:94%;height:94%;object-fit:contain;position:absolute;inset:0;margin:auto;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
+                      <div class="nk-card-dots" style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:5px;align-items:center;padding:3px 8px;border-radius:999px;background:rgba(10,10,12,0.65);backdrop-filter:blur(4px);pointer-events:none;z-index:4">
+                        <span class="nk-dot-front" style="width:5px;height:5px;border-radius:50%;background:#FFFFFF;display:inline-block"></span>
+                        <span class="nk-dot-back" style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.3);display:inline-block"></span>
+                      </div>
                     </div>
                     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
                       <div>
@@ -387,9 +406,13 @@
                     <span>{{ w.num }}</span>
                     <span style="color:#CAA7A7">{{ w.tag }}</span>
                   </div>
-                  <div style="position:relative;margin:12px 0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;">
+                  <div class="nk-card-image-box" style="position:relative;margin:12px 0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;touch-action:pan-y;">
                     <img class="nk-product-front" src="{{ w.img }}" alt="{{ w.name }}" loading="lazy" style="width:94%;height:94%;object-fit:contain;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
                     <img class="nk-product-back" src="{{ w.imgBack }}" alt="{{ w.name }} back" loading="lazy" style="width:94%;height:94%;object-fit:contain;position:absolute;inset:0;margin:auto;display:block;filter:drop-shadow(0 30px 44px rgba(0,0,0,0.7));animation:nk-float 7s ease-in-out infinite">
+                    <div class="nk-card-dots" style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:5px;align-items:center;padding:3px 8px;border-radius:999px;background:rgba(10,10,12,0.65);backdrop-filter:blur(4px);pointer-events:none;z-index:4">
+                      <span class="nk-dot-front" style="width:5px;height:5px;border-radius:50%;background:#FFFFFF;display:inline-block"></span>
+                      <span class="nk-dot-back" style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.3);display:inline-block"></span>
+                    </div>
                   </div>
                   <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
                     <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(15px,1.5vw,20px);line-height:1.15">{{ w.name }}</span>
@@ -475,7 +498,15 @@
 
   <sc-if value="{{ isPdp }}" hint-placeholder-val="{{ false }}">
     <div style="position:relative;z-index:1;background:#0A0A0A;padding-top:132px">
-      <div style="max-width:1600px;margin:0 auto;padding:56px 32px 96px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:64px;align-items:start" data-pdp-grid="">
+      <!-- MOBILE / DESKTOP BACK BUTTON -->
+      <div style="max-width:1600px;margin:0 auto;padding:16px 32px 0;display:flex;align-items:center;">
+        <button onClick="{{ goBackToCollection }}" aria-label="Back to collection" style="display:inline-flex;align-items:center;gap:9px;padding:9px 18px 9px 13px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);border-radius:999px;color:rgba(245,245,240,0.9);font-family:inherit;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:all 200ms ease;box-shadow:0 4px 16px rgba(0,0,0,0.4)" style-hover="background:rgba(255,255,255,0.12);color:#FFFFFF;border-color:rgba(255,255,255,0.28)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          <span>{{ backToCollectionLabel }}</span>
+        </button>
+      </div>
+
+      <div style="max-width:1600px;margin:0 auto;padding:24px 32px 96px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:64px;align-items:start" data-pdp-grid="">
 
         <div style="display:flex;flex-direction:column;gap:16px">
           <div style="display:flex;gap:12px;margin-bottom:12px">
@@ -1286,6 +1317,61 @@ class Component extends DCLogic {
     }
   }
 
+  openProduct(collection, index, e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    this._lastScroll = (typeof window !== 'undefined') ? (window.scrollY || window.pageYOffset || 0) : 0;
+    this._lastCollection = collection;
+    const isHw = collection === 'halloween';
+    const handles = isHw ? this.halloweenHandles() : this.handles();
+    const handle = (handles && handles[index]) ? handles[index] : String(index);
+    if (typeof window !== 'undefined' && window.history) {
+      window.history.pushState({ page: 'pdp', collection, scrollY: this._lastScroll }, '', '?pdp=' + handle);
+    }
+    window.scrollTo(0, 0);
+    this.setState({
+      page: 'pdp',
+      pdpCollection: collection,
+      pdp: index,
+      pdpColor: 0,
+      view: 0,
+      size: null,
+      scale: 1, rotY: 0, tx: 0, ty: 0
+    });
+    setTimeout(() => {
+      const s = document.getElementById('pdp-slider');
+      if (s) s.scrollTo({ left: 0, behavior: 'instant' });
+    }, 10);
+  }
+
+  goBackToCollection(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    const targetCollection = this._lastCollection || (this.state.pdpCollection === 'halloween' ? 'halloween' : 'drop001');
+    const savedScroll = (typeof this._lastScroll === 'number' && this._lastScroll > 0) ? this._lastScroll : null;
+
+    if (typeof window !== 'undefined' && window.history) {
+      if (window.location.search && window.location.search.includes('pdp=')) {
+        window.history.pushState({ page: 'home' }, '', '/');
+      }
+    }
+
+    this.setState({ page: 'home' });
+
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        if (savedScroll !== null) {
+          window.scrollTo({ top: savedScroll, behavior: 'instant' });
+          setTimeout(() => {
+            window.scrollTo({ top: savedScroll, behavior: 'instant' });
+          }, 40);
+        } else {
+          const sel = targetCollection === 'halloween' ? '#halloween-drop' : '#nk-drop';
+          const el = document.querySelector(sel);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 30);
+    });
+  }
+
   halloweenProducts(prefix, idxs) {
     const cat = this.halloweenCatalog();
     return idxs.map((ci, i) => ({
@@ -1296,12 +1382,7 @@ class Component extends DCLogic {
       originalPrice: '',
       img: cat[ci][3],
       imgBack: cat[ci][4] || cat[ci][3],
-      open: (e) => {
-        e.preventDefault();
-        window.scrollTo(0, 0);
-        this.setState({ page: 'pdp', pdpCollection: 'halloween', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 });
-        setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
-      }
+      open: (e) => this.openProduct('halloween', ci, e)
     }));
   }
 
@@ -1442,6 +1523,119 @@ class Component extends DCLogic {
     }, { passive: false });
   }
 
+  bindCardSwipes() {
+    if (typeof document === 'undefined') return;
+    const cards = document.querySelectorAll('.nk-product-card');
+    cards.forEach((card) => {
+      if (card.__swipeBound) return;
+      card.__swipeBound = true;
+
+      const imgBox = card.querySelector('.nk-card-image-box');
+      const target = imgBox || card;
+
+      let startX = 0;
+      let startY = 0;
+      let isHorizontal = false;
+      let isVertical = false;
+
+      const onTouchStart = (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        const t = e.touches[0];
+        startX = t.clientX;
+        startY = t.clientY;
+        isHorizontal = false;
+        isVertical = false;
+      };
+
+      const onTouchMove = (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        const t = e.touches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+
+        if (!isHorizontal && !isVertical) {
+          if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) {
+            isVertical = true;
+          } else if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)) {
+            isHorizontal = true;
+          }
+        }
+      };
+
+      const onTouchEnd = (e) => {
+        if (!isHorizontal) return;
+        const t = e.changedTouches && e.changedTouches[0];
+        if (!t) return;
+        const dx = t.clientX - startX;
+
+        if (Math.abs(dx) >= 30) {
+          card.__swipedAt = Date.now();
+          if (dx < 0) {
+            // Swipe Left -> show Back
+            card.classList.remove('show-front');
+            card.classList.add('show-back');
+          } else {
+            // Swipe Right -> show Front
+            card.classList.remove('show-back');
+            card.classList.add('show-front');
+          }
+        }
+      };
+
+      target.addEventListener('touchstart', onTouchStart, { passive: true });
+      target.addEventListener('touchmove', onTouchMove, { passive: true });
+      target.addEventListener('touchend', onTouchEnd, { passive: true });
+      target.addEventListener('touchcancel', () => { isHorizontal = false; isVertical = false; }, { passive: true });
+
+      // Pointer event support for touch emulation / touchscreens
+      target.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+        startX = e.clientX;
+        startY = e.clientY;
+        isHorizontal = false;
+        isVertical = false;
+      }, { passive: true });
+
+      target.addEventListener('pointermove', (e) => {
+        if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        if (!isHorizontal && !isVertical) {
+          if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) {
+            isVertical = true;
+          } else if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)) {
+            isHorizontal = true;
+          }
+        }
+      }, { passive: true });
+
+      target.addEventListener('pointerup', (e) => {
+        if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+        if (!isHorizontal) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) >= 30) {
+          card.__swipedAt = Date.now();
+          if (dx < 0) {
+            card.classList.remove('show-front');
+            card.classList.add('show-back');
+          } else {
+            card.classList.remove('show-back');
+            card.classList.add('show-front');
+          }
+        }
+      }, { passive: true });
+
+      // Suppress accidental PDP navigation when swiping
+      card.addEventListener('click', (e) => {
+        if (card.__swipedAt && (Date.now() - card.__swipedAt < 350)) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          return false;
+        }
+      }, true);
+    });
+  }
+
   componentDidMount() {
     this.updateCountdown();
     this._halloweenTimer = setInterval(() => {
@@ -1463,16 +1657,41 @@ class Component extends DCLogic {
     this.onScroll = () => {
       const s = window.scrollY > 40;
       if (s !== this.state.scrolled) this.setState({ scrolled: s });
-      if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; this.parallax(); });
+      if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; this.parallax(); this.bindCardSwipes(); });
     };
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll, { passive: true });
     window.addEventListener('pageshow', () => { if (this.state.checkingOut) this.setState({ checkingOut: false }); });
+
+    // Handle browser back button (popstate)
+    window.addEventListener('popstate', (e) => {
+      const params = new URLSearchParams(window.location.search);
+      const pParam = params.get('pdp') || params.get('product');
+      if (!pParam) {
+        if (this.state.page === 'pdp') {
+          const targetCollection = (e.state && e.state.collection) || this._lastCollection || (this.state.pdpCollection === 'halloween' ? 'halloween' : 'drop001');
+          const savedScroll = (e.state && typeof e.state.scrollY === 'number') ? e.state.scrollY : this._lastScroll;
+          this.setState({ page: 'home' });
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              if (typeof savedScroll === 'number' && savedScroll > 0) {
+                window.scrollTo({ top: savedScroll, behavior: 'instant' });
+              } else {
+                const sel = targetCollection === 'halloween' ? '#halloween-drop' : '#nk-drop';
+                const el = document.querySelector(sel);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 30);
+          });
+        }
+      }
+    });
+
     this._announcementTimer = setInterval(() => {
       if (this.state.copied || this._announcementPaused) return;
       this.setState((s) => ({ announcementIndex: (s.announcementIndex + 1) % 2 }));
     }, 4500);
-    setTimeout(() => { this.parallax(); this.bindCursor(); }, 60);
+    setTimeout(() => { this.parallax(); this.bindCursor(); this.bindCardSwipes(); }, 60);
     this.playVideo();
     this.reveal();
 
@@ -1542,7 +1761,7 @@ class Component extends DCLogic {
       } catch (err) {}
     }
   }
-  componentDidUpdate() { this.playVideo(); this.reveal(); this.bindStage(); this.parallax(); }
+  componentDidUpdate() { this.playVideo(); this.reveal(); this.bindStage(); this.parallax(); this.bindCardSwipes(); }
 
   playVideo() {
     const v = document.getElementById('nk-hero-video');
@@ -1688,12 +1907,7 @@ class Component extends DCLogic {
       originalPrice: this.rupees(cat[ci][2]),
       img: cat[ci][3],
       imgBack: cat[ci][4] || cat[ci][3],
-      open: (e) => { 
-        e.preventDefault(); 
-        window.scrollTo(0, 0); 
-        this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); 
-        setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
-      }
+      open: (e) => this.openProduct('drop001', ci, e)
     }));
   }
 
@@ -1894,20 +2108,7 @@ class Component extends DCLogic {
             noticeForHalloween: -1
           }));
         },
-        open: (e) => {
-          e.preventDefault();
-          window.scrollTo(0, 0);
-          this.setState({
-            page: 'pdp',
-            pdpCollection: 'halloween',
-            pdp: i,
-            pdpColor: 0,
-            view: 0,
-            size: null,
-            scale: 1, rotY: 0, tx: 0, ty: 0
-          });
-          setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
-        }
+        open: (e) => this.openProduct('halloween', i, e)
       })),
       query: this.state.query,
       onSearch: (e) => {
@@ -1968,7 +2169,9 @@ class Component extends DCLogic {
       checkoutError: this.state.checkoutError,
       bagTotal: this.rupees(bagEntries.reduce((t, [k, qty]) => { const isHw = k.startsWith('hw_'); const cleanKey = isHw ? k.slice(3) : k; const idx = Number(cleanKey.split('|')[0]); const item = isHw ? this.halloweenCatalog()[idx] : this.catalog()[idx]; return t + (item ? item[1] * qty : 0); }, 0)),
       stop: (e) => e.stopPropagation(),
-      pdpSubtitle: isPdpHw ? 'After Dark â€” Halloween Edition Â· Oversized Tee' : 'Oversized tees',
+      backToCollectionLabel: 'Back to Collection',
+      goBackToCollection: (e) => this.goBackToCollection(e),
+      pdpSubtitle: isPdpHw ? 'After Dark — Halloween Edition · Oversized Tee' : 'Oversized tees',
       pdpDesc: isPdpHw ? '240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem. Dedicated Halloween Edition.' : '240gsm combed ringspun cotton. Boxy oversized fit, drop shoulder, double-stitched hem.',
       pdpHasOriginalPrice: !isPdpHw && cur[2] != null,
       pdpName: cur[0],
@@ -2027,11 +2230,7 @@ class Component extends DCLogic {
             isBestSeller: true,
             num: String(ci + 1).padStart(2, '0'),
             sway: (j * 0.7).toFixed(1) + 's',
-            open: (e) => { 
-              e.preventDefault(); window.scrollTo(0, 0); 
-              this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); 
-              setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
-            }
+            open: (e) => this.openProduct('drop001', ci, e)
           };
         })
       })),
@@ -2041,11 +2240,7 @@ class Component extends DCLogic {
           img: c[3], imgBack: c[4] || c[3], name: c[0],
           num: String(ci + 1).padStart(2, '0'),
           sway: (j * 0.7).toFixed(1) + 's',
-          open: (e) => { 
-            e.preventDefault(); window.scrollTo(0, 0); 
-            this.setState({ page: 'pdp', pdp: ci, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); 
-            setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
-          }
+          open: (e) => this.openProduct('drop001', ci, e)
         };
       }),
       visible: cat.map((c, i) => ({
@@ -2074,11 +2269,7 @@ class Component extends DCLogic {
           this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true, notice: '' }));
         },
         depth: [0.8, 0.3, 1.1, 0.45, 0.95, 0.6][i % 6],
-        open: (e) => { 
-          e.preventDefault(); window.scrollTo(0, 0); 
-          this.setState({ page: 'pdp', pdp: i, pdpColor: 0, view: 0, size: null, scale: 1, rotY: 0, tx: 0, ty: 0 }); 
-          setTimeout(() => { const s = document.getElementById('pdp-slider'); if(s) s.scrollTo({left: 0, behavior: 'instant'}); }, 10);
-        }
+        open: (e) => this.openProduct('drop001', i, e)
       })).filter((p, mappedIdx) => {
         if (!q) return true;
         const handles = this.handles();
