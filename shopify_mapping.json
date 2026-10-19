@@ -136,5 +136,66 @@
     "XL / White": "gid://shopify/ProductVariant/47796365263004",
     "XL / Navy": "gid://shopify/ProductVariant/47858970591388",
     "XL / Beige": "gid://shopify/ProductVariant/47858970624156"
+  },
+  "Boo Bites": {
+    "S / Black": null,
+    "M / Black": null,
+    "L / Black": null,
+    "XL / Black": null,
+    "S / Elephant Grey": null,
+    "M / Elephant Grey": null,
+    "L / Elephant Grey": null,
+    "XL / Elephant Grey": null
+  },
+  "Boo Season": {
+    "S / Black": null,
+    "M / Black": null,
+    "L / Black": null,
+    "XL / Black": null,
+    "S / Elephant Grey": null,
+    "M / Elephant Grey": null,
+    "L / Elephant Grey": null,
+    "XL / Elephant Grey": null
+  },
+  "Dead on Arrival": {
+    "S / Black": null,
+    "M / Black": null,
+    "L / Black": null,
+    "XL / Black": null,
+    "S / Elephant Grey": null,
+    "M / Elephant Grey": null,
+    "L / Elephant Grey": null,
+    "XL / Elephant Grey": null
+  },
+  "Killer Encore": {
+    "S / Black": null,
+    "M / Black": null,
+    "L / Black": null,
+    "XL / Black": null,
+    "S / Elephant Grey": null,
+    "M / Elephant Grey": null,
+    "L / Elephant Grey": null,
+    "XL / Elephant Grey": null
+  },
+  "Nightmare Run": {
+    "S / Black": null,
+    "M / Black": null,
+    "L / Black": null,
+    "XL / Black": null,
+    "S / Elephant Grey": null,
+    "M / Elephant Grey": null,
+    "L / Elephant Grey": null,
+    "XL / Elephant Grey": null
+  },
+  "Scream Scoop": {
+    "S / Black": null,
+    "M / Black": null,
+    "L / Black": null,
+    "XL / Black": null,
+    "S / Elephant Grey": null,
+    "M / Elephant Grey": null,
+    "L / Elephant Grey": null,
+    "XL / Elephant Grey": null
   }
 }
+

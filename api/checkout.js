@@ -4,6 +4,15 @@
 const API_VERSION = '2026-07';
 const SIZES = ['S', 'M', 'L', 'XL'];
 const HANDLE_RE = /^[a-z0-9][a-z0-9-]{0,99}$/;
+const HALLOWEEN_LAUNCH_TIMESTAMP = 1792434600000; // 2026-10-20T00:00:00+05:30 (Asia/Kolkata)
+const HALLOWEEN_HANDLES = new Set([
+  'boo-bites',
+  'boo-season',
+  'dead-on-arrival',
+  'killer-encore',
+  'nightmare-run',
+  'scream-scoop'
+]);
 
 const PRODUCT_QUERY = `query Variants($handle: String!) {
   product(handle: $handle) {
@@ -102,6 +111,11 @@ export default async function handler(req, res) {
 
     const merged = new Map();
     for (const l of lines) {
+      if (HALLOWEEN_HANDLES.has(l.handle) && Date.now() < HALLOWEEN_LAUNCH_TIMESTAMP) {
+        return res.status(403).json({
+          error: 'The AFTER DARK — HALLOWEEN EDITION drop unlocks automatically at 12:00 AM IST on 20 October 2026. Early checkout is restricted.'
+        });
+      }
       if (l.color && l.color.trim().toLowerCase() === 'beige') {
         return res.status(409).json({ error: 'Beige fabric is temporarily out of stock. Please select another color.' });
       }
