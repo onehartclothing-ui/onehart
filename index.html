@@ -1973,7 +1973,8 @@ class Component extends DCLogic {
 
     const isLive = this.isHalloweenActive();
     const isPdpHw = this.state.pdpCollection === 'halloween';
-    const cat = isPdpHw ? this.halloweenCatalog() : this.catalog();
+    const dropCat = this.catalog();
+    const cat = isPdpHw ? this.halloweenCatalog() : dropCat;
     const cur = cat[this.state.pdp] || cat[0];
     const bestsellers = [7, 0, 4, 6, 9, 11];
     const safeColorIdx = (cur[5] && cur[5][this.state.pdpColor]) ? this.state.pdpColor : 0;
@@ -2187,7 +2188,7 @@ class Component extends DCLogic {
         }
       },
       clearSearch: (e) => { e.preventDefault(); this.setState({ query: '' }); },
-      emptySearch: !!(this.state.query.trim() && cat.filter((c, i) => {
+      emptySearch: !!(this.state.query.trim() && dropCat.filter((c, i) => {
         const q = this.state.query.trim().toLowerCase();
         const handles = this.handles();
         const searchString = (c[0] + " " + (handles[i] || "") + " oversized tee t-shirt streetwear").toLowerCase();
@@ -2253,7 +2254,7 @@ class Component extends DCLogic {
       chartTabWomenAria: this.state.chartTab === 'WOMEN' ? 'true' : 'false',
       setChartTabMen: () => this.setState({ chartTab: 'MEN' }),
       setChartTabWomen: () => this.setState({ chartTab: 'WOMEN' }),
-      visibleCount: String(cat.filter((c, i) => {
+      visibleCount: String(dropCat.filter((c, i) => {
         if (!q) return true;
         const handles = this.handles();
         const searchString = (c[0] + " " + (handles[i] || "") + " oversized tee t-shirt streetwear").toLowerCase();
@@ -2261,7 +2262,7 @@ class Component extends DCLogic {
       }).length).padStart(2, '0'),
       rackRows: [0, 3].map((off) => ({
         items: bestsellers.slice(off, off + 3).map((ci, j) => {
-          const c = cat[ci];
+          const c = dropCat[ci];
           return {
             img: c[3], imgBack: c[4] || c[3], name: c[0],
             isBestSeller: true,
@@ -2272,7 +2273,7 @@ class Component extends DCLogic {
         })
       })),
       rack: bestsellers.map((ci, j) => {
-        const c = cat[ci];
+        const c = dropCat[ci];
         return {
           img: c[3], imgBack: c[4] || c[3], name: c[0],
           num: String(ci + 1).padStart(2, '0'),
@@ -2280,7 +2281,7 @@ class Component extends DCLogic {
           open: (e) => this.openProduct('drop001', ci, e)
         };
       }),
-      visible: cat.map((c, i) => ({
+      visible: dropCat.map((c, i) => ({
         img: c[3], imgBack: c[4] || c[3], name: c[0], price: this.rupees(c[1]), originalPrice: this.rupees(c[2]),
         tag: bestsellers.includes(i) ? 'Bestseller' : '',
         num: String(i + 1).padStart(2, '0') + ' / 13',
@@ -2299,7 +2300,7 @@ class Component extends DCLogic {
           e.stopPropagation(); e.preventDefault();
           const size = this.state.cardSize[i];
           if (!size) { this.setState({ notice: 'size', noticeFor: i }); return; }
-          const curItem = cat[i];
+          const curItem = dropCat[i];
           const colName = (curItem[5] && curItem[5][0]) ? curItem[5][0].name : '';
           if (!this.isColorAvailable(colName, curItem[0])) return;
           const key = i + '|0|' + size; // Default color is 0 when adding from card
