@@ -370,8 +370,8 @@
                       </div>
                     </div>
                     <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px;">
-                      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px">
-                        <sc-for list="{{ hw.sizes }}" as="z" hint-placeholder-count="4">
+                      <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px">
+                        <sc-for list="{{ hw.sizes }}" as="z" hint-placeholder-count="5">
                           <button onClick="{{ z.pick }}" style="min-width:0;padding:8px 2px;border:1px solid {{ z.border }};background:{{ z.bg }};color:{{ z.color }};font-family:inherit;font-size:10px;font-weight:600;letter-spacing:0.04em;text-align:center;cursor:pointer;transition:all 180ms ease">{{ z.label }}</button>
                         </sc-for>
                       </div>
@@ -425,8 +425,8 @@
                     </div>
                   </div>
                   <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;">
-                    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px">
-                      <sc-for list="{{ w.sizes }}" as="z" hint-placeholder-count="4">
+                    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px">
+                      <sc-for list="{{ w.sizes }}" as="z" hint-placeholder-count="5">
                         <button onClick="{{ z.pick }}" style="min-width:0;padding:8px 2px;border:1px solid {{ z.border }};background:{{ z.bg }};color:{{ z.color }};font-family:inherit;font-size:10px;font-weight:600;letter-spacing:0.04em;text-align:center;cursor:pointer;transition:all 180ms ease">{{ z.label }}</button>
                       </sc-for>
                     </div>
@@ -568,7 +568,7 @@
               <button onClick="{{ openSizeChart }}" style="background:none;border:0;padding:0;color:#F5F5F0;font-family:inherit;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px;cursor:pointer">Size chart</button>
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:10px">
-              <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="4">
+              <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="5">
                 <button onClick="{{ s.select }}" style="min-width:60px;padding:12px 18px;border-radius:999px;border:1px solid {{ s.border }};background:{{ s.bg }};color:{{ s.color }};font-family:inherit;font-size:14px;font-weight:500;letter-spacing:0.06em;cursor:pointer;transition:all 180ms ease">{{ s.label }}</button>
               </sc-for>
             </div>
@@ -1443,7 +1443,7 @@ class Component extends DCLogic {
       return colors.map((col) => {
         const cName = col.name;
         const res = {};
-        for (const s of ['S', 'M', 'L', 'XL']) {
+        for (const s of ['XS', 'S', 'M', 'L', 'XL']) {
           res[s] = this.lookupVariant(pName, cName, s);
         }
         return res;
@@ -1946,7 +1946,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const set = (k, v) => () => this.setState({ [k]: v });
-    const sizes = ['S', 'M', 'L', 'XL'].map((label) => {
+    const sizes = ['XS', 'S', 'M', 'L', 'XL'].map((label) => {
       const active = this.state.size === label;
       return {
         label,
@@ -2102,7 +2102,7 @@ class Component extends DCLogic {
           name: c[0],
           price: this.rupees(c[1]),
           num: String(i + 1).padStart(2, '0') + ' / 06',
-          sizes: ['S', 'M', 'L', 'XL'].map((label) => {
+          sizes: ['XS', 'S', 'M', 'L', 'XL'].map((label) => {
             const on = this.state.cardSizeHalloween && this.state.cardSizeHalloween[i] === label;
             return {
               label,
@@ -2137,6 +2137,11 @@ class Component extends DCLogic {
             const curItem = this.halloweenCatalog()[i];
             const colName = (curItem[5] && curItem[5][defaultColorIdx]) ? curItem[5][defaultColorIdx].name : '';
             if (!this.isColorAvailable(colName, curItem[0])) return;
+            const varId = this.lookupVariant(curItem[0], colName, size);
+            if (!varId) {
+              this.setState({ checkoutError: '"' + curItem[0] + '" (' + (colName ? colName + ' / ' : '') + size + ') is currently out of stock / coming soon and awaiting Shopify variant configuration.' });
+              return;
+            }
             const key = 'hw_' + i + '|' + defaultColorIdx + '|' + size;
             this.setState((s) => ({
               bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 },
@@ -2285,7 +2290,7 @@ class Component extends DCLogic {
         img: c[3], imgBack: c[4] || c[3], name: c[0], price: this.rupees(c[1]), originalPrice: this.rupees(c[2]),
         tag: bestsellers.includes(i) ? 'Bestseller' : '',
         num: String(i + 1).padStart(2, '0') + ' / 13',
-        sizes: ['S', 'M', 'L', 'XL'].map((label) => {
+        sizes: ['XS', 'S', 'M', 'L', 'XL'].map((label) => {
           const on = this.state.cardSize[i] === label;
           return {
             label,
@@ -2303,6 +2308,11 @@ class Component extends DCLogic {
           const curItem = dropCat[i];
           const colName = (curItem[5] && curItem[5][0]) ? curItem[5][0].name : '';
           if (!this.isColorAvailable(colName, curItem[0])) return;
+          const varId = this.lookupVariant(curItem[0], colName, size);
+          if (!varId) {
+            this.setState({ checkoutError: '"' + curItem[0] + '" (' + (colName ? colName + ' / ' : '') + size + ') is currently out of stock / coming soon and awaiting Shopify variant configuration.' });
+            return;
+          }
           const key = i + '|0|' + size; // Default color is 0 when adding from card
           this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true, notice: '' }));
         },
@@ -2362,14 +2372,14 @@ class Component extends DCLogic {
       accordions,
       ctaLabel: (isPdpHw && !isLive)
         ? 'Drops at 12:00 AM IST'
-        : (isCurColorOOS ? 'Out of stock' : (this.state.size ? 'Add to cart' : 'Select size')),
-      ctaDisabled: (isPdpHw && !isLive) || isCurColorOOS,
-      ctaAriaDisabled: ((isPdpHw && !isLive) || isCurColorOOS) ? 'true' : 'false',
-      ctaBg: ((isPdpHw && !isLive) || isCurColorOOS) ? '#222224' : '#F5F5F0',
-      ctaColor: ((isPdpHw && !isLive) || isCurColorOOS) ? 'rgba(245,245,240,0.45)' : '#0A0A0A',
-      ctaCursor: ((isPdpHw && !isLive) || isCurColorOOS) ? 'not-allowed' : 'pointer',
-      ctaOpacity: ((isPdpHw && !isLive) || isCurColorOOS) ? 0.6 : 1,
-      ctaHover: ((isPdpHw && !isLive) || isCurColorOOS) ? '' : 'background:#FFFFFF',
+        : (isCurColorOOS ? 'Out of stock' : (this.state.size ? (this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size) ? 'Add to cart' : (this.state.size === 'XS' ? 'XS — Coming Soon' : 'Out of stock')) : 'Select size')),
+      ctaDisabled: (isPdpHw && !isLive) || isCurColorOOS || (!!this.state.size && !this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size)),
+      ctaAriaDisabled: ((isPdpHw && !isLive) || isCurColorOOS || (!!this.state.size && !this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size))) ? 'true' : 'false',
+      ctaBg: ((isPdpHw && !isLive) || isCurColorOOS || (!!this.state.size && !this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size))) ? '#222224' : '#F5F5F0',
+      ctaColor: ((isPdpHw && !isLive) || isCurColorOOS || (!!this.state.size && !this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size))) ? 'rgba(245,245,240,0.45)' : '#0A0A0A',
+      ctaCursor: ((isPdpHw && !isLive) || isCurColorOOS || (!!this.state.size && !this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size))) ? 'not-allowed' : 'pointer',
+      ctaOpacity: ((isPdpHw && !isLive) || isCurColorOOS || (!!this.state.size && !this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size))) ? 0.6 : 1,
+      ctaHover: ((isPdpHw && !isLive) || isCurColorOOS || (!!this.state.size && !this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size))) ? '' : 'background:#FFFFFF',
       addToCart: () => {
         if (isPdpHw && !isLive) {
           this.setState({ checkoutError: 'AFTER DARK â€” HALLOWEEN EDITION drops at 12:00 AM IST on 20 October 2026.' });
@@ -2377,6 +2387,11 @@ class Component extends DCLogic {
         }
         if (isCurColorOOS) return;
         if (!this.state.size) return;
+        const varId = this.lookupVariant(cur[0], curColorObj ? curColorObj.name : '', this.state.size);
+        if (!varId) {
+          this.setState({ checkoutError: '"' + cur[0] + '" (' + (curColorObj ? curColorObj.name + ' / ' : '') + this.state.size + ') is currently out of stock / coming soon and awaiting Shopify variant configuration.' });
+          return;
+        }
         const key = (isPdpHw ? 'hw_' : '') + this.state.pdp + '|' + safeColorIdx + '|' + this.state.size;
         this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true }));
       },

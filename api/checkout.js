@@ -2,7 +2,7 @@
 // Credentials are read from environment variables and never reach the browser.
 
 const API_VERSION = '2026-07';
-const SIZES = ['S', 'M', 'L', 'XL'];
+const SIZES = ['XS', 'S', 'M', 'L', 'XL'];
 const HANDLE_RE = /^[a-z0-9][a-z0-9-]{0,99}$/;
 const HALLOWEEN_LAUNCH_TIMESTAMP = 1792434600000; // 2026-10-20T00:00:00+05:30 (Asia/Kolkata)
 const HALLOWEEN_HANDLES = new Set([
