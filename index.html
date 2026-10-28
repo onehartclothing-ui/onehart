@@ -415,7 +415,21 @@
                     </div>
                   </div>
                   <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
-                    <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(15px,1.5vw,20px);line-height:1.15">{{ w.name }}</span>
+                    <div>
+                      <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:clamp(15px,1.5vw,20px);line-height:1.15;display:block">{{ w.name }}</span>
+                      <div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap">
+                        <sc-for list="{{ w.colors }}" as="col">
+                          <span style="position:relative;width:10px;height:10px;border-radius:50%;background:{{ col.hex }};border:1px solid rgba(255,255,255,0.3);display:inline-block;overflow:hidden;flex-shrink:0" title="{{ col.title }}">
+                            <sc-if value="{{ col.isOOS }}" hint-placeholder-val="{{ false }}">
+                              <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:2;display:block">
+                                <line x1="1" y1="9" x2="9" y2="1" stroke="#111111" stroke-width="1.4" stroke-linecap="round" />
+                              </svg>
+                            </sc-if>
+                          </span>
+                        </sc-for>
+                        <span style="font-size:10px;color:rgba(245,245,240,0.45);margin-left:4px">{{ w.colorNames }}</span>
+                      </div>
+                    </div>
                     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">
                       <span style="font-size:18px;font-weight:700;line-height:1.15;white-space:nowrap"><del style="color:rgba(245,245,240,0.65);font-size:0.75em;margin-right:8px">{{ w.originalPrice }}</del>{{ w.price }}</span>
                       <span style="font-size:9.5px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:rgba(245,245,240,0.7);display:inline-flex;align-items:center;gap:4px;white-space:nowrap">
@@ -2270,7 +2284,7 @@ class Component extends DCLogic {
       pdpOriginalPrice: cur[2] ? this.rupees(cur[2]) : '',
       pdpImage: (cur[5] && cur[5][safeColorIdx] && cur[5][safeColorIdx].front) ? cur[5][safeColorIdx].front : cur[3],
       pdpBack: (cur[5] && cur[5][safeColorIdx] && cur[5][safeColorIdx].back) ? cur[5][safeColorIdx].back : (cur[4] || cur[3]),
-      hasColors: cur[5] && cur[5].length > 1,
+      hasColors: cur[5] && cur[5].length > 0,
       pdpColorName: curColorObj ? (isCurColorOOS ? curColorObj.name + ' — Out of stock' : curColorObj.name) : '',
       pdpColorOptions: (cur[5] || []).map((c, i) => {
         const isOOS = !this.isColorAvailable(c.name, cur[0]);
@@ -2334,7 +2348,18 @@ class Component extends DCLogic {
           open: (e) => this.openProduct('drop001', ci, e)
         };
       }),
-      visible: dropCat.map((c, i) => ({
+      visible: dropCat.map((c, i) => {
+        const colorList = (c[5] || []).map((col) => {
+          const isOOS = !this.isColorAvailable(col.name, c[0]);
+          return {
+            name: col.name,
+            hex: col.hex,
+            isOOS,
+            title: isOOS ? (col.name + ' — Out of Stock') : col.name
+          };
+        });
+        const colorNames = colorList.map(col => col.name).join(' / ');
+        return {
         img: c[3], imgBack: c[4] || c[3], name: c[0], price: this.rupees(c[1]), originalPrice: this.rupees(c[2]),
         tag: bestsellers.includes(i) ? 'Bestseller' : '',
         num: String(i + 1).padStart(2, '0') + ' / 13',
@@ -2364,8 +2389,11 @@ class Component extends DCLogic {
           const key = i + '|0|' + size; // Default color is 0 when adding from card
           this.setState((s) => ({ bag: { ...s.bag, [key]: (s.bag[key] || 0) + 1 }, cart: s.cart + 1, bagOpen: true, notice: '' }));
         },
+        colors: colorList,
+        colorNames,
         depth: [0.8, 0.3, 1.1, 0.45, 0.95, 0.6][i % 6],
         open: (e) => this.openProduct('drop001', i, e)
+      };
       })).filter((p, mappedIdx) => {
         if (!q) return true;
         const handles = this.handles();
