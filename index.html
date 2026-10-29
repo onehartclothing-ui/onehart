@@ -30,6 +30,7 @@
 <meta name="ext-resource-dependency" content="./uploads/cosmos_1116054149-2fe8251f.mp4" data-resource-id="herovideo" />
 <meta name="ext-resource-dependency" content="./brand/tile-bg.jpg" data-resource-id="tilebg" />
 <meta name="ext-resource-dependency" content="./brand/wordmark-v3.png" data-resource-id="wordmark" />
+<script src="./reviews-data.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -139,6 +140,56 @@
   .header-container { padding: 0 32px; gap: 24px; }
   @media (max-width: 900px) {
     .header-container { padding: 0 16px !important; gap: 12px !important; }
+  }
+  .nk-reviews-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    padding-bottom: 4px;
+  }
+  .nk-reviews-track::-webkit-scrollbar { display: none; }
+  .nk-review-card {
+    flex: 0 0 calc((100% - 48px) / 3);
+    min-width: 0;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    background: #0D0D0F;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 32px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 240ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .nk-review-card:hover {
+      border-color: rgba(255,255,255,0.22);
+    }
+  }
+  @media (max-width: 1024px) {
+    .nk-review-card {
+      flex: 0 0 calc((100% - 24px) / 2);
+    }
+  }
+  @media (max-width: 900px) {
+    .nk-reviews-track {
+      gap: 16px;
+    }
+    .nk-review-card {
+      flex: 0 0 88%;
+      max-width: 88%;
+      padding: 28px 22px 24px;
+    }
+    .nk-review-card[data-single-mobile="true"] {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
   }
 </style>
 </helmet>
@@ -453,7 +504,111 @@
         </div>
       </section>
 
+      <!-- CUSTOMER REVIEWS SECTION -->
+      <section id="customer-reviews" data-reveal="" onMouseEnter="{{ pauseReviews }}" onMouseLeave="{{ resumeReviews }}" onFocus="{{ pauseReviews }}" onBlur="{{ resumeReviews }}" style="position:relative;background:#08080A;border-top:1px solid rgba(255,255,255,0.08);padding:clamp(72px,9vw,120px) 0">
+        <div style="max-width:1500px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
+          <!-- Section Heading -->
+          <div style="text-align:center;max-width:680px;margin:0 auto clamp(44px,5.5vw,68px);display:flex;flex-direction:column;align-items:center">
+            <span style="font-size:11px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:rgba(245,245,240,0.58)">REAL PEOPLE. REAL FEEDBACK.</span>
+            <h2 style="margin:14px 0 0;font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:clamp(32px,4.8vw,56px);line-height:1.08;letter-spacing:-0.01em;color:#F5F5F0">Worn. Loved. Reviewed.</h2>
+            <p style="margin:14px 0 0;font-size:clamp(14px,1.5vw,17px);line-height:1.5;color:rgba(245,245,240,0.68)">What the OneHart community has to say.</p>
+            <div style="margin-top:22px;display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;max-width:100%;box-sizing:border-box;padding:8px 16px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);border-radius:999px">
+              <div role="img" aria-label="{{ reviewsSummaryAriaLabel }}" style="display:inline-flex;align-items:center;gap:3px;color:#F5F5F0">
+                <sc-for list="{{ reviewsSummaryStars }}" as="st" hint-placeholder-count="5">
+                  <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true" style="display:block;flex-shrink:0">
+                    <sc-if value="{{ st.type === 'full' }}" hint-placeholder-val="{{ true }}">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#F5F5F0" stroke="#F5F5F0" stroke-width="1.4" stroke-linejoin="round" />
+                    </sc-if>
+                    <sc-if value="{{ st.type === 'half' }}" hint-placeholder-val="{{ false }}">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77V2z" fill="#F5F5F0" />
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="#F5F5F0" stroke-width="1.4" stroke-linejoin="round" />
+                    </sc-if>
+                    <sc-if value="{{ st.type === 'empty' }}" hint-placeholder-val="{{ false }}">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="rgba(245,245,240,0.35)" stroke-width="1.4" stroke-linejoin="round" />
+                    </sc-if>
+                  </svg>
+                </sc-for>
+              </div>
+              <span style="font-size:clamp(10px,2.6vw,11px);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,245,240,0.82)">{{ reviewsSummaryText }}</span>
+            </div>
+          </div>
 
+          <!-- Reviews Carousel Track -->
+          <div style="position:relative">
+            <div id="nk-reviews-track" class="nk-reviews-track" role="region" aria-label="Customer reviews">
+              <sc-for list="{{ customerReviews }}" as="rev" hint-placeholder-count="3">
+                <article class="nk-review-card" tabindex="0">
+                  <div>
+                    <!-- 1. Star rating & 2. Numeric rating -->
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px">
+                      <div role="img" aria-label="{{ rev.ariaRating }}" style="display:inline-flex;align-items:center;gap:4px;color:#F5F5F0">
+                        <sc-for list="{{ rev.stars }}" as="star" hint-placeholder-count="5">
+                          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="display:block;flex-shrink:0">
+                            <sc-if value="{{ star.type === 'full' }}" hint-placeholder-val="{{ true }}">
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#F5F5F0" stroke="#F5F5F0" stroke-width="1.4" stroke-linejoin="round" />
+                            </sc-if>
+                            <sc-if value="{{ star.type === 'half' }}" hint-placeholder-val="{{ false }}">
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77V2z" fill="#F5F5F0" />
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="#F5F5F0" stroke-width="1.4" stroke-linejoin="round" />
+                            </sc-if>
+                            <sc-if value="{{ star.type === 'empty' }}" hint-placeholder-val="{{ false }}">
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="rgba(245,245,240,0.35)" stroke-width="1.4" stroke-linejoin="round" />
+                            </sc-if>
+                          </svg>
+                        </sc-for>
+                      </div>
+                      <span style="font-size:12px;font-weight:600;letter-spacing:0.12em;color:rgba(245,245,240,0.75)">{{ rev.ratingFormatted }}</span>
+                    </div>
+
+                    <!-- 3. Customer review in quotation marks -->
+                    <blockquote style="margin:0;padding:0;border:0;font-size:15.5px;line-height:1.68;color:#F5F5F0;font-weight:400;white-space:pre-line;word-break:break-word">"{{ rev.reviewText }}"</blockquote>
+                  </div>
+
+                  <div>
+                    <!-- 4. Subtle divider -->
+                    <div style="height:1px;background:rgba(255,255,255,0.08);margin:26px 0 20px"></div>
+
+                    <!-- 5. Customer name, 6. Product purchased, 7. Verified Buyer label -->
+                    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                      <div style="display:flex;flex-direction:column;gap:5px">
+                        <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:18px;font-weight:400;color:#F5F5F0;line-height:1.2">{{ rev.customerName }}</span>
+                        <span style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,245,240,0.52)">Purchased: <span style="color:rgba(245,245,240,0.8)">{{ rev.productPurchased }}</span></span>
+                      </div>
+
+                      <sc-if value="{{ rev.verifiedBuyer }}" hint-placeholder-val="{{ true }}">
+                        <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border:1px solid rgba(255,255,255,0.12);border-radius:3px;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,245,240,0.8);flex-shrink:0">
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block"><polyline points="20 6 9 17 4 12" /></svg>
+                          <span>Verified Buyer</span>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </div>
+                </article>
+              </sc-for>
+            </div>
+
+            <!-- Navigation Controls (Pagination Dots + Arrows when scrollable) -->
+            <sc-if value="{{ showReviewsControls }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+                <div style="display:flex;align-items:center;gap:8px" role="tablist" aria-label="Review slides">
+                  <sc-for list="{{ reviewDots }}" as="dot" hint-placeholder-count="3">
+                    <button onClick="{{ dot.go }}" aria-label="{{ dot.label }}" aria-selected="{{ dot.selected }}" role="tab" style="width:{{ dot.width }};height:6px;border-radius:999px;border:0;padding:0;background:{{ dot.bg }};cursor:pointer;transition:all 260ms ease"></button>
+                  </sc-for>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:10px">
+                  <button onClick="{{ prevReview }}" aria-label="Previous review" style="width:40px;height:40px;border-radius:50%;background:transparent;border:1px solid rgba(255,255,255,0.16);color:#F5F5F0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color 200ms ease,background 200ms ease" style-hover="border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.05)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                  </button>
+                  <button onClick="{{ nextReview }}" aria-label="Next review" style="width:40px;height:40px;border-radius:50%;background:transparent;border:1px solid rgba(255,255,255,0.16);color:#F5F5F0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color 200ms ease,background 200ms ease" style-hover="border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.05)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                  </button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </section>
 
       <section data-reveal="" style="background:rgba(8,8,8,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:120px 0;border-top:1px solid rgba(202,167,167,0.28)">
         <div style="max-width:1100px;margin:0 auto;padding:0 32px;text-align:center">
@@ -1239,12 +1394,142 @@ const SHOPIFY_VARIANTS = {
 
 const HALLOWEEN_LAUNCH_TIMESTAMP = 1792434600000; // 2026-10-20T00:00:00+05:30 (Asia/Kolkata)
 
+const DEFAULT_REVIEWS = [
+  {
+    id: "review-1",
+    customerName: "Varsha Surana",
+    rating: 5,
+    reviewText: "Great fit….fabric is super comfy …I wud really recommend ONEHART tees❤️",
+    productPurchased: "Born Iconic",
+    verifiedBuyer: true
+  },
+  {
+    id: "review-2",
+    customerName: "Kavya Shah",
+    rating: 4.5,
+    reviewText: "I really like the fit and feel of the t-shirt. Its comfortable, good quality, and easy to style! ❤️",
+    productPurchased: "Faith Unbroken",
+    verifiedBuyer: true
+  },
+  {
+    id: "review-3",
+    customerName: "Vivaan Aurora",
+    rating: 5,
+    reviewText: "the quality of the t-shirt was super good and comfortable and the t-shirts design was also classy and elegant\nthe size chart was perfect. ❤️❤️",
+    productPurchased: "Wild West, Lucky Theory, No Pressure",
+    verifiedBuyer: true
+  }
+];
+
 class Component extends DCLogic {
   state = { announcementIndex: 0, copied: false, page: (typeof window !== 'undefined' && window.location.pathname.includes('shipping')) ? 'shipping' : (typeof window !== 'undefined' && window.location.pathname.includes('privacy')) ? 'privacy' : (typeof window !== 'undefined' && window.location.pathname.includes('terms')) ? 'terms' : 'home', scrolled: false, size: null, cart: 0, open: {},
             menuOpen: false, bagOpen: false, aboutOpen: false, query: '', bag: {},
             cardSize: {}, notice: '', noticeFor: -1, checkingOut: false, checkoutError: '',
             pdpCollection: 'drop001', pdp: 0, pdpColor: 0, view: 0, zoomOpen: false, chartOpen: false, chartTab: 'MEN', scale: 1, rotY: 0, tx: 0, ty: 0, dragging: false,
-            isHalloweenLive: false, serverTimeOffset: 0, countdownHours: '00', countdownMinutes: '00', countdownSeconds: '00', cardSizeHalloween: {}, noticeForHalloween: -1 };
+            isHalloweenLive: false, serverTimeOffset: 0, countdownHours: '00', countdownMinutes: '00', countdownSeconds: '00', cardSizeHalloween: {}, noticeForHalloween: -1,
+            reviewIndex: 0, reviewsScrollable: (typeof window !== 'undefined' ? window.innerWidth <= 900 : true) };
+
+  getReviewsData() {
+    if (typeof window !== 'undefined' && Array.isArray(window.ONEHART_REVIEWS) && window.ONEHART_REVIEWS.length > 0) {
+      return window.ONEHART_REVIEWS;
+    }
+    return DEFAULT_REVIEWS;
+  }
+
+  buildStars(rating) {
+    const num = Math.max(0, Math.min(5, Number(rating) || 0));
+    const rounded = Math.round(num * 2) / 2;
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (rounded >= i) {
+        stars.push({ type: 'full' });
+      } else if (rounded >= i - 0.5) {
+        stars.push({ type: 'half' });
+      } else {
+        stars.push({ type: 'empty' });
+      }
+    }
+    return stars;
+  }
+
+  scrollToReview(idx) {
+    const reviews = this.getReviewsData();
+    if (!reviews.length) return;
+    const safeIdx = ((idx % reviews.length) + reviews.length) % reviews.length;
+    const track = typeof document !== 'undefined' ? document.getElementById('nk-reviews-track') : null;
+    if (track) {
+      const cards = track.querySelectorAll('.nk-review-card');
+      const targetCard = cards[safeIdx];
+      if (targetCard) {
+        const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const left = Math.max(0, targetCard.offsetLeft - track.offsetLeft);
+        track.scrollTo({ left, behavior: reduce ? 'instant' : 'smooth' });
+      }
+    }
+    this.setState({ reviewIndex: safeIdx });
+  }
+
+  bindReviewsCarousel() {
+    if (typeof document === 'undefined') return;
+    const track = document.getElementById('nk-reviews-track');
+    if (!track) return;
+
+    const checkScrollable = () => {
+      const t = document.getElementById('nk-reviews-track');
+      if (!t) return;
+      const isScrollable = (t.scrollWidth - t.clientWidth > 12) || (typeof window !== 'undefined' && window.innerWidth <= 900 && this.getReviewsData().length > 1);
+      if (isScrollable !== this.state.reviewsScrollable) {
+        this.setState({ reviewsScrollable: isScrollable });
+      }
+    };
+
+    checkScrollable();
+    if (!this._reviewsResizeCheck) {
+      this._reviewsResizeCheck = setTimeout(checkScrollable, 250);
+    }
+
+    if (track.__reviewsBound) return;
+    track.__reviewsBound = true;
+
+    let scrollRaf = 0;
+    track.addEventListener('scroll', () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = 0;
+        const cards = track.querySelectorAll('.nk-review-card');
+        if (!cards.length) return;
+        const trackLeft = track.scrollLeft;
+        let closestIdx = 0;
+        let minDiff = Infinity;
+        cards.forEach((c, i) => {
+          const offset = c.offsetLeft - track.offsetLeft;
+          const diff = Math.abs(offset - trackLeft);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIdx = i;
+          }
+        });
+        if (closestIdx !== this.state.reviewIndex) {
+          this.setState({ reviewIndex: closestIdx });
+        }
+      });
+    }, { passive: true });
+
+    track.addEventListener('touchstart', () => {
+      this._reviewsPaused = true;
+      if (this._reviewsResumeTimeout) clearTimeout(this._reviewsResumeTimeout);
+    }, { passive: true });
+
+    const resumeAfterTouch = () => {
+      if (this._reviewsResumeTimeout) clearTimeout(this._reviewsResumeTimeout);
+      this._reviewsResumeTimeout = setTimeout(() => {
+        this._reviewsPaused = false;
+      }, 4000);
+    };
+
+    track.addEventListener('touchend', resumeAfterTouch, { passive: true });
+    track.addEventListener('touchcancel', resumeAfterTouch, { passive: true });
+  }
 
   isColorAvailable(colorName) {
     if (!colorName) return true;
@@ -1752,7 +2037,7 @@ class Component extends DCLogic {
     this.onScroll = () => {
       const s = window.scrollY > 40;
       if (s !== this.state.scrolled) this.setState({ scrolled: s });
-      if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; this.parallax(); this.bindCardSwipes(); });
+      if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; this.parallax(); this.bindCardSwipes(); this.bindReviewsCarousel(); });
     };
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll, { passive: true });
@@ -1786,7 +2071,17 @@ class Component extends DCLogic {
       if (this.state.copied || this._announcementPaused) return;
       this.setState((s) => ({ announcementIndex: (s.announcementIndex + 1) % 2 }));
     }, 4500);
-    setTimeout(() => { this.parallax(); this.bindCursor(); this.bindCardSwipes(); }, 60);
+
+    this._reviewsTimer = setInterval(() => {
+      if (this.state.page !== 'home' || this._reviewsPaused || !this.state.reviewsScrollable) return;
+      if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const reviews = this.getReviewsData();
+      if (reviews.length <= 1) return;
+      const nextIdx = (this.state.reviewIndex + 1) % reviews.length;
+      this.scrollToReview(nextIdx);
+    }, 5500);
+
+    setTimeout(() => { this.parallax(); this.bindCursor(); this.bindCardSwipes(); this.bindReviewsCarousel(); }, 60);
     this.playVideo();
     this.reveal();
 
@@ -1856,7 +2151,7 @@ class Component extends DCLogic {
       } catch (err) {}
     }
   }
-  componentDidUpdate() { this.playVideo(); this.reveal(); this.bindStage(); this.parallax(); this.bindCardSwipes(); }
+  componentDidUpdate() { this.playVideo(); this.reveal(); this.bindStage(); this.parallax(); this.bindCardSwipes(); this.bindReviewsCarousel(); }
 
   playVideo() {
     const v = document.getElementById('nk-hero-video');
@@ -1897,6 +2192,8 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this.onScroll);
     if (this._announcementTimer) clearInterval(this._announcementTimer);
     if (this._halloweenTimer) clearInterval(this._halloweenTimer);
+    if (this._reviewsTimer) clearInterval(this._reviewsTimer);
+    if (this._reviewsResumeTimeout) clearTimeout(this._reviewsResumeTimeout);
     if (this._blobUrl) URL.revokeObjectURL(this._blobUrl);
   }
 
@@ -2476,7 +2773,72 @@ class Component extends DCLogic {
       relatedTitle: isPdpHw ? 'More from After Dark â€” Halloween' : 'A few more you might like.',
       related: isPdpHw
         ? this.halloweenProducts('hw-rel', [(this.state.pdp + 1) % 6, (this.state.pdp + 2) % 6, (this.state.pdp + 3) % 6])
-        : this.products('rel', [3, 4, 5])
+        : this.products('rel', [3, 4, 5]),
+      ...(() => {
+        const rawReviews = this.getReviewsData();
+        const totalRating = rawReviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0);
+        const avgNum = rawReviews.length ? totalRating / rawReviews.length : 5;
+        const avgFormatted = Number(avgNum.toFixed(2)).toString();
+        const verifiedCount = rawReviews.filter((r) => r.verifiedBuyer).length;
+        const countToDisplay = verifiedCount > 0 ? verifiedCount : rawReviews.length;
+        const summaryText = avgFormatted + '/5 from ' + countToDisplay + (verifiedCount > 0 ? ' verified customer ' : ' customer ') + (countToDisplay === 1 ? 'review' : 'reviews');
+        const customerReviews = rawReviews.map((r, idx) => {
+          const rNum = Number(r.rating) || 0;
+          const ratingFormatted = (rNum % 1 === 0 ? rNum.toFixed(1) : rNum.toString()) + '/5';
+          return {
+            id: r.id || ('rev-' + idx),
+            customerName: r.customerName,
+            rating: rNum,
+            ratingFormatted,
+            ariaRating: 'Rated ' + rNum + ' out of 5 stars',
+            stars: this.buildStars(rNum),
+            reviewText: r.reviewText,
+            productPurchased: r.productPurchased,
+            verifiedBuyer: !!r.verifiedBuyer
+          };
+        });
+        const activeIdx = this.state.reviewIndex || 0;
+        const reviewDots = customerReviews.map((_, idx) => {
+          const isActive = idx === activeIdx;
+          return {
+            label: 'Go to review ' + (idx + 1),
+            selected: isActive ? 'true' : 'false',
+            width: isActive ? '22px' : '6px',
+            bg: isActive ? '#F5F5F0' : 'rgba(245,245,240,0.28)',
+            go: (e) => {
+              if (e && e.preventDefault) e.preventDefault();
+              this._reviewsPaused = true;
+              this.scrollToReview(idx);
+              if (this._reviewsResumeTimeout) clearTimeout(this._reviewsResumeTimeout);
+              this._reviewsResumeTimeout = setTimeout(() => { this._reviewsPaused = false; }, 5000);
+            }
+          };
+        });
+        return {
+          customerReviews,
+          reviewsSummaryText: summaryText,
+          reviewsSummaryAriaLabel: 'Average rating ' + avgFormatted + ' out of 5 stars',
+          reviewsSummaryStars: this.buildStars(avgNum),
+          showReviewsControls: !!this.state.reviewsScrollable && customerReviews.length > 1,
+          reviewDots,
+          prevReview: (e) => {
+            if (e && e.preventDefault) e.preventDefault();
+            this._reviewsPaused = true;
+            this.scrollToReview((this.state.reviewIndex || 0) - 1);
+            if (this._reviewsResumeTimeout) clearTimeout(this._reviewsResumeTimeout);
+            this._reviewsResumeTimeout = setTimeout(() => { this._reviewsPaused = false; }, 5000);
+          },
+          nextReview: (e) => {
+            if (e && e.preventDefault) e.preventDefault();
+            this._reviewsPaused = true;
+            this.scrollToReview((this.state.reviewIndex || 0) + 1);
+            if (this._reviewsResumeTimeout) clearTimeout(this._reviewsResumeTimeout);
+            this._reviewsResumeTimeout = setTimeout(() => { this._reviewsPaused = false; }, 5000);
+          },
+          pauseReviews: () => { this._reviewsPaused = true; },
+          resumeReviews: () => { this._reviewsPaused = false; }
+        };
+      })()
     };
   }
 }
