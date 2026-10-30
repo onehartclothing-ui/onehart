@@ -111,9 +111,9 @@ export default async function handler(req, res) {
 
     const merged = new Map();
     for (const l of lines) {
-      if (HALLOWEEN_HANDLES.has(l.handle) && Date.now() < HALLOWEEN_LAUNCH_TIMESTAMP) {
-        return res.status(403).json({
-          error: 'The AFTER DARK — HALLOWEEN EDITION drop unlocks automatically at 12:00 AM IST on 20 October 2026. Early checkout is restricted.'
+      if (HALLOWEEN_HANDLES.has(l.handle)) {
+        return res.status(410).json({
+          error: 'The AFTER DARK — HALLOWEEN EDITION drop has ended and is no longer available.'
         });
       }
       if (l.color && l.color.trim().toLowerCase() === 'beige') {
