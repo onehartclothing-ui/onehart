@@ -572,7 +572,9 @@
                     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
                       <div style="display:flex;flex-direction:column;gap:5px">
                         <span style="font-family:'Bodoni Moda',Georgia,serif;font-size:18px;font-weight:400;color:#F5F5F0;line-height:1.2">{{ rev.customerName }}</span>
-                        <span style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,245,240,0.52)">Purchased: <span style="color:rgba(245,245,240,0.8)">{{ rev.productPurchased }}</span></span>
+                        <sc-if value="{{ rev.hasProductPurchased }}" hint-placeholder-val="{{ true }}">
+                          <span style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,245,240,0.52)">Purchased: <span style="color:rgba(245,245,240,0.8)">{{ rev.productPurchased }}</span></span>
+                        </sc-if>
                       </div>
 
                       <sc-if value="{{ rev.verifiedBuyer }}" hint-placeholder-val="{{ true }}">
@@ -1401,7 +1403,8 @@ const DEFAULT_REVIEWS = [
     rating: 5,
     reviewText: "Great fit….fabric is super comfy …I wud really recommend ONEHART tees❤️",
     productPurchased: "Born Iconic",
-    verifiedBuyer: true
+    verifiedBuyer: true,
+    published: true
   },
   {
     id: "review-2",
@@ -1409,7 +1412,8 @@ const DEFAULT_REVIEWS = [
     rating: 4.5,
     reviewText: "I really like the fit and feel of the t-shirt. Its comfortable, good quality, and easy to style! ❤️",
     productPurchased: "Faith Unbroken",
-    verifiedBuyer: true
+    verifiedBuyer: true,
+    published: true
   },
   {
     id: "review-3",
@@ -1417,7 +1421,53 @@ const DEFAULT_REVIEWS = [
     rating: 5,
     reviewText: "the quality of the t-shirt was super good and comfortable and the t-shirts design was also classy and elegant\nthe size chart was perfect. ❤️❤️",
     productPurchased: "Wild West, Lucky Theory, No Pressure",
-    verifiedBuyer: true
+    verifiedBuyer: true,
+    published: true
+  },
+  {
+    id: "review-4",
+    customerName: "Aarti Mehta",
+    rating: 5,
+    reviewText: "Loving the ONEHART tee! The fit is great, it’s super comfortable, and the quality is really good. Definitely worth it!",
+    productPurchased: "Forever Yours, Lucky Theory",
+    verifiedBuyer: true,
+    published: true
+  },
+  {
+    id: "review-5",
+    customerName: "Swashthika",
+    rating: 4,
+    reviewText: "Honestly, I’m obsessed with Onehart clothing! 😭❤️ The quality, fit, and overall vibes are just so good. The T-shirts are super comfortable and look amazing. Definitely one of my new favourites, and I can’t wait to shop more! 🫶",
+    productPurchased: null,
+    verifiedBuyer: true,
+    published: true
+  },
+  {
+    id: "review-6",
+    customerName: "Harini",
+    rating: 5,
+    reviewText: "I absolutely love your T-shirts, the quality is amazing and the material feels so good and I’m genuinely happy with my purchase. Definitely worth repurchasing from ya’ll. looking forward to more collections and new drops",
+    productPurchased: null,
+    verifiedBuyer: true,
+    published: true
+  },
+  {
+    id: "review-7",
+    customerName: "Unmesha",
+    rating: 5,
+    reviewText: "I absolutely love your T-shirts, the quality is amazing and the material feels so good and I’m genuinely happy with my purchase. Definitely worth repurchasing from ya’ll. looking forward to more collections and new drops",
+    productPurchased: "Midnight Madness",
+    verifiedBuyer: true,
+    published: false // Pending confirmation: review text is identical to Harini's review
+  },
+  {
+    id: "review-8",
+    customerName: "Shayaan",
+    rating: 5,
+    reviewText: "I got a oversized tee from onehart clothing for my sister it was very cool and she loved the quality of the fabric and the design definitely would recommend for others",
+    productPurchased: "Midnight Madness",
+    verifiedBuyer: true,
+    published: true
   }
 ];
 
@@ -1427,13 +1477,13 @@ class Component extends DCLogic {
             cardSize: {}, notice: '', noticeFor: -1, checkingOut: false, checkoutError: '',
             pdpCollection: 'drop001', pdp: 0, pdpColor: 0, view: 0, zoomOpen: false, chartOpen: false, chartTab: 'MEN', scale: 1, rotY: 0, tx: 0, ty: 0, dragging: false,
             isHalloweenLive: false, serverTimeOffset: 0, countdownHours: '00', countdownMinutes: '00', countdownSeconds: '00', cardSizeHalloween: {}, noticeForHalloween: -1,
-            reviewIndex: 0, reviewsScrollable: (typeof window !== 'undefined' ? window.innerWidth <= 900 : true) };
+            reviewIndex: 0, reviewsScrollable: true };
 
   getReviewsData() {
-    if (typeof window !== 'undefined' && Array.isArray(window.ONEHART_REVIEWS) && window.ONEHART_REVIEWS.length > 0) {
-      return window.ONEHART_REVIEWS;
-    }
-    return DEFAULT_REVIEWS;
+    const source = (typeof window !== 'undefined' && Array.isArray(window.ONEHART_REVIEWS) && window.ONEHART_REVIEWS.length > 0)
+      ? window.ONEHART_REVIEWS
+      : DEFAULT_REVIEWS;
+    return source.filter((r) => r && r.published !== false);
   }
 
   buildStars(rating) {
@@ -1462,7 +1512,14 @@ class Component extends DCLogic {
       const targetCard = cards[safeIdx];
       if (targetCard) {
         const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const left = Math.max(0, targetCard.offsetLeft - track.offsetLeft);
+        const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+        const rawLeft = Math.max(0, targetCard.offsetLeft - track.offsetLeft);
+        if (idx > (this.state.reviewIndex || 0) && maxScroll > 0 && track.scrollLeft >= maxScroll - 8 && rawLeft >= maxScroll - 8) {
+          track.scrollTo({ left: 0, behavior: reduce ? 'instant' : 'smooth' });
+          this.setState({ reviewIndex: 0 });
+          return;
+        }
+        const left = Math.min(rawLeft, maxScroll);
         track.scrollTo({ left, behavior: reduce ? 'instant' : 'smooth' });
       }
     }
@@ -1477,7 +1534,7 @@ class Component extends DCLogic {
     const checkScrollable = () => {
       const t = document.getElementById('nk-reviews-track');
       if (!t) return;
-      const isScrollable = (t.scrollWidth - t.clientWidth > 12) || (typeof window !== 'undefined' && window.innerWidth <= 900 && this.getReviewsData().length > 1);
+      const isScrollable = (t.scrollWidth - t.clientWidth > 12) || (typeof window !== 'undefined' && window.innerWidth <= 900 && this.getReviewsData().length > 1) || (this.getReviewsData().length > 3);
       if (isScrollable !== this.state.reviewsScrollable) {
         this.setState({ reviewsScrollable: isScrollable });
       }
@@ -1499,6 +1556,14 @@ class Component extends DCLogic {
         const cards = track.querySelectorAll('.nk-review-card');
         if (!cards.length) return;
         const trackLeft = track.scrollLeft;
+        const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+        if (maxScroll > 0 && trackLeft >= maxScroll - 8) {
+          const lastIdx = cards.length - 1;
+          if (lastIdx !== this.state.reviewIndex) {
+            this.setState({ reviewIndex: lastIdx });
+          }
+          return;
+        }
         let closestIdx = 0;
         let minDiff = Infinity;
         cards.forEach((c, i) => {
@@ -2785,6 +2850,7 @@ class Component extends DCLogic {
         const customerReviews = rawReviews.map((r, idx) => {
           const rNum = Number(r.rating) || 0;
           const ratingFormatted = (rNum % 1 === 0 ? rNum.toFixed(1) : rNum.toString()) + '/5';
+          const cleanProd = (typeof r.productPurchased === 'string') ? r.productPurchased.trim() : '';
           return {
             id: r.id || ('rev-' + idx),
             customerName: r.customerName,
@@ -2793,7 +2859,8 @@ class Component extends DCLogic {
             ariaRating: 'Rated ' + rNum + ' out of 5 stars',
             stars: this.buildStars(rNum),
             reviewText: r.reviewText,
-            productPurchased: r.productPurchased,
+            productPurchased: cleanProd,
+            hasProductPurchased: cleanProd.length > 0 && cleanProd.toLowerCase() !== 'not specified',
             verifiedBuyer: !!r.verifiedBuyer
           };
         });
